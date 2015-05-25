@@ -1,8 +1,10 @@
-package com.campus.xiaozhao;
+package com.campus.xiaozhao.activity;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
+
+import com.campus.xiaozhao.R;
 
 public class MainActivity extends Activity {
 
