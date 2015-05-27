@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.campus.xiaozhao.CampusEnvironment;
+import com.campus.xiaozhao.Environment;
 import com.campus.xiaozhao.R;
 
 public class MainActivity extends Activity {
@@ -14,7 +14,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         
         int setupDelay = 0;
-        if (CampusEnvironment.ENABLE_SETUP_ACTIVITY) {
+        if (Environment.ENABLE_SETUP_ACTIVITY) {
             // TODO: 判断是否已经login
             SetupActivity.startFrom(this);
             setupDelay = 500;
