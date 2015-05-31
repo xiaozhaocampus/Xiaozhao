@@ -1,22 +1,22 @@
 package com.campus.xiaozhao.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-
-import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import com.campus.xiaozhao.Environment;
 import com.campus.xiaozhao.R;
-import com.component.logger.Logger;
-
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.campus.xiaozhao.basic.utils.CampusSharePreference;
+import com.component.logger.Logger;
 
 public class MainActivity extends Activity {
     private static final String TAG = "MainActivity";
@@ -29,10 +29,11 @@ public class MainActivity extends Activity {
         
         int setupDelay = 0;
         if (Environment.ENABLE_SETUP_ACTIVITY) {
-            // TODO: 判断是否已经login
-            SetupActivity.startFrom(this);
-            setupDelay = 500;
-            finish();
+            if (!CampusSharePreference.isLogin(this)) {
+	            SetupActivity.startFrom(this);
+	            setupDelay = 500;
+	            finish();
+            }
         }
         
         new Handler().postDelayed(new Runnable() {
@@ -41,6 +42,14 @@ public class MainActivity extends Activity {
                 setupUI();
             }
         }, setupDelay);
+    }
+    
+    public static void startFrom(Context context) {
+    	Intent intent = new Intent(context, MainActivity.class);
+    	intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+    		.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+    		.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    	context.startActivity(intent);
     }
 
     private void setupUI() {

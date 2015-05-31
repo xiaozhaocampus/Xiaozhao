@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.campus.xiaozhao.Configuration;
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.campus.xiaozhao.basic.utils.NumberUtils;
 import com.component.logger.Logger;
 
@@ -72,18 +73,6 @@ public class LoginActivity extends Activity {
         context.startActivity(intent);
 	}
 	
-	public void onClickAuth(View view) {
-		if (!checkInput()) {
-			Logger.w(TAG, "checkInput failed");
-			return;
-		}
-		if (mType == UIType.Login) {
-			
-		} else if (mType == UIType.Register) {
-			
-		}
-	}
-	
 	private void init() {
 		mAuthButton = (Button) findViewById(R.id.auth_btn);
 		mPhoneEditText = (EditText) findViewById(R.id.phone_number_et);
@@ -94,6 +83,21 @@ public class LoginActivity extends Activity {
 		} else if (mType == UIType.Register) {
 			setTitle(R.string.register);
             mAuthButton.setText(R.string.next_step);
+		}
+	}
+	
+	public void onClickAuth(View view) {
+		if (!checkInput()) {
+			Logger.w(TAG, "checkInput failed");
+			return;
+		}
+		
+		String number = mPhoneEditText.getText().toString();
+		String pwd = mPwdEditText.getText().toString();
+		if (mType == UIType.Login) {
+			login(number, pwd);
+		} else if (mType == UIType.Register) {
+			register(number, pwd);
 		}
 	}
 	
@@ -123,5 +127,25 @@ public class LoginActivity extends Activity {
         }
 		
 		return true;
+	}
+	
+	/**
+	 * 网络校验
+	 * @param number
+	 * @param pwd
+	 */
+	private void login(String number, String pwd) {
+		// TODO: 向后台发送登录请求
+		CampusSharePreference.setLogin(this, true);
+		MainActivity.startFrom(this);
+	}
+	
+	/**
+	 * 网络注册
+	 * @param number
+	 * @param pwd
+	 */
+	private void register(String number, String pwd) {
+		// TODO: 向后台发送注册请求
 	}
 }
