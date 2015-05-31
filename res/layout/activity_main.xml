@@ -1,8 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:orientation="vertical" >
+	
+    	<!--
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -11,16 +12,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
+        android:orientation="horizontal" >
     </LinearLayout>
 
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent" >
     </ListView>
+	  -->
+	  
+    <fragment
+        android:id="@+id/me_fragment"
+        android:name="com.campus.xiaozhao.fragment.MeFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
 
 </LinearLayout>
