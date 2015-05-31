@@ -1,17 +1,28 @@
 package com.campus.xiaozhao.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import com.campus.xiaozhao.Environment;
 import com.campus.xiaozhao.R;
 import com.component.logger.Logger;
 
+import com.campus.xiaozhao.basic.data.CampusInfoItemData;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends Activity {
-	private static final String TAG = "MainActivity"; 
-	
+    private static final String TAG = "MainActivity";
+    private ListView mCampusList;
+    private CampusInfoAdapter mInfoAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +45,29 @@ public class MainActivity extends Activity {
 
     private void setupUI() {
         setContentView(R.layout.activity_main);
+        mCampusList = (ListView) findViewById(R.id.campus_list);
+        List<CampusInfoItemData> list = new ArrayList<CampusInfoItemData>();
+        CampusInfoItemData data = new CampusInfoItemData();
+        data.setCompany("tencent");
+        data.setId(100000);
+        data.setTitle("2015 campus employment");
+        data.setTime(1436256758021L);
+        data.setType("IT");
+        list.add(data);
+        mInfoAdapter = new CampusInfoAdapter(getApplicationContext(), list);
+        mCampusList.setAdapter(mInfoAdapter);
+        ListItemClickListener listener = new ListItemClickListener();
+        mCampusList.setOnItemClickListener(listener);
+    }
+
+    class ListItemClickListener implements AdapterView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            Intent intent = new Intent(MainActivity.this, CampusDetailActivity.class);
+            startActivity(intent);
+        }
     }
     
     //TODO:处理各个点击事件

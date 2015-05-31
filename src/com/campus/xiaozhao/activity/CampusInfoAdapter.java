@@ -7,30 +7,34 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.basic.data.CampusInfoItemData;
+
+import java.util.List;
 
 /**
  * Created by frankenliu on 15/5/29.
  */
 public class CampusInfoAdapter extends BaseAdapter {
     private Context mContext;
-
-    public CampusInfoAdapter(Context context) {
+    private List<CampusInfoItemData> mDatas;
+    public CampusInfoAdapter(Context context, List<CampusInfoItemData> datas) {
         this.mContext = context;
+        this.mDatas = datas;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return mDatas.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return mDatas.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
