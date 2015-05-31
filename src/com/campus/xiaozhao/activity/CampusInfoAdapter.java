@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
+import com.campus.xiaozhao.basic.utils.DateUtils;
 
 import java.util.List;
 
@@ -50,9 +51,10 @@ public class CampusInfoAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.mTitle.setText("title");
-        holder.mAddress.setText("address");
-        holder.mTime.setText("time");
+        CampusInfoItemData itemData = mDatas.get(position);
+        holder.mTitle.setText(itemData.getTitle());
+        holder.mAddress.setText(itemData.getAddress());
+        holder.mTime.setText(DateUtils.transferTimeToDate(itemData.getTime()));
         return convertView;
     }
 
