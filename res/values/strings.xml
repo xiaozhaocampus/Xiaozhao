@@ -9,4 +9,15 @@
     <string name="login">登陆</string>
     <string name="register">注册</string>
 
+    <string name="alarm">闹钟提醒</string>
+    <string name="version_check">检查新版本 (当前: %1$s)</string>
+    <string name="issue_title">意见反馈</string>
+    <string name="about">关于</string>
+    <string name="clear_cache">清除缓存</string>
+    <string name="quit">退出</string>
+    <string name="alarm_setting">闹钟设置</string>
+    <string name="check_update">检查更新</string>
+    <string name="support_us">支持我们</string>
+    <string name="support_us_remove_ad">支持我们（去除广告）</string>
+	<string name="me">我</string>
 </resources>
