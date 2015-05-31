@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.campus.xiaozhao.activity.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,15 +25,33 @@
         </activity>
         <activity
             android:name="com.campus.xiaozhao.activity.SetupActivity"
-            android:label="@string/title_activity_setup" >
+            android:label="@string/title_activity_setup"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.campus.xiaozhao.activity.LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.campus.xiaozhao.activity.RegisterActivity"
-            android:label="@string/title_activity_register" >
+            android:label="@string/title_activity_register"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.campus.xiaozhao.activity.FeedbackActivity"
+            android:label="@string/title_activity_feedback"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.campus.xiaozhao.activity.AlarmActivity"
+            android:label="@string/title_activity_feedback"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name="com.campus.xiaozhao.activity.CampusDetailActivity" />
+        <activity
+            android:name="com.campus.xiaozhao.activity.VerifyNumberActivity"
+            android:label="@string/title_activity_verify_number" >
         </activity>
     </application>
 

@@ -3,6 +3,23 @@
   xmlns:android="http://schemas.android.com/apk/res/android">
     <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent">
         <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+            
+			<LinearLayout
+                android:id="@+id/more_account"
+                style="@style/style_preference_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="25.0dip"
+                android:background="@drawable/one_layout_select"
+                android:onClick="onClick" >
+                <TextView android:text="@string/account" android:drawableLeft="@drawable/more_menu_alarms" style="@style/style_layout_textview" />
+                <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/mm_submenu_normal" android:contentDescription="@null" />
+            </LinearLayout>
+            
+            
             
             <LinearLayout
                 android:id="@+id/more_alarms"
@@ -67,6 +84,7 @@
                 android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip"
                 android:layout_marginTop="15.0dip"
+                android:visibility="gone"
                 android:background="@drawable/one_layout_select"
                 android:onClick="onClick" >
                 <TextView android:id="@+id/star_tv" android:text="@string/support_us_remove_ad" android:drawableLeft="@drawable/star_big_full"
@@ -88,6 +106,7 @@
                 android:layout_marginRight="5dip"
                 android:layout_marginTop="15dip"
                 android:background="@drawable/top_layout_select"
+                android:visibility="gone"
                 android:onClick="onClick" >
                 <TextView android:text="@string/clear_cache" android:drawableLeft="@drawable/more_menu_clearcache" style="@style/style_layout_textview" />
                 <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/mm_submenu_normal" android:contentDescription="@null" />
@@ -100,6 +119,7 @@
                 android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip"
                 android:background="@drawable/bottom_layout_select"
+                android:visibility="gone"
                 android:onClick="onClick" >
                 <TextView android:text="@string/quit" android:drawableLeft="@drawable/more_menu_quit" style="@style/style_layout_textview" />
                 <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/mm_submenu_normal" android:contentDescription="@null" />
