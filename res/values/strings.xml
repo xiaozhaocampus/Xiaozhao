@@ -8,6 +8,8 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_verify_number">VerifyNumberActivity</string>
+    <string name="title_activity_feedback">FeedbackActivity</string>
+    <string name="title_activity_reset_password">ResetPasswordActivity</string>
     <string name="login">登陆</string>
     <string name="register">注册</string>
     <string name="edit_hint_phone_number">请输入手机号码</string>
@@ -30,7 +32,14 @@
     <string name="verification_quit_dialog_message">发送信息可能会有延迟，真的确定放弃等待吗？</string>
     <string name="verification_quit_dialog_confirm">放弃</string>
     <string name="verification_quit_dialog_cancel">继续等待</string>
-    <string name="title_activity_feedback">FeedbackActivity</string>
+    <string name="label_forgot_password">忘记密码</string>
+    <string name="forgot_password">@string/label_forgot_password</string>
+    <string name="reset_password_edit_hint_phone_number">输入手机号码</string>
+    <string name="reset_password_edit_hint_input_verification_code">输入验证码</string>
+    <string name="reset_password_edit_hint_new_password">你的新密码</string>
+    <string name="reset_password_edit_hint_repeat_new_password">再次确定新密码</string>
+    <string name="reset_password_continue">继续</string>
+    <string name="reset_password_tip">为保护隐私，通过短信找回密码后，将清空此账号的所有相关记录！若你只是想修改密码，请登录后在设置中修改。</string>
     <string name="alarm">我的提醒 %条</string>
     <string name="account">账号</string>
     <string name="version_check">检查新版本 (当前: %1$s)</string>

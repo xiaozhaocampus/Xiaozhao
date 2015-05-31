@@ -53,6 +53,10 @@
             android:name="com.campus.xiaozhao.activity.VerifyNumberActivity"
             android:label="@string/title_activity_verify_number" >
         </activity>
+        <activity
+            android:name="com.campus.xiaozhao.activity.ResetPasswordActivity"
+            android:label="@string/title_activity_reset_password" >
+        </activity>
     </application>
 
 </manifest>

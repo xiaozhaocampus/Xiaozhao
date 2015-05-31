@@ -4,12 +4,14 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.campus.xiaozhao.Configuration;
@@ -28,6 +30,7 @@ public class LoginActivity extends Activity {
 	private UIType mType;
 	private EditText mPhoneEditText;
 	private EditText mPwdEditText;
+	private TextView mForgotPwdTextView;
 	private Button mAuthButton;
 	
 	@Override
@@ -77,13 +80,25 @@ public class LoginActivity extends Activity {
 		mAuthButton = (Button) findViewById(R.id.auth_btn);
 		mPhoneEditText = (EditText) findViewById(R.id.phone_number_et);
 		mPwdEditText = (EditText) findViewById(R.id.password_et);
+		mForgotPwdTextView = (TextView) findViewById(R.id.forgot_password_tv);
 		if (mType == UIType.Login) {
 			setTitle(R.string.login);
             mAuthButton.setText(R.string.login);
+            mForgotPwdTextView.setVisibility(View.VISIBLE);
+            mForgotPwdTextView.setPaintFlags(mForgotPwdTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 		} else if (mType == UIType.Register) {
 			setTitle(R.string.register);
             mAuthButton.setText(R.string.next_step);
+            mForgotPwdTextView.setVisibility(View.GONE);
 		}
+	}
+	
+	public void clickOnForgotPassword(View view) {
+	    if (mType == UIType.Register) {
+	        Logger.d(TAG, "clickOnForgotPassword: should not come here");
+	        return;
+	    }
+	    ResetPasswordActivity.startFrom(this);
 	}
 	
 	public void onClickAuth(View view) {
