@@ -1,10 +1,11 @@
 package com.campus.xiaozhao.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
-import android.view.Menu;
 
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.activity.LoginActivity.UIType;
 
 public class RegisterActivity extends Activity {
 
@@ -14,11 +15,7 @@ public class RegisterActivity extends Activity {
 		setContentView(R.layout.activity_register);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.register, menu);
-		return true;
+	public static void startFrom(Context context) {
+		LoginActivity.startFrom(context, UIType.Register);
 	}
-
 }

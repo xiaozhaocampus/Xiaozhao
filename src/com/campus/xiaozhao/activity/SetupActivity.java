@@ -21,10 +21,10 @@ public class SetupActivity extends Activity {
     }
     
     public void onLogin(View view) {
-        
+        LoginActivity.startFrom(this);
     }
     
     public void onRegister(View view) {
-        
+        RegisterActivity.startFrom(this);
     }
 }
