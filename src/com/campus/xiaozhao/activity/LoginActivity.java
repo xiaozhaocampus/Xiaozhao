@@ -97,7 +97,7 @@ public class LoginActivity extends Activity {
 		if (mType == UIType.Login) {
 			login(number, pwd);
 		} else if (mType == UIType.Register) {
-			register(number, pwd);
+			verifyNumber(number, pwd);
 		}
 	}
 	
@@ -140,12 +140,7 @@ public class LoginActivity extends Activity {
 		MainActivity.startFrom(this);
 	}
 	
-	/**
-	 * 网络注册
-	 * @param number
-	 * @param pwd
-	 */
-	private void register(String number, String pwd) {
-		// TODO: 向后台发送注册请求
+	private void verifyNumber(String number, String pwd) {
+		VerifyNumberActivity.startFrom(this, number);
 	}
 }

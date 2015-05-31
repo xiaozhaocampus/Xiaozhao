@@ -34,7 +34,11 @@
             android:name="com.campus.xiaozhao.activity.RegisterActivity"
             android:label="@string/title_activity_register" >
         </activity>
-        <activity android:name=".activity.CampusDetailActivity"/>
+        <activity android:name="com.campus.xiaozhao.activity.CampusDetailActivity" />
+        <activity
+            android:name="com.campus.xiaozhao.activity.VerifyNumberActivity"
+            android:label="@string/title_activity_verify_number" >
+        </activity>
     </application>
 
 </manifest>
