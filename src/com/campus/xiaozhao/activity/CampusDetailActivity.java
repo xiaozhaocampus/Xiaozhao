@@ -2,9 +2,6 @@ package com.campus.xiaozhao.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,15 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.alarm.CampusAlarmManager;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
 import com.campus.xiaozhao.basic.utils.DateUtils;
 import com.component.logger.Logger;
-
-import java.text.SimpleDateFormat;
-
 /**
  * Created by frankenliu on 15/5/31.
  */
@@ -85,19 +78,5 @@ public class CampusDetailActivity extends Activity {
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    class AlarmReceive extends BroadcastReceiver {
-        private NotificationManager manager;
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            Intent playIntent = new Intent(context, CampusDetailActivity.class);
-            playIntent.putExtra("", "");
-//            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-//            builder.setContentTitle("title").setContentText("提醒内容").setSmallIcon(R.drawable.app_icon).setDefaults(Notification.DEFAULT_ALL).setContentIntent(pendingIntent).setAutoCancel(true).setSubText("二级text");
-//            manager.notify(1, builder.build());
-
-        }
     }
 }
