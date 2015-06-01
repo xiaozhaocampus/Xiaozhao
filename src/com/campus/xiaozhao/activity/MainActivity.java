@@ -26,21 +26,20 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		int setupDelay = 0;
 		if (Environment.ENABLE_SETUP_ACTIVITY) {
             if (!CampusSharePreference.isLogin(this)) {
 	            SetupActivity.startFrom(this);
-	            setupDelay = 500;
 	            finish();
+	            return;
             }
         }
 
-		new Handler().postDelayed(new Runnable() {
+		new Handler().post(new Runnable() {
 			@Override
 			public void run() {
 				setupUI();
 			}
-		}, setupDelay);
+		});
 	}
 
 	public static void startFrom(Context context) {
