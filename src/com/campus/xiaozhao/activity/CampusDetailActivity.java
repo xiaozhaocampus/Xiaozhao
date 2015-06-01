@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.basic.alarm.CampusAlarmManager;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
 import com.campus.xiaozhao.basic.utils.DateUtils;
 import com.component.logger.Logger;
@@ -54,10 +55,12 @@ public class CampusDetailActivity extends Activity {
         mSetRemind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                long remindTime = mItemData.getTime() - 4 * 60 * 60 * 1000;
                 //TODO 设置定时提醒
-
-                Toast.makeText(CampusDetailActivity.this, "系统将于" +DateUtils.transferTimeToDate(remindTime) + "提醒您!", Toast.LENGTH_LONG).show();
+               int result = CampusAlarmManager.getInstance().setCampusAlarm(CampusDetailActivity.this, mItemData.getTime());
+                if(result > 0) {
+                    mSetRemind.setText("已设提醒");
+                    mSetRemind.setClickable(false);
+                }
             }
         });
     }
