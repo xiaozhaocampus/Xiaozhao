@@ -16,6 +16,27 @@ public class CampusDBHelper extends SQLiteOpenHelper {
     public static final int VER_CURRENT = 1;
     public static final String DB_NAME = "campus_info.db";
 
+    /** 校招信息表 */
+    public static final String TABLE_CAMPUS_INFO = "campus_info";
+
+    public static final String CREATE_TABLE_CAMPUS_INFO =
+            "CREATE TABLE IF NOT EXISTS " + TABLE_CAMPUS_INFO + " ("
+            + CampusModel.CampusInfoItemColumn._ID + "INTEGER PRIMARY KEY,"
+            + CampusModel.CampusInfoItemColumn.CAMPUS_ID + " LONG UNIQUE,"
+            + CampusModel.CampusInfoItemColumn.COMPANY_NAME + " TEXT,"
+            + CampusModel.CampusInfoItemColumn.COMPANY_INTRODUCTION + " TEXT,"
+            + CampusModel.CampusInfoItemColumn.TYPE + " INTEGER,"
+            + CampusModel.CampusInfoItemColumn.TITLE + " TEXT,"
+            + CampusModel.CampusInfoItemColumn.CONTENT + " TEXT,"
+            + CampusModel.CampusInfoItemColumn.ADDRESS + " TEXT,"
+            + CampusModel.CampusInfoItemColumn.TIME + " LONG DEFAULT -1,"
+            + CampusModel.CampusInfoItemColumn.VERSION + " LONG DEFAULT -1,"
+            + CampusModel.CampusInfoItemColumn.IS_REMIND + " INTEGER NOT NULL DEFAULT 0"
+            + CampusModel.CampusInfoItemColumn.REMIND_TYPE + " INTEGER);";
+
+    /** 删除 校招信息数据表 */
+    public static final String DROP_TABLE_CAMPUS_INFO = "DROP TABLE IF EXISTS " + TABLE_CAMPUS_INFO;
+
     public CampusDBHelper(Context context) {
         this(context, DB_NAME, null, VER_CURRENT);
     }
@@ -26,11 +47,14 @@ public class CampusDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        db.execSQL(CREATE_TABLE_CAMPUS_INFO);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(DROP_TABLE_CAMPUS_INFO);
 
+        // 重新建表
+        db.execSQL(CREATE_TABLE_CAMPUS_INFO);
     }
 }
