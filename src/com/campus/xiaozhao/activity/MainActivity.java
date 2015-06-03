@@ -57,12 +57,13 @@ public class MainActivity extends FragmentActivity {
         CampusInfoItemData data = new CampusInfoItemData();
         data.setCompany("Tencent");
         data.setIntroduction("Tencent is famous Internet Company in China!");
-        data.setId(100000);
+        data.setCampusID(100000);
         data.setTitle("腾讯宣讲会");
         data.setContent("2015年腾讯校园招聘宣讲会");
         data.setTime(1436256758021L);
-        data.setType("IT");
+        data.setType(1001);
         data.setAddress("华中科技大学大学生活动中心");
+		data.setVersion(345);
         mDatas.add(data);
         mInfoAdapter = new CampusInfoAdapter(getApplicationContext(), mDatas);
         mCampusList.setAdapter(mInfoAdapter);

@@ -21,7 +21,7 @@ public class CampusDBHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_TABLE_CAMPUS_INFO =
             "CREATE TABLE IF NOT EXISTS " + TABLE_CAMPUS_INFO + " ("
-            + CampusModel.CampusInfoItemColumn._ID + "INTEGER PRIMARY KEY,"
+            + CampusModel.CampusInfoItemColumn._ID + " INTEGER PRIMARY KEY,"
             + CampusModel.CampusInfoItemColumn.CAMPUS_ID + " LONG UNIQUE,"
             + CampusModel.CampusInfoItemColumn.COMPANY_NAME + " TEXT,"
             + CampusModel.CampusInfoItemColumn.COMPANY_INTRODUCTION + " TEXT,"
@@ -31,14 +31,14 @@ public class CampusDBHelper extends SQLiteOpenHelper {
             + CampusModel.CampusInfoItemColumn.ADDRESS + " TEXT,"
             + CampusModel.CampusInfoItemColumn.TIME + " LONG DEFAULT -1,"
             + CampusModel.CampusInfoItemColumn.VERSION + " LONG DEFAULT -1,"
-            + CampusModel.CampusInfoItemColumn.IS_REMIND + " INTEGER NOT NULL DEFAULT 0"
-            + CampusModel.CampusInfoItemColumn.REMIND_TYPE + " INTEGER);";
+            + CampusModel.CampusInfoItemColumn.IS_REMIND + " INTEGER NOT NULL DEFAULT 0,"
+            + CampusModel.CampusInfoItemColumn.REMIND_TYPE + " INTEGER NOT NULL DEFAULT 0);";
 
     /** 删除 校招信息数据表 */
     public static final String DROP_TABLE_CAMPUS_INFO = "DROP TABLE IF EXISTS " + TABLE_CAMPUS_INFO;
 
     public CampusDBHelper(Context context) {
-        this(context, DB_NAME, null, VER_CURRENT);
+        super(context, DB_NAME, null, VER_CURRENT);
     }
 
     public CampusDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {

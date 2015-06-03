@@ -5,6 +5,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import com.campus.xiaozhao.basic.data.CampusInfoItemData;
+import com.campus.xiaozhao.basic.db.CampusDBProcessor;
+import com.campus.xiaozhao.basic.db.CampusModel;
+
+import java.util.List;
 
 /**
  * Created by frankenliu on 2015/6/1.
@@ -14,7 +19,15 @@ public class CampusBootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
             //TODO Set the alarm here.
-
+            CampusDBProcessor processor = new CampusDBProcessor(context);
+            String whereClause = CampusModel.CampusInfoItemColumn.IS_REMIND + " =?";
+            String[] whereArgs = new String[]{String.valueOf(true)};
+            List<CampusInfoItemData> list = processor.getCampusInfos(whereClause, whereArgs, null);
+            if(list != null && list.size() > 0) {
+                for(CampusInfoItemData data : list) {
+                    CampusAlarmManager.getInstance().setCampusAlarm(context, data.getTime(), data.getCampusID());
+                }
+            }
         }
     }
 

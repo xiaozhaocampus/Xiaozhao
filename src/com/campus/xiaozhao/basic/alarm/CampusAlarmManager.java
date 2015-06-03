@@ -33,9 +33,10 @@ public class CampusAlarmManager {
      * @param context
      * @param time 计时结束的时间(也就是定时提醒的时间)
      */
-    public void startAlarm(Context context, long time) {
+    public void startAlarm(Context context, long time, long campusID) {
         AlarmManager manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, CampusAlarmReceiver.class);
+        intent.putExtra("campus_id", campusID);
         PendingIntent send = PendingIntent.getBroadcast(context, 0, intent, 0);
         manager.set(AlarmManager.RTC_WAKEUP, time, send);
     }
@@ -45,7 +46,7 @@ public class CampusAlarmManager {
      * @param context
      * @param time 校招信息的时间
      */
-    public int setCampusAlarm(Context context, long time) {
+    public int setCampusAlarm(Context context, long time, long campusID) {
         int res;
         long subTime = time - System.currentTimeMillis();
         if(subTime < 0) {
@@ -56,7 +57,7 @@ public class CampusAlarmManager {
             res = 0;
         } else {
             long remindTime = time - REMIND_TIME_DISTANCE;
-            startAlarm(context, remindTime);
+            startAlarm(context, remindTime, campusID);
             Toast.makeText(context, "系统将于" + DateUtils.transferTimeToDate(remindTime) + "提醒您!", Toast.LENGTH_LONG).show();
             res = 1;
         }

@@ -19,6 +19,7 @@ public class CampusDBProcessor {
 
     private static final String[] CAMPUS_INFO = {
             CampusModel.CampusInfoItemColumn._ID,
+            CampusModel.CampusInfoItemColumn.CAMPUS_ID,
             CampusModel.CampusInfoItemColumn.COMPANY_NAME,
             CampusModel.CampusInfoItemColumn.COMPANY_INTRODUCTION,
             CampusModel.CampusInfoItemColumn.TYPE,
@@ -191,14 +192,62 @@ public class CampusDBProcessor {
                         itemData.setVersion(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.VERSION)));
                         itemData.setIsRemind(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.IS_REMIND)) > 0 ? true : false);
                         itemData.setRemindType(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.REMIND_TYPE)));
+                        list.add(itemData);
                     }
                 }
             } catch (Exception e) {
                 Logger.e(TAG, e);
                 list = null;
+            }  finally {
+                try {
+                    cursor.close();
+                } catch (Exception e) {
+                    Logger.e(TAG, e);
+                }
             }
         }
 
         return list;
+    }
+
+    public CampusInfoItemData getCampusInfoByCampsuID(long campusID) {
+        SQLiteDatabase db = getWriteDatabase();
+        if(db == null ) {
+            return null;
+        }
+        String whereClause = CampusModel.CampusInfoItemColumn.CAMPUS_ID + " =?";
+        String[] whereArgs = new String[] {String.valueOf(campusID)};
+        final Cursor cursor = query(db, CampusDBHelper.TABLE_CAMPUS_INFO, CAMPUS_INFO, whereClause, whereArgs, null, null, null);
+        if(cursor != null) {
+            try {
+                if(cursor.getCount() > 0) {
+                    while (cursor.moveToNext()) {
+                        CampusInfoItemData itemData = new CampusInfoItemData();
+                        itemData.setId(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn._ID)));
+                        itemData.setCampusID(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.CAMPUS_ID)));
+                        itemData.setCompany(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.COMPANY_NAME)));
+                        itemData.setIntroduction(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.COMPANY_INTRODUCTION)));
+                        itemData.setType(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.TYPE)));
+                        itemData.setTitle(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.TITLE)));
+                        itemData.setContent(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.CONTENT)));
+                        itemData.setAddress(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.ADDRESS)));
+                        itemData.setTime(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.TIME)));
+                        itemData.setVersion(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.VERSION)));
+                        itemData.setIsRemind(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.IS_REMIND)) > 0 ? true : false);
+                        itemData.setRemindType(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.REMIND_TYPE)));
+                        return itemData;
+                    }
+                }
+            } catch (Exception e) {
+                Logger.e(TAG, e);
+            } finally {
+                try {
+                    cursor.close();
+                } catch (Exception e) {
+                    Logger.e(TAG, e);
+                }
+            }
+        }
+        return null;
     }
 }
