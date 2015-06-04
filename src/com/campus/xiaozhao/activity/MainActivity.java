@@ -4,24 +4,31 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import com.baidu.location.BDLocation;
 import com.campus.xiaozhao.Environment;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
+import com.campus.xiaozhao.basic.location.BaiDuLocationManager;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.component.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements Handler.Callback{
 	private static final String TAG = "MainActivity";
+	public static final int MSG_SET_LOCATION = 1;
 	private ListView mCampusList;
 	private CampusInfoAdapter mInfoAdapter;
 	private List<CampusInfoItemData> mDatas;
+	private TextView mLocation;
+	private Handler mHandler;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,8 +58,12 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void setupUI() {
+		mHandler = new Handler(this);
+		BaiDuLocationManager.getInstance().start(getApplicationContext(), mHandler);
+
         setContentView(R.layout.activity_main);
         mCampusList = (ListView) findViewById(R.id.campus_list);
+		mLocation = (TextView) findViewById(R.id.location);
         mDatas = new ArrayList<CampusInfoItemData>();
         CampusInfoItemData data = new CampusInfoItemData();
         data.setCompany("Tencent");
@@ -71,7 +82,18 @@ public class MainActivity extends FragmentActivity {
         mCampusList.setOnItemClickListener(listener);
     }
 
-    class ListItemClickListener implements AdapterView.OnItemClickListener {
+	@Override
+	public boolean handleMessage(Message msg) {
+		switch (msg.what) {
+			case MSG_SET_LOCATION:
+				BDLocation location = (BDLocation) msg.obj;
+				mLocation.setText(location.getCity());
+		}
+
+		return false;
+	}
+
+	class ListItemClickListener implements AdapterView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
