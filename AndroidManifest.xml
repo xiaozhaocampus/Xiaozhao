@@ -16,6 +16,10 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <!-- 百度地图定位的APP_KEY -->
+        <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="73HoeMOMZroObeGc5ZBWranv" />
+
         <activity
             android:name="com.campus.xiaozhao.activity.MainActivity"
             android:label="@string/app_name"
