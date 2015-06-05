@@ -15,7 +15,7 @@ import com.component.logger.Logger;
  */
 public class BaiDuLocationManager {
     private static final String TAG = "BaiDuLocationManager";
-    private static BaiDuLocationManager mBDuManager;
+    private static volatile BaiDuLocationManager mBDuManager;
     private static LocationClient mClient;
     private static BaiDuLocationListener mListener;
     private static Context mContext;

@@ -11,8 +11,9 @@ import com.campus.xiaozhao.basic.utils.DateUtils;
  * Created by frankenliu on 2015/6/1.
  */
 public class CampusAlarmManager {
-    private static CampusAlarmManager mAlarmManager;
+    private static volatile CampusAlarmManager mAlarmManager;
     private static final long REMIND_TIME_DISTANCE = 6 * 60 * 60 * 1000;
+
     private CampusAlarmManager() {
 
     }
