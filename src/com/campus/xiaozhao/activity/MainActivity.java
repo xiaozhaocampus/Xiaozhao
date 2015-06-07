@@ -69,6 +69,7 @@ public class MainActivity extends FragmentActivity implements Handler.Callback{
         data.setCompany("Tencent");
         data.setIntroduction("Tencent is famous Internet Company in China!");
         data.setCampusID(100000);
+		data.setCity("武汉");
         data.setTitle("腾讯宣讲会");
         data.setContent("2015年腾讯校园招聘宣讲会");
         data.setTime(1436256758021L);

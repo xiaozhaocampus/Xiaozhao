@@ -78,7 +78,9 @@
             android:label="@string/title_activity_feedback"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.campus.xiaozhao.activity.CampusDetailActivity" />
+        <activity
+            android:name="com.campus.xiaozhao.activity.CampusDetailActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.campus.xiaozhao.activity.VerifyNumberActivity"
             android:label="@string/title_activity_verify_number" >
