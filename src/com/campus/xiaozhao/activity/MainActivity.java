@@ -29,6 +29,7 @@ public class MainActivity extends FragmentActivity implements Handler.Callback{
 	private List<CampusInfoItemData> mDatas;
 	private TextView mLocation;
 	private Handler mHandler;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

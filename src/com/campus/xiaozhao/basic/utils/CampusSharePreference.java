@@ -13,6 +13,8 @@ public class CampusSharePreference {
 
     /** 终端最大版本号，用于向服务器获取最新的校招信息 */
     private static final String KEY_LAST_MAX_VERSION = "key_last_max_version";
+    /** 缓存地址位置 */
+    private static final String KEY_LOCATION = "key_location";
 
     /**
      * 获取终端最大版本号
@@ -31,7 +33,24 @@ public class CampusSharePreference {
     public static void setLastMaxVersion(Context context, int version) {
         getPreference(context).edit().putInt(KEY_LAST_MAX_VERSION, version).commit();
     }
-    
+
+    /**
+     * 获取缓存的地理位置
+     * @param context
+     * @return
+     */
+    public static String getLocation(Context context) {
+        return getPreference(context).getString(KEY_LOCATION, null);
+    }
+
+    /**
+     * 缓存地理位置
+     * @param context
+     * @param location
+     */
+    public static void setLocation(Context context, String location) {
+        getPreference(context).edit().putString(KEY_LOCATION, location).commit();
+    }
     /**
      * 设置是否已经登录
      * @param context
