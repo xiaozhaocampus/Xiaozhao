@@ -6,11 +6,13 @@ import java.util.List;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.campus.xiaozhao.R;
 import com.component.logger.Logger;
+import com.viewpagerindicator.TabPageIndicator;
 
 public class AlarmActivity extends Activity {
 	private static final String TAG = "AlarmActivity";
@@ -25,7 +27,29 @@ public class AlarmActivity extends Activity {
 
 		mViewPager = (ViewPager) findViewById(R.id.viewpager);
 		mViewPager.setAdapter(new AlarmPagerAdapter(this, mPageViewInfos));
-
+		
+	      //实例化TabPageIndicator然后设置ViewPager与之关联  
+        TabPageIndicator indicator = (TabPageIndicator)findViewById(R.id.indicator);  
+        indicator.setViewPager(mViewPager);  
+          
+        //如果我们要对ViewPager设置监听，用indicator设置就行了  
+        indicator.setOnPageChangeListener(new OnPageChangeListener() {  
+              
+            @Override  
+            public void onPageSelected(int arg0) {  
+            }  
+              
+            @Override  
+            public void onPageScrolled(int arg0, float arg1, int arg2) {  
+                  
+            }  
+              
+            @Override  
+            public void onPageScrollStateChanged(int arg0) {  
+                  
+            }  
+        });  
+          
 	}
 
 	private void initData() {

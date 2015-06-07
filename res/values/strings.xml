@@ -41,6 +41,7 @@
     <string name="reset_password_continue">继续</string>
     <string name="reset_password_tip">为保护隐私，通过短信找回密码后，将清空此账号的所有相关记录！若你只是想修改密码，请登录后在设置中修改。</string>
     <string name="alarm">我的提醒 %条</string>
+    <string name="alarm_title">我的提醒 </string>
     <string name="account">账号</string>
     <string name="version_check">检查新版本 (当前: %1$s)</string>
     <string name="issue_title">意见反馈</string>

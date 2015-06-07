@@ -6,7 +6,9 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ListView;
 
+import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.activity.AlarmActivity.PageViewInfo;
 
 public class AlarmPagerAdapter extends PagerAdapter {
@@ -22,6 +24,10 @@ public class AlarmPagerAdapter extends PagerAdapter {
 
 	public Object instantiateItem(android.view.ViewGroup container,
 			int position) {
+		View showView = mPageViewInfos.get(position).mView;
+		ListView view = (ListView)showView.findViewById(R.id.list);
+		view.setAdapter(new AlarmListAdapter(mContext));
+		((ViewPager)container).addView(mPageViewInfos.get(position).mView);
 		return mPageViewInfos.get(position).mView;
 	};
 
@@ -49,11 +55,4 @@ public class AlarmPagerAdapter extends PagerAdapter {
         mCurrentIndex = paramInt;
     }
     
-//    public void showAnimation()
-//    {
-//        if (mLastPage == null || mLastPage.getVisibility() == View.VISIBLE)
-//            return;
-//        ViewUtils.startAnimation(mLastPage, AnimationUtils.loadAnimation(
-//                mContext, R.anim.account_guidance_3_fade_in), View.VISIBLE);
-//    }
 }
