@@ -1,10 +1,13 @@
 package com.campus.xiaozhao.fragment;
 
-import android.app.Fragment;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.baidu.location.BDLocation;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.activity.CampusDetailActivity;
@@ -20,9 +24,6 @@ import com.campus.xiaozhao.basic.data.CampusInfoItemData;
 import com.campus.xiaozhao.basic.location.BaiDuLocationManager;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.component.logger.Logger;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by frankenliu on 15/6/7.

@@ -1,18 +1,50 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
-    <fragment
-        android:id="@+id/info_fragment"
-        android:name="com.campus.xiaozhao.fragment.InfoFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-	  
-    <fragment
-        android:id="@+id/me_fragment"
-        android:name="com.campus.xiaozhao.fragment.MeFragment"
+    <FrameLayout
+        android:id="@+id/tab_content"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        android:background="#77557799" />
 
-</LinearLayout>
+    <RadioGroup
+        android:id="@+id/tabs_rg"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:paddingBottom="7dp"
+        android:paddingTop="7dp" >
+
+        <RadioButton
+            android:id="@+id/tab_rb_d"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@drawable/selector_tab"
+            android:button="@null"
+            android:drawableTop="@drawable/tabconfigicon"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Tab4"
+            android:textColor="#000000"
+            android:textSize="13sp" />
+
+        <RadioButton
+            android:id="@+id/tab_rb_e"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@drawable/selector_tab"
+            android:button="@null"
+            android:drawableTop="@drawable/tababoutus"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Tab5"
+            android:textColor="#000000"
+            android:textSize="13sp" />
+    </RadioGroup>
+
+</RelativeLayout>

@@ -1,23 +1,30 @@
 package com.campus.xiaozhao.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.RadioGroup;
+
 import com.campus.xiaozhao.Environment;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
+import com.campus.xiaozhao.fragment.InfoFragment;
+import com.campus.xiaozhao.fragment.MeFragment;
 import com.component.logger.Logger;
 
-public class MainActivity extends FragmentActivity{
+public class MainActivity extends FragmentActivity {
 	private static final String TAG = "MainActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
 		if (Environment.ENABLE_SETUP_ACTIVITY) {
             if (!CampusSharePreference.isLogin(this)) {
 	            SetupActivity.startFrom(this);
@@ -25,13 +32,8 @@ public class MainActivity extends FragmentActivity{
 	            return;
             }
         }
-
-		new Handler().post(new Runnable() {
-			@Override
-			public void run() {
-				setupUI();
-			}
-		});
+		
+		setupUI();
 	}
 
 	public static void startFrom(Context context) {
@@ -45,6 +47,26 @@ public class MainActivity extends FragmentActivity{
     private void setupUI() {
 		setContentView(R.layout.activity_main);
 		Logger.d(TAG, "setup UI");
+		List<Fragment> fragments = new ArrayList<Fragment>();
+		Fragment meFragment = new MeFragment();
+		Fragment infoFragment = new InfoFragment();
+		fragments.add(infoFragment);
+		fragments.add(meFragment);
+		
+		RadioGroup rgs = (RadioGroup) findViewById(R.id.tabs_rg);
+
+		FragmentTabAdapter tabAdapter = new FragmentTabAdapter(this, fragments,
+				R.id.tab_content, rgs);
+		tabAdapter
+				.setOnRgsExtraCheckedChangedListener(new FragmentTabAdapter.OnRgsExtraCheckedChangedListener() {
+					@Override
+					public void OnRgsExtraCheckedChanged(RadioGroup radioGroup,
+							int checkedId, int index) {
+						System.out.println("Extra---- " + index
+								+ " checked!!! ");
+					}
+				});
+
     }
 
 	// TODO:处理各个点击事件
