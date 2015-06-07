@@ -21,11 +21,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
     </ListView>
-	  
-    <fragment
-        android:id="@+id/me_fragment"
-        android:name="com.campus.xiaozhao.fragment.MeFragment"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
 
 </LinearLayout>

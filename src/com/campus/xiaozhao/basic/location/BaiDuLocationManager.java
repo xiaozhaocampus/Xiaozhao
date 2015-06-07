@@ -10,6 +10,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.campus.xiaozhao.activity.MainActivity;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
+import com.campus.xiaozhao.fragment.InfoFragment;
 import com.component.logger.Logger;
 
 /**
@@ -119,7 +120,7 @@ public class BaiDuLocationManager {
         }
         String preLocation = CampusSharePreference.getLocation(context);
         if(!location.getCity().equals(preLocation)) {
-            Message msg = mHandler.obtainMessage(MainActivity.MSG_SET_LOCATION);
+            Message msg = mHandler.obtainMessage(InfoFragment.MSG_SET_LOCATION);
             msg.obj = location;
             mHandler.sendMessage(msg);
             CampusSharePreference.setLocation(context, location.getCity());
