@@ -22,6 +22,7 @@ public class CampusDBProcessor {
             CampusModel.CampusInfoItemColumn.CAMPUS_ID,
             CampusModel.CampusInfoItemColumn.COMPANY_NAME,
             CampusModel.CampusInfoItemColumn.COMPANY_INTRODUCTION,
+            CampusModel.CampusInfoItemColumn.CITY,
             CampusModel.CampusInfoItemColumn.TYPE,
             CampusModel.CampusInfoItemColumn.TITLE,
             CampusModel.CampusInfoItemColumn.CONTENT,

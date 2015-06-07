@@ -3,11 +3,13 @@ package com.campus.xiaozhao.basic.location;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.campus.xiaozhao.activity.MainActivity;
+import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.component.logger.Logger;
 
 /**
@@ -107,9 +109,20 @@ public class BaiDuLocationManager {
             }
             Logger.d(TAG, "location: " + sb.toString());
 
+            checkAndNotifyLocationChange(mContext, location);
+        }
+    }
+
+    private void checkAndNotifyLocationChange(Context context, BDLocation location) {
+        if(TextUtils.isEmpty(location.getCity())) {
+            return;
+        }
+        String preLocation = CampusSharePreference.getLocation(context);
+        if(!location.getCity().equals(preLocation)) {
             Message msg = mHandler.obtainMessage(MainActivity.MSG_SET_LOCATION);
             msg.obj = location;
             mHandler.sendMessage(msg);
+            CampusSharePreference.setLocation(context, location.getCity());
         }
     }
 }

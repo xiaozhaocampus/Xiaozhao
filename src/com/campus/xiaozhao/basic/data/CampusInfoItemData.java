@@ -19,21 +19,23 @@ public class CampusInfoItemData implements Serializable{
     private String company;
     /** 3 公司简介 */
     private String introduction;
-    /** 4 校招信息的类型 */
+    /** 4 校招城市 */
+    private String city;
+    /** 5 校招信息的类型 */
     private int type;
-    /** 5 校招信息的标题 */
+    /** 6 校招信息的标题 */
     private String title;
-    /** 6 校招信息的内容 */
+    /** 7 校招信息的内容 */
     private String content;
-    /** 7 校招地址 */
+    /** 8 校招地址 */
     private String address;
-    /** 8 校招时间 */
+    /** 9 校招时间 */
     private long time;
-    /** 9 校招信息的版本号 */
+    /** 10 校招信息的版本号 */
     private long version;
-    /** 10 用户是否已经设置此校招的提醒 */
+    /** 11 用户是否已经设置此校招的提醒 */
     private boolean isRemind;
-    /** 11 用户设置校招提醒的频率类型 */
+    /** 12 用户设置校招提醒的频率类型 */
     private int remindType;
 
     public long getTime() {
@@ -66,6 +68,14 @@ public class CampusInfoItemData implements Serializable{
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public int getType() {
@@ -136,6 +146,7 @@ public class CampusInfoItemData implements Serializable{
         values.put(CampusModel.CampusInfoItemColumn.CAMPUS_ID, campusID);
         values.put(CampusModel.CampusInfoItemColumn.COMPANY_NAME, company);
         values.put(CampusModel.CampusInfoItemColumn.COMPANY_INTRODUCTION, introduction);
+        values.put(CampusModel.CampusInfoItemColumn.CITY, city);
         values.put(CampusModel.CampusInfoItemColumn.TYPE, type);
         values.put(CampusModel.CampusInfoItemColumn.TITLE, title);
         values.put(CampusModel.CampusInfoItemColumn.CONTENT, content);

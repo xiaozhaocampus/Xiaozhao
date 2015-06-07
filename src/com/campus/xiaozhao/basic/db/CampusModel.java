@@ -17,6 +17,9 @@ public class CampusModel {
         /** 发布此校招信息的公司简介 */
         public static final String COMPANY_INTRODUCTION = "company_introduction";
 
+        /** 校招城市 */
+        public static final String CITY = "city";
+
         /** 此校招信息的所属类别 */
         public static final String TYPE = "type";
 
