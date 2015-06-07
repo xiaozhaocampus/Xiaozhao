@@ -58,12 +58,19 @@ public class CampusDetailActivity extends Activity {
             mItemData.setIsRemind(itemData.isRemind());
             mItemData.setRemindType(itemData.getRemindType());
         }
-        // 判断Button的状态
-        if(mItemData.isRemind()) {
+
+        if(itemData != null && itemData.isRemind()) { // 该校招信息已经设置过定时提醒
             mSetRemind.setText("已设提醒");
             mSetRemind.setClickable(false);
-            mDBProcessor.updateCampus(mItemData);
-        } else {
+            if(itemData.getTime() != mItemData.getTime()) {
+                // 重新设置定时
+                CampusAlarmManager.getInstance().stopAlarm(CampusDetailActivity.this, mItemData.getCampusID());
+                CampusAlarmManager.getInstance().setCampusAlarm(CampusDetailActivity.this, mItemData.getTime(), mItemData.getCampusID());
+
+                // 更新本地校招信息
+                mDBProcessor.updateCampus(mItemData);
+            }
+        } else { // 该校招信息美欧设置过定时提醒
             mSetRemind.setText("提醒");
             mSetRemind.setOnClickListener(new View.OnClickListener() {
                 @Override

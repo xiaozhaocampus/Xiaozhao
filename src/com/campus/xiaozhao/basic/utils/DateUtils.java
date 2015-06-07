@@ -13,7 +13,7 @@ public class DateUtils {
      * @return
      */
     public static String transferTimeToDate(long time) {
-        return transferTimeToDate(time, "yyyy-MM-dd HH:00");
+        return transferTimeToDate(time, "yyyy-MM-dd HH:mm");
     }
 
     /**

@@ -47,11 +47,11 @@ public class InfoFragment extends Fragment implements Handler.Callback{
             location = "暂无定位";
         }
         mLocation.setText(location);
-        initUI();
+        initData();
         return view;
     }
 
-    private void initUI() {
+    private void initData() {
         mHandler = new Handler(this);
         BaiDuLocationManager.getInstance().start(getActivity(), mHandler);
         mDatas = new ArrayList<CampusInfoItemData>();
@@ -62,11 +62,24 @@ public class InfoFragment extends Fragment implements Handler.Callback{
         data.setCity("武汉");
         data.setTitle("腾讯宣讲会");
         data.setContent("2015年腾讯校园招聘宣讲会");
-        data.setTime(1436256758021L);
+        data.setTime(1433658454785L);
         data.setType(1001);
         data.setAddress("华中科技大学大学生活动中心");
         data.setVersion(345);
         mDatas.add(data);
+
+        CampusInfoItemData data1 = new CampusInfoItemData();
+        data1.setCompany("Tencent");
+        data1.setIntroduction("Tencent is famous Internet Company in China!");
+        data1.setCampusID(100001);
+        data1.setCity("武汉1");
+        data1.setTitle("腾讯宣讲会1");
+        data1.setContent("2015年腾讯校园招聘宣讲会");
+        data1.setTime(1433658454785L);
+        data1.setType(1001);
+        data1.setAddress("华中科技大学大学生活动中心");
+        data1.setVersion(346);
+        mDatas.add(data1);
         mInfoAdapter = new CampusInfoAdapter(getActivity(), mDatas);
         mCampusList.setAdapter(mInfoAdapter);
         ListItemClickListener listener = new ListItemClickListener();

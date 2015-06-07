@@ -43,6 +43,19 @@ public class CampusAlarmManager {
     }
 
     /**
+     * 取消计时
+     * @param context
+     * @param campusID
+     */
+    public void stopAlarm(Context context, long campusID) {
+        AlarmManager manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, CampusAlarmReceiver.class);
+        intent.putExtra("campus_id", campusID);
+        PendingIntent send = PendingIntent.getBroadcast(context, 0, intent, 0);
+        manager.cancel(send);
+    }
+
+    /**
      * 设置一个定时提醒, 默认定时提醒在校招开始前6小时
      * @param context
      * @param time 校招信息的时间
