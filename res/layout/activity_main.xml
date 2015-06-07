@@ -1,0 +1,18 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/info_fragment"
+        android:name="com.campus.xiaozhao.fragment.InfoFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+	  
+    <fragment
+        android:id="@+id/me_fragment"
+        android:name="com.campus.xiaozhao.fragment.MeFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+</LinearLayout>
