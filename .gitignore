@@ -4,3 +4,5 @@
 /.idea
 /Xiaozhao.iml
 /proguard_logs
+/third_party/ViewPagerIndicator/bin
+/third_party/ViewPagerIndicator/gen
