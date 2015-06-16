@@ -19,7 +19,6 @@ public class CampusAlarmReceiver extends BroadcastReceiver {
     private PowerManager.WakeLock mWakeLock;
     @Override
     public void onReceive(Context context, Intent intent) {
-        //TODO 定时提醒到，提醒用户
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Intent resIntent = new Intent(context, MainActivity.class);
         resIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -40,7 +39,7 @@ public class CampusAlarmReceiver extends BroadcastReceiver {
     }
 
     /**
-     * (弹出通知栏同时)亮屏
+     *
      * @param context
      */
     public void acquireWakeLock(Context context) {
@@ -52,7 +51,7 @@ public class CampusAlarmReceiver extends BroadcastReceiver {
     }
 
     public void releaseWakeLock() {
-        Logger.i(TAG, " ---------------------------------取消点亮");
+        Logger.i(TAG, " ---------------------------------??????");
         if (mWakeLock != null && mWakeLock.isHeld()) {
             mWakeLock.release();
             mWakeLock = null;

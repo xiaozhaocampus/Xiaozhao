@@ -2,7 +2,6 @@ package com.campus.xiaozhao.activity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +9,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.RadioGroup;
-
+import cn.bmob.v3.Bmob;
 import com.campus.xiaozhao.Environment;
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.basic.utils.ApplicationInfo;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.campus.xiaozhao.fragment.InfoFragment;
 import com.campus.xiaozhao.fragment.MeFragment;
@@ -32,7 +32,9 @@ public class MainActivity extends FragmentActivity {
 	            return;
             }
         }
-		
+
+		// 初始化BmobSDK
+		Bmob.initialize(this, ApplicationInfo.APP_ID);
 		setupUI();
 	}
 
