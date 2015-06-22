@@ -24,6 +24,8 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// 初始化BmobSDK
+		Bmob.initialize(this, ApplicationInfo.APP_ID);
 		
 		if (Environment.ENABLE_SETUP_ACTIVITY) {
             if (!CampusSharePreference.isLogin(this)) {
@@ -32,9 +34,7 @@ public class MainActivity extends FragmentActivity {
 	            return;
             }
         }
-
-		// 初始化BmobSDK
-		Bmob.initialize(this, ApplicationInfo.APP_ID);
+		
 		setupUI();
 	}
 

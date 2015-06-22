@@ -14,6 +14,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.bmob.v3.BmobSMS;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.LogInListener;
+import cn.bmob.v3.listener.RequestSMSCodeListener;
 
 import com.campus.xiaozhao.Configuration;
 import com.campus.xiaozhao.R;
@@ -26,13 +31,14 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
 	
 	public static final String TAG = "VerifyNumberActivity";
 	private static final String KEY_PHONE_NUMBER = "phone_number";
+	private static final String KEY_PASSWORD = "password";
 	
 	private TextView mNumberTextView;
 	private EditText mVerifyCodeEditText;
 	private CountDownTimerView mCountDownTimerView;
 	
 	private String mPhoneNumber;
-	private String mVerifyCode;
+	private String mPassword;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,7 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
 			Logger.e(TAG, "onCreate: invalid phone number: " + mPhoneNumber);
 			return;
 		}
+		mPassword = getIntent().getStringExtra(KEY_PASSWORD);
 		Logger.d(TAG, "onCreate: phone number: " + mPhoneNumber);
 		
 		ActionBar actionBar = getActionBar();
@@ -75,9 +82,10 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
         return true;
     }
 
-	public static void startFrom(Context context, String phoneNumber) {
+	public static void startFrom(Context context, String phoneNumber, String password) {
 		Intent intent = new Intent(context, VerifyNumberActivity.class);
 		intent.putExtra(KEY_PHONE_NUMBER, phoneNumber);
+		intent.putExtra(KEY_PASSWORD, password);
 		context.startActivity(intent);
 	}
 
@@ -108,33 +116,49 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
     }
 	
 	public void clickOnCommit(View view) {
-		String input = mVerifyCodeEditText.getText().toString();
-		if (TextUtils.isEmpty(input)) {
+		String smsCode = mVerifyCodeEditText.getText().toString();
+		if (TextUtils.isEmpty(smsCode)) {
 			Toast.makeText(this, R.string.toast_input_verification_code, Toast.LENGTH_SHORT).show();
 			return;
 		}
 		
-		if (!TextUtils.equals(mVerifyCode, input)) {
-            Toast.makeText(this, R.string.toast_verification_code_not_match, Toast.LENGTH_LONG).show();
-            return;
-        }
-		
-		sendRegisterRequest();
+		BmobUser user = new BmobUser();
+		user.setUsername(mPhoneNumber);
+		user.setPassword(mPassword);
+		BmobUser.signOrLoginByMobilePhone(this, mPhoneNumber, smsCode, new LogInListener<BmobUser>() {
+			@Override
+			public void done(BmobUser user, BmobException ex) {
+				if (ex != null) {
+					Logger.e(TAG, "signOrLoginByMobilePhone failed: code=" + ex.getErrorCode()
+							+ ", msg=" + ex.getLocalizedMessage());
+					toast(getString(R.string.toast_verification_failed) + ": " + ex.getLocalizedMessage());
+					return;
+				}
+				CampusSharePreference.setLogin(VerifyNumberActivity.this, true);
+				MainActivity.startFrom(VerifyNumberActivity.this);
+			}
+		});
 	}
 	
 	/**
 	 * 向后台发送手机号验证请求
 	 */
 	private void sendVerifyRequest() {
-		// TDDO: 发送手机号验证请求
+		final String phoneNumber = mPhoneNumber;
+        final String template = Configuration.SMS_VERIFY_TEMPLATE;
+        BmobSMS.requestSMSCode(this, phoneNumber, template, new RequestSMSCodeListener() {
+            @Override
+            public void done(Integer smsId, BmobException ex) {
+                if (ex != null) {
+                	Logger.e(TAG, "requestSMSCode failed: code=" + ex.getErrorCode() + ", msg=" + ex.getLocalizedMessage());
+                	toast(getString(R.string.toast_send_verification_error));
+                	return;
+                }
+            }
+        });
 	}
 	
-	/**
-	 * 验证成功后，向后台发送注册请求
-	 */
-	private void sendRegisterRequest() {
-		// TODO: 向后台发送新用户注册请求
-		CampusSharePreference.setLogin(this, true);
-		MainActivity.startFrom(this);
+	private void toast(String text) {
+		Toast.makeText(VerifyNumberActivity.this, text, Toast.LENGTH_LONG).show();
 	}
 }

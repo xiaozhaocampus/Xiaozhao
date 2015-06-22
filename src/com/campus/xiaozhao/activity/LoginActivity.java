@@ -156,6 +156,6 @@ public class LoginActivity extends Activity {
 	}
 	
 	private void verifyNumber(String number, String pwd) {
-		VerifyNumberActivity.startFrom(this, number);
+		VerifyNumberActivity.startFrom(this, number, pwd);
 	}
 }
