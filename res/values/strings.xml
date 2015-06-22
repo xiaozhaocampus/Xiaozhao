@@ -86,5 +86,6 @@
         <item>等待中</item>
         <item>已过时</item>
     </string-array>
+    <string name="sms_snippet_template_1">您的验证码是</string>
 
 </resources>

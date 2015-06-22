@@ -24,14 +24,20 @@ import cn.bmob.v3.listener.VerifySMSCodeListener;
 import com.campus.xiaozhao.Configuration;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.data.CampusUser;
+import com.campus.xiaozhao.basic.utils.BmobUtil;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.campus.xiaozhao.basic.widget.CountDownTimerView;
 import com.campus.xiaozhao.basic.widget.CountDownTimerView.OnCountDownListener;
+import com.campus.xiaozhao.sms.CloudSms;
+import com.campus.xiaozhao.sms.CloudSmsManager;
+import com.campus.xiaozhao.sms.CloudSmsManager.SmsObserver;
+import com.campus.xiaozhao.sms.CloudSmsThread;
 import com.component.logger.Logger;
 
 public class VerifyNumberActivity extends Activity implements OnCountDownListener {
 	
 	public static final String TAG = "VerifyNumberActivity";
+	private static final int SMS_USER_CODE = 1000;
 	private static final String KEY_PHONE_NUMBER = "phone_number";
 	private static final String KEY_PASSWORD = "password";
 	
@@ -41,6 +47,7 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
 	
 	private String mPhoneNumber;
 	private String mPassword;
+	private CloudSmsManager mSmsManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +78,14 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
                 Configuration.COUNT_INTERVAL);
         
         mVerifyCodeEditText = (EditText) findViewById(R.id.verification_code_et);
+        mSmsManager = new CloudSmsManager(getApplicationContext());
         requestVerifyCode();
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		mSmsManager.removeSmsObserver(SMS_USER_CODE);
 	}
 	
 	@Override
@@ -154,8 +168,37 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
                 	toast(getString(R.string.toast_send_verification_error));
                 	return;
                 }
+                startSmsObserver();
             }
         });
+	}
+	
+	private void startSmsObserver() {
+		mSmsManager.addSmsObserver(SMS_USER_CODE, new SmsObserver() {
+			@Override
+			public void onNewThread(int userCode, CloudSmsThread thread) {
+				Logger.d(TAG, "onNewThread: date= " + thread.getDate()
+						+ ", address=" + thread.getNumberList() + ", snippet=" + thread.getSnippet());
+				String smsCode = BmobUtil.getSmsCode(getApplicationContext(), thread.getSnippet());
+				if (!TextUtils.isEmpty(smsCode)) {
+					if (!isDestroyed()) {
+						mVerifyCodeEditText.setText(smsCode);
+					}
+				}
+			}
+			
+			@Override
+			public void onNewSms(int userCode, CloudSms sms) {
+				Logger.d(TAG, "onNewSms: date=" + sms.getDate() + ", address="
+						+ sms.getAddress() + ", body=" + sms.getBody());
+				String smsCode = BmobUtil.getSmsCode(getApplicationContext(), sms.getBody());
+				if (!TextUtils.isEmpty(smsCode)) {
+					if (!isDestroyed()) {
+						mVerifyCodeEditText.setText(smsCode);
+					}
+				}
+			}
+		});
 	}
 	
 	private void signUp() {

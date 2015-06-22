@@ -2,6 +2,9 @@ package com.campus.xiaozhao.basic.utils;
 
 import java.util.List;
 
+import com.campus.xiaozhao.Configuration;
+import com.campus.xiaozhao.R;
+
 import android.content.Context;
 import android.text.TextUtils;
 import cn.bmob.v3.BmobQuery;
@@ -39,5 +42,19 @@ public class BmobUtil {
 				listener.onError(code, msg);
 			}
 		});
+	}
+	
+	public static String getSmsCode(Context context, String message) {
+		assert (context != null);
+		if (TextUtils.isEmpty(message)) {
+			return null;
+		}
+		String smsSnippetTemplate = context.getString(R.string.sms_snippet_template_1);
+		if (message.contains(smsSnippetTemplate)) {
+			int start = message.indexOf(smsSnippetTemplate) + smsSnippetTemplate.length();
+			String smsCode = message.substring(start, start + Configuration.SMS_CODE_LENGTH);
+			return smsCode;
+		}
+		return null;
 	}
 }

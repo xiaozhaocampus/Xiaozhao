@@ -6,4 +6,5 @@ public class Configuration {
 	public static final int VERIFICATION_WAIT_TIME = 120000;
     public static final int COUNT_INTERVAL = 1000;
     public static final String SMS_VERIFY_TEMPLATE = "template_1";
+    public static final int SMS_CODE_LENGTH = 6;
 }

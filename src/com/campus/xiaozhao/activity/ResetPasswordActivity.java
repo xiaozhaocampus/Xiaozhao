@@ -29,16 +29,22 @@ import com.campus.xiaozhao.basic.utils.BmobUtil.QueryUserListener;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.campus.xiaozhao.basic.utils.NumberUtils;
 import com.campus.xiaozhao.basic.widget.CountDownTimerView;
+import com.campus.xiaozhao.sms.CloudSms;
+import com.campus.xiaozhao.sms.CloudSmsManager;
+import com.campus.xiaozhao.sms.CloudSmsThread;
+import com.campus.xiaozhao.sms.CloudSmsManager.SmsObserver;
 import com.component.logger.Logger;
 
 public class ResetPasswordActivity extends Activity {
 
     public static final String TAG = "ResetPasswordActivity";
+    private static final int SMS_USER_CODE = 1001;
     private CountDownTimerView mCountDownTimerView;
     private EditText mPhoneNumberEditText;
     private EditText mVerifyCodeEditText;
     private EditText mNewPwdEditText;
     private EditText mRepeatPwdEditText;
+    private CloudSmsManager mSmsManager;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +83,7 @@ public class ResetPasswordActivity extends Activity {
         });
         mNewPwdEditText = (EditText) findViewById(R.id.new_password_et);
         mRepeatPwdEditText = (EditText) findViewById(R.id.repeat_new_password_et);
+        mSmsManager = new CloudSmsManager(getApplicationContext());
     }
     
     @Override
@@ -186,9 +193,38 @@ public class ResetPasswordActivity extends Activity {
                 	toast(getString(R.string.toast_send_verification_error));
                 	return;
                 }
+                startSmsObserver();
             }
         });
     }
+    
+    private void startSmsObserver() {
+		mSmsManager.addSmsObserver(SMS_USER_CODE, new SmsObserver() {
+			@Override
+			public void onNewThread(int userCode, CloudSmsThread thread) {
+				Logger.d(TAG, "onNewThread: date= " + thread.getDate()
+						+ ", address=" + thread.getNumberList() + ", snippet=" + thread.getSnippet());
+				String smsCode = BmobUtil.getSmsCode(getApplicationContext(), thread.getSnippet());
+				if (!TextUtils.isEmpty(smsCode)) {
+					if (!isDestroyed()) {
+						mVerifyCodeEditText.setText(smsCode);
+					}
+				}
+			}
+			
+			@Override
+			public void onNewSms(int userCode, CloudSms sms) {
+				Logger.d(TAG, "onNewSms: date=" + sms.getDate() + ", address="
+						+ sms.getAddress() + ", body=" + sms.getBody());
+				String smsCode = BmobUtil.getSmsCode(getApplicationContext(), sms.getBody());
+				if (!TextUtils.isEmpty(smsCode)) {
+					if (!isDestroyed()) {
+						mVerifyCodeEditText.setText(smsCode);
+					}
+				}
+			}
+		});
+	}
     
     private void commitResetPassword() {
     	final ProgressDialog dialog = ProgressDialog.show(this, null, getString(R.string.loading_reset));
