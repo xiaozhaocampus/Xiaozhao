@@ -2,6 +2,7 @@ package com.campus.xiaozhao.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -105,14 +106,17 @@ public class ResetPasswordActivity extends Activity {
             return;
         }
         
+        final ProgressDialog dialog = ProgressDialog.show(this, null, getString(R.string.loading_verify));
         BmobUtil.queryUser(this, number, new QueryUserListener() {
 			@Override
 			public void onError(int code, String msg) {
+				dialog.dismiss();
 				Logger.e(TAG, "queryUser failed: code=" + code + ", msg=" + msg);
 			}
 			
 			@Override
 			public void findResult(boolean exist) {
+				dialog.dismiss();
 				if (!exist) {
 					Logger.w(TAG, "queryUser: user( " + number + ") not exist");
 					toast(getString(R.string.toast_reset_password_user_not_exist));
@@ -187,12 +191,15 @@ public class ResetPasswordActivity extends Activity {
     }
     
     private void commitResetPassword() {
+    	final ProgressDialog dialog = ProgressDialog.show(this, null, getString(R.string.loading_reset));
+    	
     	final String number = mPhoneNumberEditText.getText().toString();
     	final String smsCode = mVerifyCodeEditText.getText().toString();
     	final String newPassword = mNewPwdEditText.getText().toString();
     	BmobUser.resetPasswordBySMSCode(this, smsCode, newPassword, new ResetPasswordByCodeListener() {
     	    @Override
     	    public void done(BmobException ex) {
+    	    	dialog.dismiss();
     	        if (ex != null) {
     	        	Logger.e(TAG, "resetPasswordBySMSCode faield: code=" + ex.getErrorCode()
     	        			+ ", msg=" + ex.getLocalizedMessage());

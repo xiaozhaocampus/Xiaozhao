@@ -2,6 +2,7 @@ package com.campus.xiaozhao.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -155,9 +156,12 @@ public class LoginActivity extends Activity {
 	 * @param pwd
 	 */
 	private void login(String number, String pwd) {
+		final ProgressDialog dialog = ProgressDialog.show(this, null, getString(R.string.loading_login));
+		
 		BmobUser.loginByAccount(this, number, pwd, new LogInListener<CampusUser>() {
 			@Override
 			public void done(CampusUser user, BmobException ex) {
+				dialog.dismiss();
 				if (ex != null) {
 					Logger.e(TAG, "loginByAccount failed: code=" + ex.getErrorCode()
 							+ ", msg=" + ex.getLocalizedMessage());
@@ -172,15 +176,19 @@ public class LoginActivity extends Activity {
 	}
 	
 	private void verifyNumber(final String number, final String pwd) {
+		final ProgressDialog dialog = ProgressDialog.show(this, null, getString(R.string.loading_verify));
+		
 		BmobUtil.queryUser(this, number, new BmobUtil.QueryUserListener() {
 			@Override
 			public void onError(int code, String msg) {
+				dialog.dismiss();
 				Logger.e(TAG, "verifyNumber: find user failed: code=" + code + ", msg=" + msg);
 				VerifyNumberActivity.startFrom(LoginActivity.this, number, pwd);
 			}
 			
 			@Override
 			public void findResult(boolean exist) {
+				dialog.dismiss();
 				if (exist) {
 					toast(getString(R.string.toast_login_user_exist));
 				} else {

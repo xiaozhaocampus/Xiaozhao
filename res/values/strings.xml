@@ -34,6 +34,9 @@
     <string name="toast_reset_password_failed">重置密码失败</string>
     <string name="toast_reset_password_success">重置密码成功</string>
     <string name="toast_welcome_back">欢迎回来！</string>
+    <string name="loading_login">登录中，请稍等...</string>
+    <string name="loading_verify">校验中，请稍等...</string>
+    <string name="loading_reset">重置中，请稍等...</string>
     <string name="get_verification_code_again">%1$ss 重新获取</string>
     <string name="get_verification_code">获取验证码</string>
     <string name="verification_content_hint">本次注册需要短信验证，已发送验证码至</string>

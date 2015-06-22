@@ -3,6 +3,7 @@ package com.campus.xiaozhao.activity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -123,9 +124,11 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
 			return;
 		}
 		
+		final ProgressDialog dialog = ProgressDialog.show(this, null, getString(R.string.loading_verify));
 		BmobSMS.verifySmsCode(this, mPhoneNumber, smsCode, new VerifySMSCodeListener() {
             @Override
             public void done(BmobException ex) {
+            	dialog.dismiss();
             	if (ex != null) {
 					Logger.e(TAG, "verifySmsCode failed: code=" + ex.getErrorCode()
 							+ ", msg=" + ex.getLocalizedMessage());
