@@ -53,7 +53,7 @@ public class CampusDetailActivity extends Activity {
      * 设置Button的状态
      */
     private void setButtonState() {
-        CampusInfoItemData itemData = mDBProcessor.getCampusInfoByCampsuID(mItemData.getCampusID());
+        final CampusInfoItemData itemData = mDBProcessor.getCampusInfoByCampsuID(mItemData.getCampusID());
         if(itemData != null) {
             mItemData.setIsRemind(itemData.isRemind());
             mItemData.setRemindType(itemData.getRemindType());
@@ -70,19 +70,21 @@ public class CampusDetailActivity extends Activity {
                 // 更新本地校招信息
                 mDBProcessor.updateCampus(mItemData);
             }
-        } else { // 该校招信息美欧设置过定时提醒
+        } else { // 该校招信息没有设置过定时提醒
             mSetRemind.setText("提醒");
             mSetRemind.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mItemData.setIsRemind(true);
-                    mItemData.setRemindType(1);
-                    mDBProcessor.addCampusInfo(mItemData); // 这个地方先入库，数据库ID在设置定时提醒时唯一标示一个定时提醒
-                    int result = CampusAlarmManager.getInstance().setCampusAlarm(CampusDetailActivity.this, mItemData.getTime(), mItemData.getCampusID());
-                    if(result > 0) {
+                    long checkRes = CampusAlarmManager.getInstance().checkTime(mItemData.getTime());
+                    if(checkRes > 0) {
+                        mItemData.setIsRemind(true);
+                        mItemData.setRemindType(1);
+                        mDBProcessor.addCampusInfo(mItemData); // 这个地方先入库，数据库ID在设置定时提醒时唯一标示一个定时提醒
+                        CampusAlarmManager.getInstance().startAlarm(CampusDetailActivity.this, checkRes, mItemData.getCampusID());
                         mSetRemind.setText("已设提醒");
                         mSetRemind.setClickable(false);
                     }
+                    CampusAlarmManager.getInstance().showTips(CampusDetailActivity.this, checkRes);
                 }
             });
         }

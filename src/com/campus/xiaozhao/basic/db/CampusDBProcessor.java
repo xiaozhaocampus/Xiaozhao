@@ -165,6 +165,16 @@ public class CampusDBProcessor {
         delete(db, CampusDBHelper.TABLE_CAMPUS_INFO, whereClause, whereArgs);
     }
 
+    public void deleteCampusIfoByCampusId(String campusId) {
+        SQLiteDatabase db = getWriteDatabase();
+        if(db == null ) {
+            return;
+        }
+        String whereClause = CampusModel.CampusInfoItemColumn.CAMPUS_ID + "= ? ";
+        String[] whereArgs = new String[]{campusId};
+        delete(db, CampusDBHelper.TABLE_CAMPUS_INFO, whereClause, whereArgs);
+    }
+
     public void updateCampus(CampusInfoItemData itemData) {
         if(itemData == null) {
             return;

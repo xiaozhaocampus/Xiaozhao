@@ -62,20 +62,11 @@ public class CampusAlarmManager {
      * @param context
      * @param time 校招信息的时间
      */
-    public int setCampusAlarm(Context context, long time, String campusID) {
-        int res;
-        long subTime = time - System.currentTimeMillis();
-        if(subTime < 0) {
-            Toast.makeText(context, "信息已过期!", Toast.LENGTH_LONG).show();
-            res = -1;
-        } else if(subTime < REMIND_TIME_DISTANCE) {
-            Toast.makeText(context, "距离校招开始还有不到6小时的时间, 请做好准备!", Toast.LENGTH_LONG).show();
-            res = 0;
-        } else {
-            long remindTime = time - REMIND_TIME_DISTANCE;
-            startAlarm(context, remindTime, campusID);
-            Toast.makeText(context, "系统将于" + DateUtils.transferTimeToDate(remindTime) + "提醒您!", Toast.LENGTH_LONG).show();
-            res = 1;
+    public long setCampusAlarm(Context context, long time, String campusID) {
+        long res = checkTime(time);
+        showTips(context, res);
+        if(res > 0) {
+            startAlarm(context, res, campusID);
         }
         return res;
     }
@@ -91,5 +82,28 @@ public class CampusAlarmManager {
             return (int)itemData.getId();
         }
         return -1;
+    }
+
+    public long checkTime(long time) {
+        long res;
+        long subTime = time - System.currentTimeMillis();
+        if(subTime < 0) {
+            res = -1;
+        } else if(subTime < REMIND_TIME_DISTANCE) {
+            res = 0;
+        } else {
+            res = time - REMIND_TIME_DISTANCE;
+        }
+        return res;
+    }
+
+    public void showTips(Context context, long res) {
+        if(res < 0) {
+            Toast.makeText(context, "信息已过期!", Toast.LENGTH_LONG).show();
+        } else if(res == 0) {
+            Toast.makeText(context, "距离校招开始还有不到6小时的时间, 请做好准备!", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(context, "系统将于" + DateUtils.transferTimeToDate(res) + "提醒您!", Toast.LENGTH_LONG).show();
+        }
     }
 }

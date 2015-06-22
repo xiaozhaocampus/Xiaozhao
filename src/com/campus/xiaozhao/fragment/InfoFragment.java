@@ -1,7 +1,6 @@
 package com.campus.xiaozhao.fragment;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -26,7 +25,6 @@ import com.campus.xiaozhao.activity.CampusDetailActivity;
 import com.campus.xiaozhao.activity.CampusInfoAdapter;
 import com.campus.xiaozhao.basic.data.CampusInfo;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
-import com.campus.xiaozhao.basic.db.CampusDBProcessor;
 import com.campus.xiaozhao.basic.location.BaiDuLocationManager;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.component.logger.Logger;
