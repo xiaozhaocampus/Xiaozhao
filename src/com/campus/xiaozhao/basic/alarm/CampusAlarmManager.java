@@ -5,6 +5,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
+import com.campus.xiaozhao.basic.data.CampusInfoItemData;
+import com.campus.xiaozhao.basic.db.CampusDBProcessor;
 import com.campus.xiaozhao.basic.utils.DateUtils;
 
 /**
@@ -38,7 +40,7 @@ public class CampusAlarmManager {
         AlarmManager manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, CampusAlarmReceiver.class);
         intent.putExtra("campus_id", campusID);
-        PendingIntent send = PendingIntent.getBroadcast(context, 0, intent, 0);
+        PendingIntent send = PendingIntent.getBroadcast(context, getIdByDB(context, campusID), intent, 0);
         manager.set(AlarmManager.RTC_WAKEUP, time, send);
     }
 
@@ -51,7 +53,7 @@ public class CampusAlarmManager {
         AlarmManager manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, CampusAlarmReceiver.class);
         intent.putExtra("campus_id", campusID);
-        PendingIntent send = PendingIntent.getBroadcast(context, 0, intent, 0);
+        PendingIntent send = PendingIntent.getBroadcast(context, getIdByDB(context, campusID), intent, 0);
         manager.cancel(send);
     }
 
@@ -76,5 +78,18 @@ public class CampusAlarmManager {
             res = 1;
         }
         return res;
+    }
+
+    /**
+     * 获取校招信息的数据库ID，作为定时提醒的ID以便能准确撤销定时提醒和设置多个定时提醒
+     * @param campusId
+     * @return
+     */
+    private int getIdByDB(Context context, String campusId) {
+        CampusInfoItemData itemData = CampusDBProcessor.getInstance(context).getCampusInfoByCampsuID(campusId);
+        if(itemData != null) {
+            return (int)itemData.getId();
+        }
+        return -1;
     }
 }
