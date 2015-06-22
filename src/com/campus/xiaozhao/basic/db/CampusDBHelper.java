@@ -26,7 +26,7 @@ public class CampusDBHelper extends SQLiteOpenHelper {
             + CampusModel.CampusInfoItemColumn.COMPANY_NAME + " TEXT,"
             + CampusModel.CampusInfoItemColumn.COMPANY_INTRODUCTION + " TEXT,"
             + CampusModel.CampusInfoItemColumn.CITY + " TEXT,"
-            + CampusModel.CampusInfoItemColumn.TYPE + " INTEGER,"
+            + CampusModel.CampusInfoItemColumn.TYPE + " TEXT,"
             + CampusModel.CampusInfoItemColumn.TITLE + " TEXT,"
             + CampusModel.CampusInfoItemColumn.CONTENT + " TEXT,"
             + CampusModel.CampusInfoItemColumn.ADDRESS + " TEXT,"

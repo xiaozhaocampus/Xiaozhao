@@ -45,7 +45,7 @@ public class CampusDetailActivity extends Activity {
         mAddress.setText(mItemData.getAddress());
         mTime.setText(DateUtils.transferTimeToDate(mItemData.getTime()));
 
-        mDBProcessor = new CampusDBProcessor(getApplicationContext());
+        mDBProcessor = CampusDBProcessor.getInstance(getApplicationContext());
         setButtonState();
     }
 

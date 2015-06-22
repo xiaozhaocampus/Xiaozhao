@@ -1,7 +1,9 @@
 package com.campus.xiaozhao.fragment;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,11 +18,15 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 import com.baidu.location.BDLocation;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.activity.CampusDetailActivity;
 import com.campus.xiaozhao.activity.CampusInfoAdapter;
+import com.campus.xiaozhao.basic.data.CampusInfo;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
+import com.campus.xiaozhao.basic.db.CampusDBProcessor;
 import com.campus.xiaozhao.basic.location.BaiDuLocationManager;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.component.logger.Logger;
@@ -31,6 +37,7 @@ import com.component.logger.Logger;
 public class InfoFragment extends Fragment implements Handler.Callback{
     private static final String TAG = "InfoFragment";
     public static final int MSG_SET_LOCATION = 1;
+    public static final int MSG_RECEIVE_DATA_FROM_BMOB = 2;
     private ListView mCampusList;
     private CampusInfoAdapter mInfoAdapter;
     private List<CampusInfoItemData> mDatas;
@@ -55,35 +62,55 @@ public class InfoFragment extends Fragment implements Handler.Callback{
         mHandler = new Handler(this);
         BaiDuLocationManager.getInstance().start(getActivity(), mHandler);
         mDatas = new ArrayList<CampusInfoItemData>();
-        CampusInfoItemData data = new CampusInfoItemData();
-        data.setCompany("Tencent");
-        data.setIntroduction("Tencent is famous Internet Company in China!");
-        data.setCampusID(100000);
-        data.setCity("武汉");
-        data.setTitle("腾讯宣讲会");
-        data.setContent("2015年腾讯校园招聘宣讲会");
-        data.setTime(1433658454785L);
-        data.setType(1001);
-        data.setAddress("华中科技大学大学生活动中心");
-        data.setVersion(345);
-        mDatas.add(data);
-
-        CampusInfoItemData data1 = new CampusInfoItemData();
-        data1.setCompany("Tencent");
-        data1.setIntroduction("Tencent is famous Internet Company in China!");
-        data1.setCampusID(100001);
-        data1.setCity("武汉1");
-        data1.setTitle("腾讯宣讲会1");
-        data1.setContent("2015年腾讯校园招聘宣讲会");
-        data1.setTime(1433658454785L);
-        data1.setType(1001);
-        data1.setAddress("华中科技大学大学生活动中心");
-        data1.setVersion(346);
-        mDatas.add(data1);
         mInfoAdapter = new CampusInfoAdapter(getActivity(), mDatas);
         mCampusList.setAdapter(mInfoAdapter);
         ListItemClickListener listener = new ListItemClickListener();
         mCampusList.setOnItemClickListener(listener);
+        getDataFromBmob();
+    }
+
+    private void getDataFromBmob() {
+        BmobQuery<CampusInfo> query = new BmobQuery<CampusInfo>();
+        //判断是否有缓存
+        boolean isCache = query.hasCachedResult(getActivity(),CampusInfo.class);
+        if(isCache){
+            query.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);    // 如果有缓存的话，则设置策略为CACHE_ELSE_NETWORK
+        }else{
+            query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);    // 如果没有缓存的话，则设置策略为NETWORK_ELSE_CACHE
+        }
+        query.setMaxCacheAge(TimeUnit.DAYS.toMillis(3));//此表示缓存三天
+        query.include("companyInfo");
+        query.findObjects(getActivity(), new FindListener<CampusInfo>() {
+            @Override
+            public void onSuccess(List<CampusInfo> list) {
+                if(list != null && list.size() > 0) {
+                    for(CampusInfo info : list) {
+                        if(info != null) {
+                            CampusInfoItemData itemData = new CampusInfoItemData();
+                            itemData.setCampusID(info.getObjectId());
+                            itemData.setCity(info.getCity());
+                            itemData.setCompany(info.getCompanyInfo().getName());
+                            itemData.setIntroduction(info.getCompanyInfo().getIntroduction());
+                            itemData.setAddress(info.getAddress());
+                            itemData.setTitle(info.getTitle());
+                            itemData.setContent(info.getContent());
+                            itemData.setTime(info.getDate());
+                            itemData.setVersion(info.getVersion());
+                            itemData.setType(info.getType());
+                            mDatas.add(itemData);
+                        }
+                    }
+                    Message msg = mHandler.obtainMessage(MSG_RECEIVE_DATA_FROM_BMOB);
+                    mHandler.sendMessage(msg);
+                }
+                Logger.d(TAG, "get success");
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                Logger.d(TAG, "get fail");
+            }
+        });
     }
 
     @Override
@@ -93,6 +120,12 @@ public class InfoFragment extends Fragment implements Handler.Callback{
                 BDLocation location = (BDLocation) msg.obj;
                 mLocation.setText(location.getCity());
                 Logger.d(TAG, "location:" + location.getCity());
+                break;
+            case MSG_RECEIVE_DATA_FROM_BMOB:
+                mInfoAdapter.notifyDataSetChanged();
+                break;
+            default:
+                break;
         }
 
         return false;

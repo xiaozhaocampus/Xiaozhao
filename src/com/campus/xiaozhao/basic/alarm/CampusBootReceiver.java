@@ -19,7 +19,7 @@ public class CampusBootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
             //TODO Set the alarm here.
-            CampusDBProcessor processor = new CampusDBProcessor(context);
+            CampusDBProcessor processor = CampusDBProcessor.getInstance(context);
             String whereClause = CampusModel.CampusInfoItemColumn.IS_REMIND + " =?";
             String[] whereArgs = new String[]{String.valueOf(true)};
             List<CampusInfoItemData> list = processor.getCampusInfos(whereClause, whereArgs, null);

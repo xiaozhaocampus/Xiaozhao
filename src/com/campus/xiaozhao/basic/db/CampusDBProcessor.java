@@ -33,11 +33,24 @@ public class CampusDBProcessor {
             CampusModel.CampusInfoItemColumn.REMIND_TYPE
     };
 
+    private static volatile CampusDBProcessor mInstance;
+
     private CampusDBHelper mDBHelper;
 
-    public CampusDBProcessor(Context context) {
+    private CampusDBProcessor(Context context) {
         mDBHelper = new CampusDBHelper(context);
         initDbIfNotExist();
+    }
+
+    public static CampusDBProcessor getInstance(Context context) {
+        if(mInstance == null) {
+            synchronized (CampusDBProcessor.class) {
+                if(mInstance == null) {
+                    mInstance = new CampusDBProcessor(context);
+                }
+            }
+        }
+        return mInstance;
     }
 
     private void initDbIfNotExist() {
@@ -182,10 +195,10 @@ public class CampusDBProcessor {
                     while(cursor.moveToNext()) {
                         CampusInfoItemData itemData = new CampusInfoItemData();
                         itemData.setId(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn._ID)));
-                        itemData.setCampusID(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.CAMPUS_ID)));
+                        itemData.setCampusID(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.CAMPUS_ID)));
                         itemData.setCompany(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.COMPANY_NAME)));
                         itemData.setIntroduction(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.COMPANY_INTRODUCTION)));
-                        itemData.setType(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.TYPE)));
+                        itemData.setType(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.TYPE)));
                         itemData.setTitle(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.TITLE)));
                         itemData.setContent(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.CONTENT)));
                         itemData.setAddress(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.ADDRESS)));
@@ -211,7 +224,7 @@ public class CampusDBProcessor {
         return list;
     }
 
-    public CampusInfoItemData getCampusInfoByCampsuID(long campusID) {
+    public CampusInfoItemData getCampusInfoByCampsuID(String campusID) {
         SQLiteDatabase db = getWriteDatabase();
         if(db == null ) {
             return null;
@@ -225,10 +238,10 @@ public class CampusDBProcessor {
                     while (cursor.moveToNext()) {
                         CampusInfoItemData itemData = new CampusInfoItemData();
                         itemData.setId(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn._ID)));
-                        itemData.setCampusID(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.CAMPUS_ID)));
+                        itemData.setCampusID(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.CAMPUS_ID)));
                         itemData.setCompany(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.COMPANY_NAME)));
                         itemData.setIntroduction(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.COMPANY_INTRODUCTION)));
-                        itemData.setType(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.TYPE)));
+                        itemData.setType(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.TYPE)));
                         itemData.setTitle(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.TITLE)));
                         itemData.setContent(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.CONTENT)));
                         itemData.setAddress(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.ADDRESS)));

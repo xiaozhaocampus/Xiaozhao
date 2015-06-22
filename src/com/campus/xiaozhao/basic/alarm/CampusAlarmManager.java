@@ -34,7 +34,7 @@ public class CampusAlarmManager {
      * @param context
      * @param time 计时结束的时间(也就是定时提醒的时间)
      */
-    public void startAlarm(Context context, long time, long campusID) {
+    public void startAlarm(Context context, long time, String campusID) {
         AlarmManager manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, CampusAlarmReceiver.class);
         intent.putExtra("campus_id", campusID);
@@ -47,7 +47,7 @@ public class CampusAlarmManager {
      * @param context
      * @param campusID
      */
-    public void stopAlarm(Context context, long campusID) {
+    public void stopAlarm(Context context, String campusID) {
         AlarmManager manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, CampusAlarmReceiver.class);
         intent.putExtra("campus_id", campusID);
@@ -60,7 +60,7 @@ public class CampusAlarmManager {
      * @param context
      * @param time 校招信息的时间
      */
-    public int setCampusAlarm(Context context, long time, long campusID) {
+    public int setCampusAlarm(Context context, long time, String campusID) {
         int res;
         long subTime = time - System.currentTimeMillis();
         if(subTime < 0) {

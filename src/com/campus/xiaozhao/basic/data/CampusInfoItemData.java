@@ -7,6 +7,7 @@ import com.campus.xiaozhao.basic.db.CampusModel;
 import java.io.Serializable;
 
 /**
+ * 客户端使用
  * Created by frankenliu on 15/5/31.
  */
 public class CampusInfoItemData implements Serializable{
@@ -14,7 +15,7 @@ public class CampusInfoItemData implements Serializable{
     /** 0 数据库ID */
     private long id;
     /** 1 单条校招信息的唯一标识(后台下发) */
-    private long campusID;
+    private String campusID;
     /** 2 校招信息发布的公司 */
     private String company;
     /** 3 公司简介 */
@@ -22,7 +23,7 @@ public class CampusInfoItemData implements Serializable{
     /** 4 校招城市 */
     private String city;
     /** 5 校招信息的类型 */
-    private int type;
+    private String type;
     /** 6 校招信息的标题 */
     private String title;
     /** 7 校招信息的内容 */
@@ -54,11 +55,11 @@ public class CampusInfoItemData implements Serializable{
         this.id = id;
     }
 
-    public long getCampusID() {
+    public String getCampusID() {
         return campusID;
     }
 
-    public void setCampusID(long campusID) {
+    public void setCampusID(String campusID) {
         this.campusID = campusID;
     }
 
@@ -78,11 +79,11 @@ public class CampusInfoItemData implements Serializable{
         this.city = city;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 
