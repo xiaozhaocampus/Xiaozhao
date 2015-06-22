@@ -30,6 +30,9 @@
     <string name="toast_send_verification_error">提交验证请求失败，请稍后重试</string>
     <string name="toast_login_failed">登录失败</string>
     <string name="toast_login_user_exist">用户已存在，请直接登录</string>
+    <string name="toast_reset_password_user_not_exist">该用户不存在，手机号正确吗？</string>
+    <string name="toast_reset_password_failed">重置密码失败</string>
+    <string name="toast_reset_password_success">重置密码成功</string>
     <string name="get_verification_code_again">%1$ss 重新获取</string>
     <string name="get_verification_code">获取验证码</string>
     <string name="verification_content_hint">本次注册需要短信验证，已发送验证码至</string>

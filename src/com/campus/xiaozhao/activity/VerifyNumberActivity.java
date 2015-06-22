@@ -70,7 +70,7 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
                 Configuration.COUNT_INTERVAL);
         
         mVerifyCodeEditText = (EditText) findViewById(R.id.verification_code_et);
-        sendVerifyRequest();
+        requestVerifyCode();
 	}
 	
 	@Override
@@ -113,7 +113,7 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
                 Configuration.VERIFICATION_WAIT_TIME,
                 Configuration.COUNT_INTERVAL);
         
-        sendVerifyRequest();
+        requestVerifyCode();
     }
 	
 	public void clickOnCommit(View view) {
@@ -140,7 +140,7 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
 	/**
 	 * 向后台发送手机号验证请求
 	 */
-	private void sendVerifyRequest() {
+	private void requestVerifyCode() {
 		final String phoneNumber = mPhoneNumber;
         final String template = Configuration.SMS_VERIFY_TEMPLATE;
         BmobSMS.requestSMSCode(this, phoneNumber, template, new RequestSMSCodeListener() {
@@ -178,6 +178,6 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
 	}
 	
 	private void toast(String text) {
-		Toast.makeText(VerifyNumberActivity.this, text, Toast.LENGTH_LONG).show();
+		Toast.makeText(this, text, Toast.LENGTH_LONG).show();
 	}
 }

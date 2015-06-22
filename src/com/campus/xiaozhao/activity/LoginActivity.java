@@ -1,7 +1,5 @@
 package com.campus.xiaozhao.activity;
 
-import java.util.List;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
@@ -15,15 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.LogInListener;
 
 import com.campus.xiaozhao.Configuration;
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.basic.utils.BmobUtil;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.campus.xiaozhao.basic.utils.NumberUtils;
 import com.component.logger.Logger;
@@ -174,25 +170,20 @@ public class LoginActivity extends Activity {
 	}
 	
 	private void verifyNumber(final String number, final String pwd) {
-		// 检测用户是否已存在
-		BmobQuery<BmobUser> query = new BmobQuery<BmobUser>();
-		query.addWhereEqualTo("username", number);
-		query.findObjects(this, new FindListener<BmobUser>() {
-			@Override
-			public void onSuccess(List<BmobUser> userList) {
-				for (BmobUser user : userList) {
-					if (TextUtils.equals(user.getUsername(), number)) {
-						toast(getString(R.string.toast_login_user_exist));
-						return;
-					}
-				}
-				VerifyNumberActivity.startFrom(LoginActivity.this, number, pwd);
-			}
-
+		BmobUtil.queryUser(this, number, new BmobUtil.QueryUserListener() {
 			@Override
 			public void onError(int code, String msg) {
 				Logger.e(TAG, "verifyNumber: find user failed: code=" + code + ", msg=" + msg);
 				VerifyNumberActivity.startFrom(LoginActivity.this, number, pwd);
+			}
+			
+			@Override
+			public void findResult(boolean exist) {
+				if (exist) {
+					toast(getString(R.string.toast_login_user_exist));
+				} else {
+					VerifyNumberActivity.startFrom(LoginActivity.this, number, pwd);
+				}
 			}
 		});
 	}

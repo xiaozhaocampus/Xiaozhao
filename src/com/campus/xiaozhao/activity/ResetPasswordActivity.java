@@ -13,10 +13,21 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import cn.bmob.v3.BmobSMS;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.LogInListener;
+import cn.bmob.v3.listener.RequestSMSCodeListener;
+import cn.bmob.v3.listener.ResetPasswordByCodeListener;
+
 import com.campus.xiaozhao.Configuration;
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.basic.utils.BmobUtil;
+import com.campus.xiaozhao.basic.utils.BmobUtil.QueryUserListener;
+import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.campus.xiaozhao.basic.utils.NumberUtils;
 import com.campus.xiaozhao.basic.widget.CountDownTimerView;
+import com.component.logger.Logger;
 
 public class ResetPasswordActivity extends Activity {
 
@@ -26,8 +37,6 @@ public class ResetPasswordActivity extends Activity {
     private EditText mVerifyCodeEditText;
     private EditText mNewPwdEditText;
     private EditText mRepeatPwdEditText;
-    
-    private String mVerifyCode;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +93,7 @@ public class ResetPasswordActivity extends Activity {
     }
     
     public void clickOnGetVerificationCode(View view) {
-        String number = mPhoneNumberEditText.getText().toString();
+        final String number = mPhoneNumberEditText.getText().toString();
         if (number.length() == 0) {
             Toast.makeText(this, R.string.reset_password_edit_hint_phone_number, Toast.LENGTH_SHORT).show();
             return;
@@ -95,11 +104,26 @@ public class ResetPasswordActivity extends Activity {
             return;
         }
         
-        mCountDownTimerView.startCountDown(
-                Configuration.VERIFICATION_WAIT_TIME,
-                Configuration.COUNT_INTERVAL);
-        mVerifyCodeEditText.requestFocus();
-        requestVerifyCode();
+        BmobUtil.queryUser(this, number, new QueryUserListener() {
+			@Override
+			public void onError(int code, String msg) {
+				Logger.e(TAG, "queryUser failed: code=" + code + ", msg=" + msg);
+			}
+			
+			@Override
+			public void findResult(boolean exist) {
+				if (!exist) {
+					Logger.w(TAG, "queryUser: user( " + number + ") not exist");
+					toast(getString(R.string.toast_reset_password_user_not_exist));
+					return;
+				}
+				mCountDownTimerView.startCountDown(
+		                Configuration.VERIFICATION_WAIT_TIME,
+		                Configuration.COUNT_INTERVAL);
+		        mVerifyCodeEditText.requestFocus();
+				requestVerifyCode();
+			}
+		});
     }
     
     public void clickOnCommit(View view) {
@@ -140,19 +164,63 @@ public class ResetPasswordActivity extends Activity {
             return;
         }
         
-        if (!TextUtils.equals(mVerifyCode, verifyCode)) {
-            Toast.makeText(this, R.string.toast_verification_code_not_match, Toast.LENGTH_SHORT).show();
-            return;
-        }
-        
         commitResetPassword();
     }
     
+    /**
+	 * 向后台发送手机号验证请求
+	 */
     private void requestVerifyCode() {
-        
+    	final String number = mPhoneNumberEditText.getText().toString();
+        final String template = Configuration.SMS_VERIFY_TEMPLATE;
+        BmobSMS.requestSMSCode(this, number, template, new RequestSMSCodeListener() {
+            @Override
+            public void done(Integer smsId, BmobException ex) {
+                if (ex != null) {
+                	Logger.e(TAG, "requestSMSCode failed: code=" + ex.getErrorCode() + ", msg=" + ex.getLocalizedMessage());
+                	toast(getString(R.string.toast_send_verification_error));
+                	return;
+                }
+            }
+        });
     }
     
     private void commitResetPassword() {
-        
+    	final String number = mPhoneNumberEditText.getText().toString();
+    	final String smsCode = mVerifyCodeEditText.getText().toString();
+    	final String newPassword = mNewPwdEditText.getText().toString();
+    	BmobUser.resetPasswordBySMSCode(this, smsCode, newPassword, new ResetPasswordByCodeListener() {
+    	    @Override
+    	    public void done(BmobException ex) {
+    	        if (ex != null) {
+    	        	Logger.e(TAG, "resetPasswordBySMSCode faield: code=" + ex.getErrorCode()
+    	        			+ ", msg=" + ex.getLocalizedMessage());
+    	        	toast(getString(R.string.toast_verification_code_not_match));
+    	        	return;
+    	        }
+    	        login(number, newPassword);
+    	    }
+    	});
     }
+    
+    private void login(String number, String pwd) {
+		BmobUser.loginByAccount(this, number, pwd, new LogInListener<BmobUser>() {
+			@Override
+			public void done(BmobUser user, BmobException ex) {
+				if (ex != null) {
+					Logger.e(TAG, "loginByAccount failed: code=" + ex.getErrorCode()
+							+ ", msg=" + ex.getLocalizedMessage());
+					toast(getString(R.string.toast_login_failed) + ": " + ex.getLocalizedMessage());
+					return;
+				}
+				toast(getString(R.string.toast_reset_password_success));
+				CampusSharePreference.setLogin(ResetPasswordActivity.this, true);
+				MainActivity.startFrom(ResetPasswordActivity.this);
+			}
+		});
+	}
+    
+    private void toast(String text) {
+		Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+	}
 }
