@@ -89,7 +89,10 @@
             android:name="com.campus.xiaozhao.activity.ResetPasswordActivity"
             android:label="@string/title_activity_reset_password" >
         </activity>
-
+        <activity
+            android:name="com.campus.xiaozhao.activity.UpdateActivity"
+            android:label="@string/check_update" >
+        </activity>
         <receiver android:name=".basic.alarm.CampusAlarmReceiver"></receiver>
 
         <receiver

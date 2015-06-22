@@ -80,6 +80,8 @@ public class MainActivity extends FragmentActivity {
 			break;
 		case R.id.more_feedback:
 			break;
+		case R.id.more_check_new_ver:
+			break;
 		}
 		startActivityById(id);
 	}
@@ -92,7 +94,10 @@ public class MainActivity extends FragmentActivity {
 			break;
 		case R.id.more_alarms:
 			classes = AlarmActivity.class;
-			break;			
+			break;
+		case R.id.more_check_new_ver:
+			classes = UpdateActivity.class;
+			break;
 		default:
 			break;
 		}

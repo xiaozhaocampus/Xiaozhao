@@ -68,7 +68,13 @@
     <string name="feedback">问题反馈</string>
     <string name="submit">提交</string>
     <string name="back">返回</string>
-
+	<string name="can_not_find_version_name">未知</string>
+	<string name="download">下载</string>
+	<string name="cancel">取消</string>
+	<string name="xiaozhao">校招</string>
+	<string name="downloading_tips">正在为您下载请稍后</string>
+	<string name="update_no_new_version">当前已是最新版本</string>
+	<string name="check_update_failed">检查更新失败，请确保网络已连接</string>
     <string-array name="alarms">
         <item>等待中</item>
         <item>已过时</item>
