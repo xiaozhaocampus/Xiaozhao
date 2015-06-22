@@ -69,6 +69,7 @@ public class InfoFragment extends Fragment implements Handler.Callback{
 
     private void getDataFromBmob() {
         BmobQuery<CampusInfo> query = new BmobQuery<CampusInfo>();
+        query.setMaxCacheAge(TimeUnit.DAYS.toMillis(3));//此表示缓存三天
         //判断是否有缓存
         boolean isCache = query.hasCachedResult(getActivity(),CampusInfo.class);
         if(isCache){
@@ -76,7 +77,6 @@ public class InfoFragment extends Fragment implements Handler.Callback{
         }else{
             query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);    // 如果没有缓存的话，则设置策略为NETWORK_ELSE_CACHE
         }
-        query.setMaxCacheAge(TimeUnit.DAYS.toMillis(3));//此表示缓存三天
         query.include("companyInfo");
         query.findObjects(getActivity(), new FindListener<CampusInfo>() {
             @Override
