@@ -77,7 +77,7 @@ public class CampusDetailActivity extends Activity {
                 public void onClick(View v) {
                     mItemData.setIsRemind(true);
                     mItemData.setRemindType(1);
-                    mDBProcessor.addCampusInfo(mItemData);
+                    mDBProcessor.addCampusInfo(mItemData); // 这个地方先入库，数据库ID在设置定时提醒时唯一标示一个定时提醒
                     int result = CampusAlarmManager.getInstance().setCampusAlarm(CampusDetailActivity.this, mItemData.getTime(), mItemData.getCampusID());
                     if(result > 0) {
                         mSetRemind.setText("已设提醒");
