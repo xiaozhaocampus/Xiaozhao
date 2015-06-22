@@ -14,6 +14,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.LogInListener;
+
 import com.campus.xiaozhao.Configuration;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
@@ -150,12 +154,26 @@ public class LoginActivity extends Activity {
 	 * @param pwd
 	 */
 	private void login(String number, String pwd) {
-		// TODO: 向后台发送登录请求
-		CampusSharePreference.setLogin(this, true);
-		MainActivity.startFrom(this);
+		BmobUser.loginByAccount(this, number, pwd, new LogInListener<BmobUser>() {
+			@Override
+			public void done(BmobUser user, BmobException ex) {
+				if (ex != null) {
+					Logger.e(TAG, "loginByAccount failed: code=" + ex.getErrorCode()
+							+ ", msg=" + ex.getLocalizedMessage());
+					toast(getString(R.string.toast_login_failed) + ": " + ex.getLocalizedMessage());
+					return;
+				}
+				CampusSharePreference.setLogin(LoginActivity.this, true);
+				MainActivity.startFrom(LoginActivity.this);
+			}
+		});
 	}
 	
 	private void verifyNumber(String number, String pwd) {
 		VerifyNumberActivity.startFrom(this, number, pwd);
+	}
+	
+	private void toast(String text) {
+		Toast.makeText(this, text, Toast.LENGTH_LONG).show();
 	}
 }

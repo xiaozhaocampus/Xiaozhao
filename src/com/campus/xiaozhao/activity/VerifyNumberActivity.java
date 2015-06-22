@@ -17,8 +17,9 @@ import android.widget.Toast;
 import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.RequestSMSCodeListener;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.VerifySMSCodeListener;
 
 import com.campus.xiaozhao.Configuration;
 import com.campus.xiaozhao.R;
@@ -122,22 +123,18 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
 			return;
 		}
 		
-		BmobUser user = new BmobUser();
-		user.setUsername(mPhoneNumber);
-		user.setPassword(mPassword);
-		BmobUser.signOrLoginByMobilePhone(this, mPhoneNumber, smsCode, new LogInListener<BmobUser>() {
-			@Override
-			public void done(BmobUser user, BmobException ex) {
-				if (ex != null) {
-					Logger.e(TAG, "signOrLoginByMobilePhone failed: code=" + ex.getErrorCode()
+		BmobSMS.verifySmsCode(this, mPhoneNumber, smsCode, new VerifySMSCodeListener() {
+            @Override
+            public void done(BmobException ex) {
+            	if (ex != null) {
+					Logger.e(TAG, "verifySmsCode failed: code=" + ex.getErrorCode()
 							+ ", msg=" + ex.getLocalizedMessage());
 					toast(getString(R.string.toast_verification_failed) + ": " + ex.getLocalizedMessage());
 					return;
 				}
-				CampusSharePreference.setLogin(VerifyNumberActivity.this, true);
-				MainActivity.startFrom(VerifyNumberActivity.this);
-			}
-		});
+            	signUp();
+            }
+        });
 	}
 	
 	/**
@@ -156,6 +153,28 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
                 }
             }
         });
+	}
+	
+	private void signUp() {
+		BmobUser user = new BmobUser();
+		user.setUsername(mPhoneNumber);
+		user.setPassword(mPassword);
+		user.setMobilePhoneNumber(mPhoneNumber);
+		user.setMobilePhoneNumberVerified(true);
+		user.signUp(this, new SaveListener() {
+			@Override
+			public void onSuccess() {
+				toast(getString(R.string.toast_verification_success));
+				CampusSharePreference.setLogin(VerifyNumberActivity.this, true);
+				MainActivity.startFrom(VerifyNumberActivity.this);
+			}
+			
+			@Override
+			public void onFailure(int code, String msg) {
+				Logger.e(TAG, "signUp failed: code=" + code + ", msg=" + msg);
+				toast(getString(R.string.toast_verification_failed) + ": " + msg);
+			}
+		});
 	}
 	
 	private void toast(String text) {
