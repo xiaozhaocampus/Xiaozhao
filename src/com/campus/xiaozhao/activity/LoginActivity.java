@@ -19,6 +19,7 @@ import cn.bmob.v3.listener.LogInListener;
 
 import com.campus.xiaozhao.Configuration;
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.basic.data.CampusUser;
 import com.campus.xiaozhao.basic.utils.BmobUtil;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.campus.xiaozhao.basic.utils.NumberUtils;
@@ -154,15 +155,16 @@ public class LoginActivity extends Activity {
 	 * @param pwd
 	 */
 	private void login(String number, String pwd) {
-		BmobUser.loginByAccount(this, number, pwd, new LogInListener<BmobUser>() {
+		BmobUser.loginByAccount(this, number, pwd, new LogInListener<CampusUser>() {
 			@Override
-			public void done(BmobUser user, BmobException ex) {
+			public void done(CampusUser user, BmobException ex) {
 				if (ex != null) {
 					Logger.e(TAG, "loginByAccount failed: code=" + ex.getErrorCode()
 							+ ", msg=" + ex.getLocalizedMessage());
 					toast(getString(R.string.toast_login_failed) + ": " + ex.getLocalizedMessage());
 					return;
 				}
+				toast(getString(R.string.toast_welcome_back));
 				CampusSharePreference.setLogin(LoginActivity.this, true);
 				MainActivity.startFrom(LoginActivity.this);
 			}

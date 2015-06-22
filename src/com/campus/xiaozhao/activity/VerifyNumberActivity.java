@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.bmob.v3.BmobSMS;
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.RequestSMSCodeListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -23,6 +22,7 @@ import cn.bmob.v3.listener.VerifySMSCodeListener;
 
 import com.campus.xiaozhao.Configuration;
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.basic.data.CampusUser;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.campus.xiaozhao.basic.widget.CountDownTimerView;
 import com.campus.xiaozhao.basic.widget.CountDownTimerView.OnCountDownListener;
@@ -156,7 +156,7 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
 	}
 	
 	private void signUp() {
-		BmobUser user = new BmobUser();
+		CampusUser user = new CampusUser();
 		user.setUsername(mPhoneNumber);
 		user.setPassword(mPassword);
 		user.setMobilePhoneNumber(mPhoneNumber);

@@ -22,6 +22,7 @@ import cn.bmob.v3.listener.ResetPasswordByCodeListener;
 
 import com.campus.xiaozhao.Configuration;
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.basic.data.CampusUser;
 import com.campus.xiaozhao.basic.utils.BmobUtil;
 import com.campus.xiaozhao.basic.utils.BmobUtil.QueryUserListener;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
@@ -204,9 +205,9 @@ public class ResetPasswordActivity extends Activity {
     }
     
     private void login(String number, String pwd) {
-		BmobUser.loginByAccount(this, number, pwd, new LogInListener<BmobUser>() {
+		BmobUser.loginByAccount(this, number, pwd, new LogInListener<CampusUser>() {
 			@Override
-			public void done(BmobUser user, BmobException ex) {
+			public void done(CampusUser user, BmobException ex) {
 				if (ex != null) {
 					Logger.e(TAG, "loginByAccount failed: code=" + ex.getErrorCode()
 							+ ", msg=" + ex.getLocalizedMessage());
