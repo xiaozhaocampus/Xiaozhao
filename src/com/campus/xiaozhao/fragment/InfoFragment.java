@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -68,6 +69,20 @@ public class InfoFragment extends Fragment implements Handler.Callback{
         ListItemClickListener listener = new ListItemClickListener();
         mCampusList.setOnItemClickListener(listener);
         getDataFromBmob();
+
+        mCampusList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                Logger.d(TAG, "pull down");
+                new GetDataTask().execute();
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                Logger.d(TAG, "pull up");
+                new GetDataTask().execute();
+            }
+        });
     }
 
     private void getDataFromBmob() {
@@ -142,6 +157,20 @@ public class InfoFragment extends Fragment implements Handler.Callback{
             bundle.putSerializable("detail_data", mDatas.get(position));
             intent.putExtras(bundle);
             startActivity(intent);
+        }
+    }
+
+    class GetDataTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            mCampusList.onRefreshComplete();
         }
     }
 }
