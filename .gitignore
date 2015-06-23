@@ -6,3 +6,5 @@
 /proguard_logs
 /third_party/ViewPagerIndicator/bin
 /third_party/ViewPagerIndicator/gen
+/third_party/library/bin
+/third_party/library/gen

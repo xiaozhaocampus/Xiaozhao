@@ -28,6 +28,8 @@ import com.campus.xiaozhao.basic.data.CampusInfoItemData;
 import com.campus.xiaozhao.basic.location.BaiDuLocationManager;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.component.logger.Logger;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 /**
  * Created by frankenliu on 15/6/7.
@@ -36,7 +38,7 @@ public class InfoFragment extends Fragment implements Handler.Callback{
     private static final String TAG = "InfoFragment";
     public static final int MSG_SET_LOCATION = 1;
     public static final int MSG_RECEIVE_DATA_FROM_BMOB = 2;
-    private ListView mCampusList;
+    private PullToRefreshListView mCampusList;
     private CampusInfoAdapter mInfoAdapter;
     private List<CampusInfoItemData> mDatas;
     private TextView mLocation;
@@ -45,7 +47,8 @@ public class InfoFragment extends Fragment implements Handler.Callback{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_info, container, false);
-        mCampusList = (ListView) view.findViewById(R.id.campus_list);
+        mCampusList = (PullToRefreshListView) view.findViewById(R.id.campus_list);
+        mCampusList.setMode(PullToRefreshBase.Mode.BOTH);
         mLocation = (TextView) view.findViewById(R.id.location);
         String location = CampusSharePreference.getLocation(getActivity());
         if(TextUtils.isEmpty(location)) {
