@@ -20,12 +20,14 @@ import android.widget.TextView;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 import com.baidu.location.BDLocation;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.activity.CampusDetailActivity;
 import com.campus.xiaozhao.activity.CampusInfoAdapter;
 import com.campus.xiaozhao.basic.data.CampusInfo;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
+import com.campus.xiaozhao.basic.data.CampusType;
 import com.campus.xiaozhao.basic.location.BaiDuLocationManager;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.component.logger.Logger;
@@ -152,9 +154,24 @@ public class InfoFragment extends Fragment implements Handler.Callback{
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Logger.d(TAG, "position:" + position + ", id:" + id);
+            CampusType campusType = new CampusType();
+            campusType.setCampusId("asdf123adsfa");
+            campusType.setIsTimeout(false);
+            campusType.save(getActivity(), new SaveListener() {
+                @Override
+                public void onSuccess() {
+                    Logger.d(TAG, "onSuccess");
+                }
+
+                @Override
+                public void onFailure(int i, String s) {
+                    Logger.d(TAG, "onFailure");
+                }
+            });
+
             Intent intent = new Intent(getActivity(), CampusDetailActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putSerializable("detail_data", mDatas.get(position));
+            bundle.putSerializable("detail_data", mDatas.get(position - 1));
             intent.putExtras(bundle);
             startActivity(intent);
         }
