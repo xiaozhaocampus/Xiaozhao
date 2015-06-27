@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.MenuItem;
@@ -205,11 +206,7 @@ public class ResetPasswordActivity extends Activity {
 				Logger.d(TAG, "onNewThread: date= " + thread.getDate()
 						+ ", address=" + thread.getNumberList() + ", snippet=" + thread.getSnippet());
 				String smsCode = BmobUtil.getSmsCode(getApplicationContext(), thread.getSnippet());
-				if (!TextUtils.isEmpty(smsCode)) {
-					if (!isDestroyed()) {
-						mVerifyCodeEditText.setText(smsCode);
-					}
-				}
+				onGetSmsCode(smsCode);
 			}
 			
 			@Override
@@ -217,14 +214,28 @@ public class ResetPasswordActivity extends Activity {
 				Logger.d(TAG, "onNewSms: date=" + sms.getDate() + ", address="
 						+ sms.getAddress() + ", body=" + sms.getBody());
 				String smsCode = BmobUtil.getSmsCode(getApplicationContext(), sms.getBody());
-				if (!TextUtils.isEmpty(smsCode)) {
-					if (!isDestroyed()) {
-						mVerifyCodeEditText.setText(smsCode);
-					}
-				}
+				onGetSmsCode(smsCode);
 			}
 		});
 	}
+    
+    private void onGetSmsCode(String smsCode) {
+        if (TextUtils.isEmpty(smsCode)) {
+            Logger.w(TAG, "onGetSmsCode smsCode is empty");
+            return;
+        }
+        if (!isDestroyed()) {
+            mVerifyCodeEditText.setText(smsCode);
+            mVerifyCodeEditText.clearFocus();
+            EditText focusEditText = mVerifyCodeEditText;
+            if (mNewPwdEditText.hasFocus()) {
+                focusEditText = mNewPwdEditText;
+            } else if (mRepeatPwdEditText.hasFocus()) {
+                focusEditText = mRepeatPwdEditText;
+            }
+            Selection.setSelection(focusEditText.getText(), focusEditText.length());
+        }
+    }
     
     private void commitResetPassword() {
     	final ProgressDialog dialog = ProgressDialog.show(this, null, getString(R.string.loading_reset));
