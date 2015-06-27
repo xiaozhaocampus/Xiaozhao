@@ -7,4 +7,5 @@ public class Configuration {
     public static final int COUNT_INTERVAL = 1000;
     public static final String SMS_VERIFY_TEMPLATE = "template_1";
     public static final int SMS_CODE_LENGTH = 6;
+    public static final long SPLASH_START_UP_INTERVAL = 24 * 3600 * 1000;   // One day
 }

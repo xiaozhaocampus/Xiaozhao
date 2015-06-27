@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.RadioGroup;
 import cn.bmob.v3.Bmob;
+
+import com.campus.xiaozhao.Configuration;
 import com.campus.xiaozhao.Environment;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.utils.ApplicationInfo;
@@ -35,6 +37,15 @@ public class MainActivity extends FragmentActivity {
             }
         }
 		
+		if (Environment.ENABLE_SPLASH_ACTIVITY) {
+		    if (shouldShowSplash()) {
+    		    SplashActivity.startFrom(this);
+    		    finish();
+    		    return;
+		    }
+		}
+		
+		CampusSharePreference.setLastStartUpTime(getApplicationContext(), System.currentTimeMillis());
 		setupUI();
 	}
 
@@ -108,4 +119,8 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
 
+	private boolean shouldShowSplash() {
+	    long interval = System.currentTimeMillis() - CampusSharePreference.getLastStartUpTime(getApplicationContext());
+	    return interval >= Configuration.SPLASH_START_UP_INTERVAL;
+	}
 }
