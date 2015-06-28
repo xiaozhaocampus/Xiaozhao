@@ -1,6 +1,7 @@
 package com.campus.xiaozhao.activity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import android.content.Context;
 import android.content.Intent;
@@ -120,7 +121,27 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	private boolean shouldShowSplash() {
-	    long interval = System.currentTimeMillis() - CampusSharePreference.getLastStartUpTime(getApplicationContext());
+	    long lastStarUpTime = CampusSharePreference.getLastStartUpTime(getApplicationContext());
+	    long now = System.currentTimeMillis();
+	    
+	    Calendar calendar1 = Calendar.getInstance();
+	    calendar1.setTimeInMillis(lastStarUpTime);
+	    calendar1.set(Calendar.HOUR_OF_DAY, 24);
+	    calendar1.set(Calendar.HOUR, 0);
+	    calendar1.set(Calendar.MINUTE, 0);
+	    calendar1.set(Calendar.SECOND, 0);
+	    calendar1.set(Calendar.MILLISECOND, 0);
+	    
+	    Calendar calendar2 = Calendar.getInstance();
+	    calendar2.setTimeInMillis(now);
+	    calendar2.set(Calendar.HOUR_OF_DAY, 24);
+	    calendar2.set(Calendar.HOUR, 0);
+        calendar2.set(Calendar.MINUTE, 0);
+        calendar2.set(Calendar.SECOND, 0);
+        calendar2.set(Calendar.MILLISECOND, 0);
+	    
+        long interval = calendar2.getTimeInMillis() - calendar1.getTimeInMillis();
+        
 	    return interval >= Configuration.SPLASH_START_UP_INTERVAL;
 	}
 }
