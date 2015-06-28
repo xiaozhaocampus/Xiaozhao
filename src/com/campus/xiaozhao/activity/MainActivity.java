@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -33,16 +36,9 @@ public class MainActivity extends FragmentActivity {
 		// 初始化BmobSDK
 		Bmob.initialize(this, ApplicationInfo.APP_ID);
 		// 使用推送服务时的初始化操作
-	    BmobInstallation.getCurrentInstallation(this).save();
-	    // 启动推送服务
-	    BmobPush.startWork(this, ApplicationInfo.APP_ID);
-		if (Environment.ENABLE_SETUP_ACTIVITY) {
-            if (!CampusSharePreference.isLogin(this)) {
-	            SetupActivity.startFrom(this);
-	            finish();
-	            return;
-            }
-        }
+		BmobInstallation.getCurrentInstallation(this).save();
+		// 启动推送服务
+		BmobPush.startWork(this, ApplicationInfo.APP_ID);
 		
 		if (Environment.ENABLE_SPLASH_ACTIVITY) {
 		    if (shouldShowSplash()) {
@@ -95,6 +91,18 @@ public class MainActivity extends FragmentActivity {
 		int id = v.getId();
 		switch (v.getId()) {
 		case R.id.more_alarms:
+		    if (!CampusSharePreference.isLogin(this)) {
+		        new AlertDialog.Builder(this)
+		            .setTitle(R.string.dialog_title_login_hint)
+		            .setMessage(R.string.dialog_body_login)
+		            .setPositiveButton(R.string.ok, new OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            LoginActivity.startFrom(MainActivity.this);
+                        }
+                    }).create().show();
+		        return;
+		    }
 			break;
 		case R.id.more_feedback:
 			break;
