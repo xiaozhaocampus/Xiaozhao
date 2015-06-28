@@ -34,14 +34,6 @@ public class MainActivity extends FragmentActivity {
 		// 初始化BmobSDK
 		Bmob.initialize(this, ApplicationInfo.APP_ID);
 		
-//		if (Environment.ENABLE_SETUP_ACTIVITY) {
-//            if (!CampusSharePreference.isLogin(this)) {
-//	            SetupActivity.startFrom(this);
-//	            finish();
-//	            return;
-//            }
-//        }
-		
 		if (Environment.ENABLE_SPLASH_ACTIVITY) {
 		    if (shouldShowSplash()) {
     		    SplashActivity.startFrom(this);
