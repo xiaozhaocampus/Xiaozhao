@@ -3,6 +3,7 @@ package com.campus.xiaozhao.activity;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +11,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.RadioGroup;
+import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobInstallation;
 
 import com.campus.xiaozhao.Configuration;
 import com.campus.xiaozhao.Environment;
@@ -29,7 +32,10 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		// 初始化BmobSDK
 		Bmob.initialize(this, ApplicationInfo.APP_ID);
-		
+		// 使用推送服务时的初始化操作
+	    BmobInstallation.getCurrentInstallation(this).save();
+	    // 启动推送服务
+	    BmobPush.startWork(this, ApplicationInfo.APP_ID);
 		if (Environment.ENABLE_SETUP_ACTIVITY) {
             if (!CampusSharePreference.isLogin(this)) {
 	            SetupActivity.startFrom(this);
