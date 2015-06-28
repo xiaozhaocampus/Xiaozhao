@@ -37,6 +37,7 @@ public class LoginActivity extends Activity {
 	private EditText mPhoneEditText;
 	private EditText mPwdEditText;
 	private TextView mForgotPwdTextView;
+	private TextView mRegisterTextView;
 	private Button mAuthButton;
 	
 	@Override
@@ -87,15 +88,19 @@ public class LoginActivity extends Activity {
 		mPhoneEditText = (EditText) findViewById(R.id.phone_number_et);
 		mPwdEditText = (EditText) findViewById(R.id.password_et);
 		mForgotPwdTextView = (TextView) findViewById(R.id.forgot_password_tv);
+		mRegisterTextView = (TextView) findViewById(R.id.register_tv);
 		if (mType == UIType.Login) {
 			setTitle(R.string.login);
             mAuthButton.setText(R.string.login);
             mForgotPwdTextView.setVisibility(View.VISIBLE);
             mForgotPwdTextView.setPaintFlags(mForgotPwdTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            mRegisterTextView.setVisibility(View.VISIBLE);
+            mRegisterTextView.setPaintFlags(mRegisterTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 		} else if (mType == UIType.Register) {
 			setTitle(R.string.register);
             mAuthButton.setText(R.string.next_step);
             mForgotPwdTextView.setVisibility(View.GONE);
+            mRegisterTextView.setVisibility(View.GONE);
 		}
 	}
 	
@@ -105,6 +110,10 @@ public class LoginActivity extends Activity {
 	        return;
 	    }
 	    ResetPasswordActivity.startFrom(this);
+	}
+	
+	public void clickOnRegister(View view) {
+	    RegisterActivity.startFrom(this);
 	}
 	
 	public void onClickAuth(View view) {

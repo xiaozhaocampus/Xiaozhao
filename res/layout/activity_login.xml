@@ -40,12 +40,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/password_et"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="8dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="15dp"
         android:padding="3dp"
         android:clickable="true"
         android:onClick="clickOnForgotPassword"
         android:text="@string/forgot_password"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="16sp" />
+    
+    <TextView
+        android:id="@+id/register_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password_et"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:padding="3dp"
+        android:clickable="true"
+        android:onClick="clickOnRegister"
+        android:text="@string/quick_register"
         android:textColor="@android:color/darker_gray"
         android:textSize="16sp" />
     
