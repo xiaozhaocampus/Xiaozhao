@@ -10,3 +10,5 @@
 /third_party/library/gen
 /third_party/pulltorefresh/bin
 /third_party/pulltorefresh/gen
+
+*.iml
