@@ -8,13 +8,15 @@ import android.widget.Toast;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
 import com.campus.xiaozhao.basic.db.CampusDBProcessor;
 import com.campus.xiaozhao.basic.utils.DateUtils;
+import com.component.logger.Logger;
 
 /**
  * Created by frankenliu on 2015/6/1.
  */
 public class CampusAlarmManager {
+    private static final String TAG = "CampusAlarmManager";
     private static volatile CampusAlarmManager mAlarmManager;
-    private static final long REMIND_TIME_DISTANCE = 6 * 60 * 60 * 1000;
+    private static final long REMIND_TIME_DISTANCE = 1 * 60 * 60 * 1000;
 
     private CampusAlarmManager() {
 
@@ -42,6 +44,7 @@ public class CampusAlarmManager {
         intent.putExtra("campus_id", campusID);
         PendingIntent send = PendingIntent.getBroadcast(context, getIdByDB(context, campusID), intent, 0);
         manager.set(AlarmManager.RTC_WAKEUP, time, send);
+        Logger.d(TAG, "set alarm success");
     }
 
     /**

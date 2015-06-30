@@ -23,6 +23,8 @@ public class CampusAlarmReceiver extends BroadcastReceiver {
     private PowerManager.WakeLock mWakeLock;
     @Override
     public void onReceive(Context context, Intent intent) {
+        String action = intent.getAction();
+        Logger.d(TAG, "action:" + action);
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Intent resIntent = new Intent(context, CampusDetailActivity.class);
         resIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
