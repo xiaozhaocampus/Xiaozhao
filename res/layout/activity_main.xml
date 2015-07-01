@@ -5,8 +5,7 @@
     <FrameLayout
         android:id="@+id/tab_content"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="#77557799" />
+        android:layout_height="fill_parent" />
 
     <RadioGroup
         android:id="@+id/tabs_rg"

@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
+import com.campus.xiaozhao.basic.db.CampusDBProcessor;
 import com.campus.xiaozhao.basic.utils.DateUtils;
 
 import java.util.List;
@@ -47,14 +49,28 @@ public class CampusInfoAdapter extends BaseAdapter {
             holder.mTitle = (TextView) convertView.findViewById(R.id.info_list_title);
             holder.mAddress = (TextView) convertView.findViewById(R.id.info_list_address);
             holder.mTime = (TextView) convertView.findViewById(R.id.info_list_time);
+            holder.mLocation = (ImageView) convertView.findViewById(R.id.info_list_location);
+            holder.mIsSave = (ImageView) convertView.findViewById(R.id.info_list_is_save);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         CampusInfoItemData itemData = mDatas.get(position);
+        CampusInfoItemData itemData1 = CampusDBProcessor.getInstance(mContext).getCampusInfoByCampsuID(itemData.getCampusID());
+        if(itemData1 != null) {
+            itemData.setIsRemind(itemData1.isRemind());
+            itemData.setRemindType(itemData1.getRemindType());
+        }
         holder.mTitle.setText(itemData.getTitle());
         holder.mAddress.setText(itemData.getAddress());
         holder.mTime.setText(DateUtils.transferTimeToDate(itemData.getTime()));
+        if(itemData.isRemind()) {
+            holder.mLocation.setImageResource(R.drawable.fragment_info_location_off);
+            holder.mIsSave.setVisibility(View.VISIBLE);
+        } else {
+            holder.mLocation.setImageResource(R.drawable.fragment_info_location_on);
+            holder.mIsSave.setVisibility(View.INVISIBLE);
+        }
         return convertView;
     }
 
@@ -62,5 +78,7 @@ public class CampusInfoAdapter extends BaseAdapter {
         public TextView mTitle;
         public TextView mAddress;
         public TextView mTime;
+        public ImageView mLocation;
+        public ImageView mIsSave;
     }
 }
