@@ -13,8 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.ImageView;
 import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobInstallation;
@@ -30,6 +29,10 @@ import com.component.logger.Logger;
 
 public class MainActivity extends FragmentActivity {
 	private static final String TAG = "MainActivity";
+    private ImageView infoFragmentView;
+    private ImageView selfFragmentView;
+    private Fragment mInfoFragment;
+    private Fragment mSelfFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,35 +67,12 @@ public class MainActivity extends FragmentActivity {
     private void setupUI() {
 		setContentView(R.layout.activity_main);
 		Logger.d(TAG, "setup UI");
-		List<Fragment> fragments = new ArrayList<Fragment>();
-		Fragment meFragment = new MeFragment();
-		Fragment infoFragment = new InfoFragment();
-		fragments.add(infoFragment);
-		fragments.add(meFragment);
+		mSelfFragment = new MeFragment();
+		mInfoFragment = new InfoFragment();
 
-		RadioGroup rgs = (RadioGroup) findViewById(R.id.tabs_rg);
-
-		FragmentTabAdapter tabAdapter = new FragmentTabAdapter(this, fragments,
-				R.id.tab_content, rgs);
-		tabAdapter
-				.setOnRgsExtraCheckedChangedListener(new FragmentTabAdapter.OnRgsExtraCheckedChangedListener() {
-					@Override
-					public void OnRgsExtraCheckedChanged(RadioGroup radioGroup,
-														 int checkedId, int index) {
-						System.out.println("Extra---- " + index
-								+ " checked!!! ");
-						RadioButton infoBtn = (RadioButton)radioGroup.findViewById(R.id.tab_rb_d);
-						RadioButton meBtn = (RadioButton)radioGroup.findViewById(R.id.tab_rb_d);
-						if(index == 0) {
-							infoBtn.setTop(R.drawable.fragment_info_on);
-							meBtn.setTop(R.drawable.fragment_self_off);
-						} else if(index == 1) {
-							infoBtn.setTop(R.drawable.fragment_info_off);
-							meBtn.setTop(R.drawable.fragment_self_on);
-						}
-					}
-				});
-
+        infoFragmentView = (ImageView) findViewById(R.id.fragment_info);
+        selfFragmentView = (ImageView) findViewById(R.id.fragment_self);
+        getSupportFragmentManager().beginTransaction().add(R.id.tab_content, mInfoFragment).commit();
     }
 
 	// TODO:处理各个点击事件
@@ -118,6 +98,31 @@ public class MainActivity extends FragmentActivity {
 			break;
 		case R.id.more_check_new_ver:
 			break;
+
+        case R.id.fragment_info:
+            infoFragmentView.setImageResource(R.drawable.fragment_info_on);
+            selfFragmentView.setImageResource(R.drawable.fragment_self_off);
+            if(mSelfFragment.isAdded()) {
+                mSelfFragment.onPause();
+                getSupportFragmentManager().beginTransaction().hide(mSelfFragment).commit();
+                mInfoFragment.onResume();
+
+            }
+            getSupportFragmentManager().beginTransaction().show(mInfoFragment).commit();
+            break;
+        case R.id.fragment_self:
+            infoFragmentView.setImageResource(R.drawable.fragment_info_off);
+            selfFragmentView.setImageResource(R.drawable.fragment_self_on);
+            getSupportFragmentManager().beginTransaction().hide(mInfoFragment).commit();
+            if(mSelfFragment.isAdded()) {
+                mInfoFragment.onPause();
+                mSelfFragment.onResume();
+                getSupportFragmentManager().beginTransaction().show(mSelfFragment).commit();
+            } else {
+                getSupportFragmentManager().beginTransaction().add(R.id.tab_content, mSelfFragment).commit();
+            }
+            break;
+
 		}
 		startActivityById(id);
 	}
