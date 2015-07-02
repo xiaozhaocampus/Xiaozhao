@@ -62,6 +62,14 @@ public class InfoFragment extends Fragment implements Handler.Callback{
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mInfoAdapter != null) {
+            mInfoAdapter.notifyDataSetChanged();
+        }
+    }
+
     private void initData() {
         mHandler = new Handler(this);
         BaiDuLocationManager.getInstance().start(getActivity(), mHandler);

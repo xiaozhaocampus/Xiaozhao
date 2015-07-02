@@ -39,8 +39,8 @@
         android:id="@+id/info_list_location"
         android:layout_below="@id/info_list_first"
         android:layout_marginLeft="@dimen/campus_info_list_margin_left"
-        android:layout_width="10dp"
-        android:layout_height="10dp"/>
+        android:layout_width="@dimen/campus_info_list_location_size"
+        android:layout_height="@dimen/campus_info_list_location_size"/>
 
     <TextView
         android:id="@+id/info_list_address"
@@ -49,14 +49,15 @@
         android:layout_marginLeft="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/campus_info_list_address_size"/>
+        android:textSize="@dimen/campus_info_list_address_size"
+        android:textColor="@color/campus_info_list_gray_color"/>
 
     <ImageView
         android:id="@+id/info_list_is_save"
         android:layout_below="@id/info_list_first"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
+        android:layout_width="@dimen/campus_info_list_is_save_size"
+        android:layout_height="@dimen/campus_info_list_is_save_size"
         android:src="@drawable/fragment_info_alarm"/>
 </RelativeLayout>

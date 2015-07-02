@@ -67,6 +67,8 @@ public class CampusInfoAdapter extends BaseAdapter {
         if(itemData.isRemind()) {
             holder.mLocation.setImageResource(R.drawable.fragment_info_location_off);
             holder.mIsSave.setVisibility(View.VISIBLE);
+            holder.mTitle.setTextColor(mContext.getResources().getColor(R.color.campus_info_list_gray_color));
+            holder.mTime.setTextColor(mContext.getResources().getColor(R.color.campus_info_list_gray_color));
         } else {
             holder.mLocation.setImageResource(R.drawable.fragment_info_location_on);
             holder.mIsSave.setVisibility(View.INVISIBLE);

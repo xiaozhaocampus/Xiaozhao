@@ -16,6 +16,8 @@
     <dimen name="campus_info_list_title_size">15sp</dimen>
     <dimen name="campus_info_list_date_size">12sp</dimen>
     <dimen name="campus_info_list_address_size">10sp</dimen>
+    <dimen name="campus_info_list_is_save_size">17dp</dimen>
+    <dimen name="campus_info_list_location_size">11dp</dimen>
 
     <!-- -->
     <dimen name="fragment_switch_height">49dp</dimen>
