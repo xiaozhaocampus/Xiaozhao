@@ -9,12 +9,15 @@
     <dimen name="campus_detail_text_size">18sp</dimen>
     <dimen name="campus_detail_button_size">240dp</dimen>
     
-    <!-- -->
+    <!-- 校招信息list参数设定-->
     <dimen name="campus_info_list_height">65dp</dimen>
     <dimen name="campus_info_list_margin_left">15dp</dimen>
     <dimen name="campus_info_list_margin_top">12dp</dimen>
     <dimen name="campus_info_list_title_size">15sp</dimen>
     <dimen name="campus_info_list_date_size">12sp</dimen>
     <dimen name="campus_info_list_address_size">10sp</dimen>
+
+    <!-- -->
+    <dimen name="fragment_switch_height">49dp</dimen>
 
 </resources>

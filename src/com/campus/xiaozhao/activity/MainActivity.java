@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
@@ -68,7 +69,7 @@ public class MainActivity extends FragmentActivity {
 		Fragment infoFragment = new InfoFragment();
 		fragments.add(infoFragment);
 		fragments.add(meFragment);
-		
+
 		RadioGroup rgs = (RadioGroup) findViewById(R.id.tabs_rg);
 
 		FragmentTabAdapter tabAdapter = new FragmentTabAdapter(this, fragments,
@@ -77,9 +78,18 @@ public class MainActivity extends FragmentActivity {
 				.setOnRgsExtraCheckedChangedListener(new FragmentTabAdapter.OnRgsExtraCheckedChangedListener() {
 					@Override
 					public void OnRgsExtraCheckedChanged(RadioGroup radioGroup,
-							int checkedId, int index) {
+														 int checkedId, int index) {
 						System.out.println("Extra---- " + index
 								+ " checked!!! ");
+						RadioButton infoBtn = (RadioButton)radioGroup.findViewById(R.id.tab_rb_d);
+						RadioButton meBtn = (RadioButton)radioGroup.findViewById(R.id.tab_rb_d);
+						if(index == 0) {
+							infoBtn.setTop(R.drawable.fragment_info_on);
+							meBtn.setTop(R.drawable.fragment_self_off);
+						} else if(index == 1) {
+							infoBtn.setTop(R.drawable.fragment_info_off);
+							meBtn.setTop(R.drawable.fragment_self_on);
+						}
 					}
 				});
 
