@@ -12,3 +12,5 @@
 /third_party/pulltorefresh/gen
 
 *.iml
+
+third_party/ViewPagerIndicator/ViewPagerIndicator.iml
