@@ -22,4 +22,8 @@
     <!-- tab底部切换参数设定 -->
     <dimen name="fragment_switch_height">49dp</dimen>
 
+    <!-- ActionBar参数设定 -->
+    <dimen name="actionbar_height">44dp</dimen>
+    <dimen name="actionbar_margin_left">10dp</dimen>
+
 </resources>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
@@ -66,6 +68,24 @@ public class MainActivity extends FragmentActivity {
 
     private void setupUI() {
 		setContentView(R.layout.activity_main);
+
+		final ActionBar actionBar = getActionBar();
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+		actionBar.setCustomView(R.layout.actionbar_layout);
+		actionBar.getCustomView().setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				switch (v.getId()) {
+					case R.id.actionbar_settings:
+						Logger.d(TAG, "actionbar settings click");
+						break;
+					case R.id.actionbar_location_city:
+						Logger.d(TAG, "actionbar location city click");
+						break;
+				}
+			}
+		});
+
 		Logger.d(TAG, "setup UI");
 		mSelfFragment = new MeFragment();
 		mInfoFragment = new InfoFragment();
