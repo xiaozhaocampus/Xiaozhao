@@ -30,7 +30,8 @@ public class CampusDBProcessor {
             CampusModel.CampusInfoItemColumn.TIME,
             CampusModel.CampusInfoItemColumn.VERSION,
             CampusModel.CampusInfoItemColumn.IS_REMIND,
-            CampusModel.CampusInfoItemColumn.REMIND_TYPE
+            CampusModel.CampusInfoItemColumn.REMIND_TYPE,
+            CampusModel.CampusInfoItemColumn.REMIND_TIME
     };
 
     private static volatile CampusDBProcessor mInstance;
@@ -216,6 +217,7 @@ public class CampusDBProcessor {
                         itemData.setVersion(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.VERSION)));
                         itemData.setIsRemind(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.IS_REMIND)) > 0 ? true : false);
                         itemData.setRemindType(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.REMIND_TYPE)));
+                        itemData.setRemindTime(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.REMIND_TIME)));
                         list.add(itemData);
                     }
                 }
@@ -259,6 +261,7 @@ public class CampusDBProcessor {
                         itemData.setVersion(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.VERSION)));
                         itemData.setIsRemind(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.IS_REMIND)) > 0 ? true : false);
                         itemData.setRemindType(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.REMIND_TYPE)));
+                        itemData.setRemindTime(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.REMIND_TIME)));
                         return itemData;
                     }
                 }

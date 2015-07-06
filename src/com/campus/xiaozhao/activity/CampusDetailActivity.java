@@ -53,6 +53,12 @@ public class CampusDetailActivity extends Activity {
      * 设置Button的状态
      */
     private void setButtonState() {
+        // 校招时间小于或等于当前时间
+        if(mItemData.getTime() <= System.currentTimeMillis()) {
+            mSetRemind.setText("信息过期");
+            mSetRemind.setClickable(false);
+            return;
+        }
         final CampusInfoItemData itemData = mDBProcessor.getCampusInfoByCampsuID(mItemData.getCampusID());
         if(itemData != null) {
             mItemData.setIsRemind(itemData.isRemind());

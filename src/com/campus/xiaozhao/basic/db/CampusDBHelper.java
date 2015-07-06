@@ -33,7 +33,8 @@ public class CampusDBHelper extends SQLiteOpenHelper {
             + CampusModel.CampusInfoItemColumn.TIME + " LONG DEFAULT -1,"
             + CampusModel.CampusInfoItemColumn.VERSION + " LONG DEFAULT -1,"
             + CampusModel.CampusInfoItemColumn.IS_REMIND + " INTEGER NOT NULL DEFAULT 0,"
-            + CampusModel.CampusInfoItemColumn.REMIND_TYPE + " INTEGER NOT NULL DEFAULT 0);";
+            + CampusModel.CampusInfoItemColumn.REMIND_TYPE + " INTEGER NOT NULL DEFAULT 0,"
+            + CampusModel.CampusInfoItemColumn.REMIND_TIME + " LONG DEFAULT -1);";
 
     /** 删除 校招信息数据表 */
     public static final String DROP_TABLE_CAMPUS_INFO = "DROP TABLE IF EXISTS " + TABLE_CAMPUS_INFO;

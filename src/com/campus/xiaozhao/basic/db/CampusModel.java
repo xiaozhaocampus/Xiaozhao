@@ -43,5 +43,8 @@ public class CampusModel {
 
         /** 用户设置此校招的提醒频率类型 */
         public static final String REMIND_TYPE = "remind_type";
+
+        /** 用户设置此校招的提醒时间(只有REMIND_TYPE为自定义时有效) */
+        public static final String REMIND_TIME = "remind_time";
     }
 }
