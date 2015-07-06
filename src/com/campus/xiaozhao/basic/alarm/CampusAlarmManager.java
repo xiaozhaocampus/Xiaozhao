@@ -7,8 +7,11 @@ import android.content.Intent;
 import android.widget.Toast;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
 import com.campus.xiaozhao.basic.db.CampusDBProcessor;
+import com.campus.xiaozhao.basic.db.CampusModel;
 import com.campus.xiaozhao.basic.utils.DateUtils;
 import com.component.logger.Logger;
+
+import java.util.List;
 
 /**
  * Created by frankenliu on 2015/6/1.
@@ -107,6 +110,23 @@ public class CampusAlarmManager {
             Toast.makeText(context, "距离校招开始还有不到6小时的时间, 请做好准备!", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(context, "系统将于" + DateUtils.transferTimeToDate(res) + "提醒您!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * 重新设定Alarm定时，主要用于用于再次启动或手机重启
+     * @param context
+     */
+    public void resetAllAlarm(Context context) {
+        CampusDBProcessor processor = CampusDBProcessor.getInstance(context);
+        String whereClause = CampusModel.CampusInfoItemColumn.IS_REMIND + " =?";
+        String[] whereArgs = new String[]{String.valueOf(true)};
+        List<CampusInfoItemData> list = processor.getCampusInfos(whereClause, whereArgs, null);
+        if(list != null && list.size() > 0) {
+            for(CampusInfoItemData data : list) {
+                stopAlarm(context, data.getCampusID());
+                setCampusAlarm(context, data.getTime(), data.getCampusID());
+            }
         }
     }
 }

@@ -146,6 +146,7 @@ public class InfoFragment extends Fragment implements Handler.Callback{
                 BDLocation location = (BDLocation) msg.obj;
                 mLocation.setText(location.getCity());
                 Logger.d(TAG, "location:" + location.getCity());
+                BaiDuLocationManager.getInstance().stop();
                 break;
             case MSG_RECEIVE_DATA_FROM_BMOB:
                 mInfoAdapter.notifyDataSetChanged();
