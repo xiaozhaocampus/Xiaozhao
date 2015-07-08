@@ -19,4 +19,15 @@ public class RemindType {
     public static final int REMIND_TYPE_SIX_HOUR = 5;
     /** 自定义提醒时间 */
     public static final int REMIND_TYPE_SELF_DEFINE = 6;
+
+    public static final String REMIND_NAME_15_MINUTES = "提前15分钟";
+    public static final String REMIND_NAME_30_MINUTES = "提前30分钟";
+    public static final String REMIND_NAME_1_HOUR = "提前1小时";
+    public static final String REMIND_NAME_3_HOUR = "提前3小时";
+    public static final String REMIND_NAME_6_HOUR = "提前6小时";
+
+    public static final String[] REMIND_TYPES = new String[]{
+        REMIND_NAME_15_MINUTES, REMIND_NAME_30_MINUTES,
+        REMIND_NAME_1_HOUR, REMIND_NAME_3_HOUR, REMIND_NAME_6_HOUR
+    };
 }

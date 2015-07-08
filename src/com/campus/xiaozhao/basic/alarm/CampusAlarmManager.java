@@ -19,7 +19,6 @@ import java.util.List;
 public class CampusAlarmManager {
     private static final String TAG = "CampusAlarmManager";
     private static volatile CampusAlarmManager mAlarmManager;
-    private static final long REMIND_TIME_DISTANCE = 1 * 60 * 60 * 1000;
 
     private CampusAlarmManager() {
 
@@ -69,7 +68,7 @@ public class CampusAlarmManager {
      * @param time 校招信息的时间
      */
     public long setCampusAlarm(Context context, long time, String campusID) {
-        long res = checkTime(time);
+        long res = DateUtils.checkTime(time);
         showTips(context, res);
         if(res > 0) {
             startAlarm(context, res, campusID);
@@ -90,18 +89,7 @@ public class CampusAlarmManager {
         return -1;
     }
 
-    public long checkTime(long time) {
-        long res;
-        long subTime = time - System.currentTimeMillis();
-        if(subTime < 0) {
-            res = -1;
-        } else if(subTime < REMIND_TIME_DISTANCE) {
-            res = 0;
-        } else {
-            res = time - REMIND_TIME_DISTANCE;
-        }
-        return res;
-    }
+
 
     public void showTips(Context context, long res) {
         if(res < 0) {
