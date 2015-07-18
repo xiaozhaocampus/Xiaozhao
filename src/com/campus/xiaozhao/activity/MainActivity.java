@@ -1,8 +1,6 @@
 package com.campus.xiaozhao.activity;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
@@ -14,7 +12,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
@@ -45,6 +42,12 @@ public class MainActivity extends FragmentActivity {
 		BmobInstallation.getCurrentInstallation(this).save();
 		// 启动推送服务
 		BmobPush.startWork(this, ApplicationInfo.APP_ID);
+		
+		if (Environment.DEBUG_LOGIN_ACTIVITY) {
+		    LoginActivity.startFrom(this);
+		    finish();
+		    return;
+		}
 		
 		if (Environment.ENABLE_SPLASH_ACTIVITY) {
 		    if (shouldShowSplash()) {

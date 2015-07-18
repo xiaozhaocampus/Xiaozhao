@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.bmob.v3.BmobUser;
@@ -55,8 +56,15 @@ public class LoginActivity extends Activity {
         Logger.d(TAG, "onCreate: mType=" + mType);
         
         ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setCustomView(R.layout.actionbar_login);
+        actionBar.getCustomView().findViewById(R.id.actionbar_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         
         init();
 	}
@@ -84,23 +92,28 @@ public class LoginActivity extends Activity {
 	}
 	
 	private void init() {
+	    ActionBar actionBar = getActionBar();
+        TextView titleTextView = (TextView) actionBar.getCustomView().findViewById(R.id.title_tv);
+        FrameLayout photoLayout = (FrameLayout) findViewById(R.id.photo_fl);
 		mAuthButton = (Button) findViewById(R.id.auth_btn);
 		mPhoneEditText = (EditText) findViewById(R.id.phone_number_et);
 		mPwdEditText = (EditText) findViewById(R.id.password_et);
 		mForgotPwdTextView = (TextView) findViewById(R.id.forgot_password_tv);
 		mRegisterTextView = (TextView) findViewById(R.id.register_tv);
 		if (mType == UIType.Login) {
-			setTitle(R.string.login);
+			titleTextView.setText(R.string.login);
             mAuthButton.setText(R.string.login);
             mForgotPwdTextView.setVisibility(View.VISIBLE);
             mForgotPwdTextView.setPaintFlags(mForgotPwdTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             mRegisterTextView.setVisibility(View.VISIBLE);
             mRegisterTextView.setPaintFlags(mRegisterTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            photoLayout.setVisibility(View.VISIBLE);
 		} else if (mType == UIType.Register) {
-			setTitle(R.string.register);
+			titleTextView.setText(R.string.register);
             mAuthButton.setText(R.string.next_step);
             mForgotPwdTextView.setVisibility(View.GONE);
             mRegisterTextView.setVisibility(View.GONE);
+            photoLayout.setVisibility(View.GONE);
 		}
 	}
 	
