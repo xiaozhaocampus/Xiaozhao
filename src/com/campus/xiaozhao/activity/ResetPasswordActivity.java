@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import cn.bmob.v3.BmobSMS;
@@ -52,10 +53,18 @@ public class ResetPasswordActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
         
-        setTitle(R.string.label_forgot_password);
         ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setCustomView(R.layout.actionbar_login);
+        actionBar.getCustomView().findViewById(R.id.actionbar_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        TextView titleTextView = (TextView) actionBar.getCustomView().findViewById(R.id.title_tv);
+        titleTextView.setText(R.string.label_forgot_password);
         
         mVerifyCodeEditText = (EditText) findViewById(R.id.verification_code_et);
         mCountDownTimerView = (CountDownTimerView) findViewById(R.id.request_verification_code);
