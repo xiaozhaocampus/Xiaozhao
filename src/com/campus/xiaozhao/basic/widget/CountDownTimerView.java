@@ -1,11 +1,11 @@
 package com.campus.xiaozhao.basic.widget;
 
-import com.campus.xiaozhao.R;
-
 import android.content.Context;
 import android.os.CountDownTimer;
 import android.util.AttributeSet;
 import android.widget.Button;
+
+import com.campus.xiaozhao.R;
 
 
 public class CountDownTimerView extends Button {
@@ -58,6 +58,11 @@ public class CountDownTimerView extends Button {
 
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
+        int bgId = R.drawable.get_verify_code_btn_valid;
+        if (!enabled) {
+            bgId = R.drawable.get_verify_code_btn_invalid;
+        }
+        setBackground(getResources().getDrawable(bgId));
     }
 
     public void setOnCountDownListener(OnCountDownListener onCountDownListener) {

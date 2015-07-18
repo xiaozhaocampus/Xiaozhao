@@ -63,10 +63,17 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
 		Logger.d(TAG, "onCreate: phone number: " + mPhoneNumber);
 		
 		ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
-        
-        setTitle(R.string.label_verification_title);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setCustomView(R.layout.actionbar_login);
+        actionBar.getCustomView().findViewById(R.id.actionbar_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        TextView titleTextView = (TextView) actionBar.getCustomView().findViewById(R.id.title_tv);
+        titleTextView.setText(R.string.label_verification_title);
         
         mNumberTextView = (TextView) findViewById(R.id.phone_number_tv);
         mNumberTextView.setText(mPhoneNumber);

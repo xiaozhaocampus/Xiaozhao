@@ -2,10 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/login_bg"
     tools:context=".VerifyNumberActivity" >
 
     <TextView
@@ -15,8 +12,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="@string/verification_content_hint"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="15sp" />
+        android:textColor="#a3a3a3"
+        android:textSize="16sp" />
     
     <TextView
         android:id="@+id/phone_number_tv"
@@ -27,42 +24,54 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:textIsSelectable="true"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="18sp" />
+        android:textColor="#a3a3a3"
+        android:textSize="20sp" />
     
-    <EditText
-        android:id="@+id/verification_code_et"
+    <RelativeLayout 
+        android:id="@+id/verify_fl"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/phone_number_tv"
-        android:layout_marginTop="20dp"
-        android:gravity="left|center"
-        android:paddingLeft="10dp"
-        android:hint="@string/verification_edit_hint"
-        android:inputType="number"
-        android:textColorHint="@android:color/darker_gray"
-        android:textSize="18sp" />
+        android:layout_marginTop="20dp" >
     
-    <com.campus.xiaozhao.basic.widget.CountDownTimerView
-        android:id="@+id/request_verification_code"
-        android:layout_width="200dp"
-        android:layout_height="40dip"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/verification_code_et"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/green_btn_bg"
-        android:onClick="clickOnGetVerificationCode"
-        android:textColor="@android:color/white"
-        android:textSize="16.0sp" />
+	    <EditText
+	        android:id="@+id/verification_code_et"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerInParent="true"
+	        android:gravity="left|center"
+	        android:paddingLeft="10dp"
+	        android:drawableLeft="@drawable/ic_verify_code"
+	        android:drawablePadding="10dp"
+	        android:background="@drawable/input_bg"
+	        android:hint="@string/verification_edit_hint"
+	        android:inputType="number"
+	        android:textColorHint="@android:color/darker_gray"
+	        android:textSize="18sp" />
+	    
+	    <com.campus.xiaozhao.basic.widget.CountDownTimerView
+	        android:id="@+id/request_verification_code"
+	        android:layout_width="wrap_content"
+	        android:layout_height="33dp"
+	        android:layout_centerVertical="true"
+	        android:layout_alignRight="@id/verification_code_et"
+	        android:layout_marginRight="10dp"
+	        android:background="@drawable/get_verify_code_btn_invalid"
+	        android:onClick="clickOnGetVerificationCode"
+	        android:textColor="@android:color/white"
+	        android:textSize="14sp" />
+    </RelativeLayout>
     
     <Button
-        android:layout_width="fill_parent"
-        android:layout_height="52dp"
-        android:layout_marginTop="16.0dip"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/verify_fl"
+        android:layout_marginTop="53dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/login_btn_bg"
         android:onClick="clickOnCommit"
         android:text="@string/commit"
+        android:textColor="@color/white"
         android:textSize="17sp" />
 
 </RelativeLayout>
