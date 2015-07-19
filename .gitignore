@@ -14,3 +14,7 @@
 *.iml
 
 third_party/ViewPagerIndicator/ViewPagerIndicator.iml
+/third_party/SlidingMenu/bin
+/third_party/SlidingMenu/gen
+/third_party/actionbarsherlock/bin
+/third_party/actionbarsherlock/gen

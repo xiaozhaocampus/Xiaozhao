@@ -10,7 +10,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import cn.bmob.push.BmobPush;
@@ -25,16 +25,19 @@ import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.campus.xiaozhao.fragment.InfoFragment;
 import com.campus.xiaozhao.fragment.MeFragment;
 import com.component.logger.Logger;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends SlidingFragmentActivity {
 	private static final String TAG = "MainActivity";
     private ImageView infoFragmentView;
     private ImageView selfFragmentView;
     private Fragment mInfoFragment;
     private Fragment mSelfFragment;
+    private SlidingMenu menu;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// 初始化BmobSDK
 		Bmob.initialize(this, ApplicationInfo.APP_ID);
@@ -70,21 +73,23 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void setupUI() {
-		setContentView(R.layout.activity_main);
+    	final View main = LayoutInflater.from(this).inflate(R.layout.activity_main, null);
+    	setContentView(main);
+//		setContentView(R.layout.activity_main);
 
 		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		actionBar.setCustomView(R.layout.actionbar_main);
 		actionBar.getCustomView().findViewById(R.id.actionbar_location_city).setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View arg0) {
+			public void onClick(View v) {
 				Logger.d(TAG, "actionbar location city click");
 			}
 		});
 		actionBar.getCustomView().findViewById(R.id.actionbar_settings).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Logger.d(TAG, "actionbar settings click");
+				toggle();
 			}
 		});
 
@@ -95,6 +100,16 @@ public class MainActivity extends FragmentActivity {
         infoFragmentView = (ImageView) findViewById(R.id.fragment_info);
         selfFragmentView = (ImageView) findViewById(R.id.fragment_self);
         getSupportFragmentManager().beginTransaction().add(R.id.tab_content, mInfoFragment).commit();
+        
+        setBehindContentView(R.layout.settings);
+        menu = getSlidingMenu();
+        menu.setMode(SlidingMenu.RIGHT);
+		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+		menu.setAboveOffsetRes(R.dimen.slidingmenu_offset);
+		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		menu.setFadeDegree(0.35f);
+		menu.setMenu(R.layout.settings);
+		menu.setBackgroundResource(R.drawable.main_bg);
     }
 
 	// TODO:处理各个点击事件
