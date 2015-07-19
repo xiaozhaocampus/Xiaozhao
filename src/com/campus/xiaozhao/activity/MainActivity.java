@@ -74,18 +74,17 @@ public class MainActivity extends FragmentActivity {
 
 		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-		actionBar.setCustomView(R.layout.actionbar_layout);
-		actionBar.getCustomView().setOnClickListener(new View.OnClickListener() {
+		actionBar.setCustomView(R.layout.actionbar_main);
+		actionBar.getCustomView().findViewById(R.id.actionbar_location_city).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Logger.d(TAG, "actionbar location city click");
+			}
+		});
+		actionBar.getCustomView().findViewById(R.id.actionbar_settings).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				switch (v.getId()) {
-					case R.id.actionbar_settings:
-						Logger.d(TAG, "actionbar settings click");
-						break;
-					case R.id.actionbar_location_city:
-						Logger.d(TAG, "actionbar location city click");
-						break;
-				}
+				Logger.d(TAG, "actionbar settings click");
 			}
 		});
 

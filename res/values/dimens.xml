@@ -25,5 +25,6 @@
     <!-- ActionBar参数设定 -->
     <dimen name="actionbar_height">50dp</dimen>
     <dimen name="actionbar_margin_left">10dp</dimen>
+    <dimen name="actionbar_title_size">20dp</dimen>
 
 </resources>

@@ -93,5 +93,6 @@
     </string-array>
 
     <string name="sms_snippet_template_1">您的验证码是</string>
+    <string name="city_wuhan">武汉</string>
 
 </resources>
