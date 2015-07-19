@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="52dp" 
+    android:paddingLeft="20dp"
+    android:paddingRight="15dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
+    android:layout_marginLeft="9dp"
+    android:layout_marginRight="9dp"
+    android:background="@drawable/bg_me_page_listview_item_background">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#333333"
+        android:textSize="14sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:text="中兴集团武汉大学宣讲会"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/time"
+		android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+		android:textSize="9sp"
+        android:textColor="#333333"
+        android:text="9月28日 4:30"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/place"
+		android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:drawablePadding="6dp"
+        android:drawableLeft="@drawable/ic_place"
+        android:textColor="#999999"
+        android:text="华中科大学生活动中心"        
+        android:gravity="center" />
+
+    <TextView
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/over"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:textColor="#D24E3E"
+        android:text="已过期"
+        android:gravity="center" />
+
+</RelativeLayout>

@@ -9,5 +9,8 @@
     <color name="fragment_switch_bg">#f6f6f6</color>
     <color name="main">#e95644</color>
     <color name="login_bg">#ececec</color>
+    <color name="indicator_bg">#f2D4D4</color>
+    <color name="indicator_focused">#F1BFBF</color>
     
 </resources>
+
