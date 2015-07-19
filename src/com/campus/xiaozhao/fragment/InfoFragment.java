@@ -52,7 +52,7 @@ public class InfoFragment extends Fragment implements Handler.Callback{
         View view = inflater.inflate(R.layout.activity_info, container, false);
         mCampusList = (PullToRefreshListView) view.findViewById(R.id.campus_list);
         mCampusList.setMode(PullToRefreshBase.Mode.BOTH);
-        mLocation = (TextView) view.findViewById(R.id.location);
+        mLocation = (TextView) getActivity().findViewById(R.id.actionbar_location_city);
         String location = CampusSharePreference.getLocation(getActivity());
         if(TextUtils.isEmpty(location)) {
             location = "暂无定位";
