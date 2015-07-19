@@ -7,11 +7,12 @@
 
     <ImageView
         android:id="@+id/actionbar_back"
-        android:layout_marginLeft="@dimen/actionbar_margin_left"
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/arrow_left"
+        android:scaleType="center"
+        android:src="@drawable/back_arrow_src"
+        android:background="@drawable/back_arrow_bg"
         android:clickable="true"
         android:contentDescription="@null" />
 
