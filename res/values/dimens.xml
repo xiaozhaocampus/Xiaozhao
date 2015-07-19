@@ -10,12 +10,12 @@
     <dimen name="campus_detail_button_size">240dp</dimen>
     
     <!-- 校招信息list参数设定 -->
-    <dimen name="campus_info_list_height">65dp</dimen>
-    <dimen name="campus_info_list_margin_left">15dp</dimen>
-    <dimen name="campus_info_list_margin_top">12dp</dimen>
-    <dimen name="campus_info_list_title_size">15sp</dimen>
-    <dimen name="campus_info_list_date_size">12sp</dimen>
-    <dimen name="campus_info_list_address_size">10sp</dimen>
+    <dimen name="campus_info_list_height">74dp</dimen>
+    <dimen name="campus_info_list_margin_left">18dp</dimen>
+    <dimen name="campus_info_list_margin_top">16dp</dimen>
+    <dimen name="campus_info_list_title_size">17sp</dimen>
+    <dimen name="campus_info_list_date_size">14sp</dimen>
+    <dimen name="campus_info_list_address_size">11sp</dimen>
     <dimen name="campus_info_list_is_save_size">17dp</dimen>
     <dimen name="campus_info_list_location_size">11dp</dimen>
 
