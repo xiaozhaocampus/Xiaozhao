@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -34,7 +35,6 @@ public class MainActivity extends SlidingFragmentActivity {
     private ImageView selfFragmentView;
     private Fragment mInfoFragment;
     private Fragment mSelfFragment;
-    private SlidingMenu menu;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -102,14 +102,25 @@ public class MainActivity extends SlidingFragmentActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.tab_content, mInfoFragment).commit();
         
         setBehindContentView(R.layout.settings);
-        menu = getSlidingMenu();
+        SlidingMenu menu = getSlidingMenu();
         menu.setMode(SlidingMenu.RIGHT);
 		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
 		menu.setAboveOffsetRes(R.dimen.slidingmenu_offset);
 		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-		menu.setFadeDegree(0.35f);
+		menu.setFadeEnabled(false);
 		menu.setMenu(R.layout.settings);
 		menu.setBackgroundResource(R.drawable.main_bg);
+		menu.setAboveCanvasTransformer(new SlidingMenu.CanvasTransformer() {
+            @Override
+            public void transformCanvas(Canvas canvas, float percentOpen) {
+                float scale = (float) (1 - percentOpen * 0.10);
+                float sx = scale;
+                float sy = scale;
+                float px = 0;
+                float py = canvas.getHeight() / 2;
+                canvas.scale(sx, sy, px, py);
+            }
+        });
     }
 
 	// TODO:处理各个点击事件
