@@ -95,6 +95,10 @@
     <string name="sms_snippet_template_1">您的验证码是</string>
     <string name="locating">定位中</string>
     <string name="city_wuhan">武汉</string>
-	<string name="me_page_title_history">历史记录</string>
-	<string name="me_page_title_activity">我的活动</string>
+    <string name="me_page_title_history">历史记录</string>
+    <string name="me_page_title_activity">我的活动</string>
+    <string name="menu_filter">订阅设置</string>
+    <string name="menu_feedback">意见反馈</string>
+    <string name="menu_update">版本更新</string>
+    <string name="menu_about">关于</string>
 </resources>
