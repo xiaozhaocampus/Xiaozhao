@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobInstallation;
@@ -113,7 +114,7 @@ public class MainActivity extends SlidingFragmentActivity {
 		menu.setAboveCanvasTransformer(new SlidingMenu.CanvasTransformer() {
             @Override
             public void transformCanvas(Canvas canvas, float percentOpen) {
-                float scale = (float) (1 - percentOpen * 0.10);
+                float scale = (float) (1 - percentOpen * 0.08);
                 float sx = scale;
                 float sy = scale;
                 float px = 0;
@@ -173,6 +174,23 @@ public class MainActivity extends SlidingFragmentActivity {
 
 		}
 		startActivityById(id);
+	}
+	
+	public void onMenuItemClicked(View view) {
+	    switch (view.getId()) {
+    	    case R.id.filter:
+    	        Toast.makeText(this, "Filter clicked", Toast.LENGTH_SHORT).show();
+    	        break;
+    	    case R.id.feedback:
+    	        Toast.makeText(this, "Feedback clicked", Toast.LENGTH_SHORT).show();
+    	        break;
+    	    case R.id.update:
+    	        Toast.makeText(this, "Update clicked", Toast.LENGTH_SHORT).show();
+    	        break;
+    	    case R.id.about:
+    	        Toast.makeText(this, "About clicked", Toast.LENGTH_SHORT).show();
+    	        break;
+	    }
 	}
 
 	private void startActivityById(int id) {

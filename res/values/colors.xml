@@ -11,6 +11,8 @@
     <color name="login_bg">#ececec</color>
     <color name="indicator_bg">#f2D4D4</color>
     <color name="indicator_focused">#D24E3E</color>
+    <color name="menu_item">#00ffffff</color>
+    <color name="menu_item_pressed">#60333333</color>
     
 </resources>
 

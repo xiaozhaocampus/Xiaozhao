@@ -1,42 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingTop="35dp"
+    android:paddingRight="15dp" >
 
     <TextView
         android:id="@+id/filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/actionbar_title_size"
-        android:textColor="@color/white"
-        android:text="订阅设置" />
+        android:gravity="center"
+        android:drawableTop="@drawable/filter_draw_selected"
+        android:drawablePadding="12dp"
+        android:textSize="12sp"
+        android:textColor="@color/city_text"
+        android:text="@string/menu_filter"
+        android:clickable="true"
+        android:onClick="onMenuItemClicked" />
     
     <TextView
         android:id="@+id/feedback"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/filter"
-        android:textSize="@dimen/actionbar_title_size"
-        android:textColor="@color/white"
-        android:text="意见反馈" />
+        android:layout_marginTop="46dp"
+        android:gravity="center"
+        android:drawableTop="@drawable/feedback_draw_selected"
+        android:drawablePadding="12dp"
+        android:textSize="12sp"
+        android:textColor="@color/city_text"
+        android:text="@string/menu_feedback"
+        android:clickable="true"
+        android:onClick="onMenuItemClicked" />
     
     <TextView
         android:id="@+id/update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/feedback"
-        android:textSize="@dimen/actionbar_title_size"
-        android:textColor="@color/white"
-        android:text="版本更新" />
+        android:layout_marginTop="46dp"
+        android:gravity="center"
+        android:drawableTop="@drawable/update_draw_selected"
+        android:drawablePadding="12dp"
+        android:textSize="12sp"
+        android:textColor="@color/city_text"
+        android:text="@string/menu_update"
+        android:clickable="true"
+        android:onClick="onMenuItemClicked" />
     
     <TextView
         android:id="@+id/about"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/update"
-        android:textSize="@dimen/actionbar_title_size"
-        android:textColor="@color/white"
-        android:text="关于" />
+        android:layout_marginTop="46dp"
+        android:gravity="center"
+        android:drawableTop="@drawable/about_draw_selected"
+        android:drawablePadding="12dp"
+        android:textSize="12sp"
+        android:textColor="@color/city_text"
+        android:text="@string/menu_about"
+        android:clickable="true"
+        android:onClick="onMenuItemClicked" />
 
-</RelativeLayout>
+</LinearLayout>
