@@ -1,6 +1,5 @@
 package com.campus.xiaozhao.activity;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -44,7 +43,7 @@ public class MePagerAdapter extends PagerAdapter{
 		}
 		if(position == 1) {
 			view = inflater.inflate(R.layout.history_listview, null);
-			view.setBackgroundResource(R.color.black);
+			((HistoryListView)view).setAdapter(new HistoryListViewAdapter(container.getContext()));
 		}
 		container.addView(view);
 		return view;

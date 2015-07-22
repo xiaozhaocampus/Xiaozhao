@@ -46,4 +46,32 @@
 		<item name="android:gravity">center</item>
 		<item name="android:textColor">@drawable/selector_indicator</item>
 	</style>
+	
+    <!-- 第一步设置主题 -->
+    <style name="StyledIndicators" parent="@android:style/Theme.DeviceDefault.Light.DarkActionBar">
+        <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
+    </style>
+    <!-- 第二步设置主题 -->
+    <style name="CustomTabPageIndicator" parent="Widget.TabPageIndicator">
+
+        <!-- 点击时在不同状态下显示的背景色 -->
+        <item name="android:background">@android:color/transparent</item>
+		<item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <!-- 分割线图片设置 
+        <item name="android:divider">@drawable/custom_tab_indicator_divider</item>
+        -->
+        <!-- 设置分割线的显示位置，或是不显示 -->
+        <item name="android:showDividers">none</item>
+        
+        <item name="android:textAppearance">@style/CustomTabPageIndicator.Text</item>
+        <item name="android:textColor">@color/indicator_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <!-- 第三步设置主题 -->
+    <style name="CustomTabPageIndicator.Text" parent="android:TextAppearance.Medium">
+        <item name="android:typeface">monospace</item>
+    </style>
+    
 </resources>
