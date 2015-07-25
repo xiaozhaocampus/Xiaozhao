@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.campus.xiaozhao.activity.HistoryListView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.campus.xiaozhao.activity.MyActiviesListView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 	android:paddingLeft="9dp"
     android:paddingRight="9dp" 
     android:scrollbars="none"
-    android:paddingTop="15dp"
     android:background="@android:color/white"
     android:divider="@android:color/white"
-    android:dividerHeight="15dp">
+    android:dividerHeight="0dp">
     
 
-</com.campus.xiaozhao.activity.HistoryListView>
+</com.campus.xiaozhao.activity.MyActiviesListView>

@@ -37,13 +37,17 @@ public class MePagerAdapter extends PagerAdapter{
 			int position) {
 		LayoutInflater inflater = LayoutInflater.from(container.getContext());
 		View view = null;
-		if(position == 0) {
-			view = inflater.inflate(R.layout.my_activity_listview, null);
-			((MyActivityListView)view).setAdapter(new MyActivityListAdaptor(container.getContext()));
-		}
 		if(position == 1) {
 			view = inflater.inflate(R.layout.history_listview, null);
-			((HistoryListView)view).setAdapter(new HistoryListViewAdapter(container.getContext()));
+			((HistoryListView)view).setAdapter(new HistoryListAdaptor(container.getContext()));
+		}
+		if(position == 0) {
+			view = inflater.inflate(R.layout.my_activities_listview, null);
+			MyActiviesListView expListView = ((MyActiviesListView)view);
+			expListView.setGroupIndicator(null);
+			MyActiviesListViewAdapter adapter = new MyActiviesListViewAdapter(container.getContext(),expListView);
+			expListView.setAdapter(adapter);
+			adapter.notifyDataSetChanged();
 		}
 		container.addView(view);
 		return view;
