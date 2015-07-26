@@ -1,147 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_marginLeft="15dp"
-      android:layout_marginRight="15dp">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/campus_detail_company_info_height">
-        <TextView
-            android:id="@+id/company_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="23dp"
-            android:textSize="23sp"
-            android:textColor="#343434"/>
-        <TextView
-            android:id="@+id/publish_time"
-            android:layout_below="@id/company_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="23dp"
-            android:textSize="18sp"
-            android:textColor="#c9c9c9"/>
-        <TextView
-            android:id="@+id/information_come"
-            android:layout_below="@id/publish_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="#c9c9c9"/>
-        <ImageView
-            android:id="@+id/company_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@id/company_name"
-            android:layout_centerHorizontal="true"/>
-    </RelativeLayout>
-    
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="89dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="66dp">
-        <ImageView
-            android:id="@+id/campus_image_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@drawable/campus_detail_image_time"/>
-        <TextView
-            android:id="@+id/campus_time"
-            android:layout_toRightOf="@id/campus_image_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:textColor="#868686"
-            android:textSize="18sp"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/campus_detail_image_alarm"/>
-    </RelativeLayout>
-    
+      android:layout_height="match_parent">
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/campus_detail_company_info_height"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+            <TextView
+                android:id="@+id/company_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="23dp"
+                android:layout_marginTop="20dp"
+                android:text="南京嘉环科技有限公司"
+                android:textSize="23sp"
+                android:textColor="#343434"/>
+            <TextView
+                android:id="@+id/publish_time"
+                android:layout_below="@id/company_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="23dp"
+                android:text="发布时间:2015-03-26"
+                android:textSize="18sp"
+                android:textColor="#c9c9c9"/>
+            <TextView
+                android:id="@+id/information_come"
+                android:layout_below="@id/publish_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="信息来源:广州大学就业网"
+                android:textSize="18sp"
+                android:textColor="#c9c9c9"/>
+            <ImageView
+                android:id="@+id/company_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/company_name"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/campus_detail_image_job_detail"/>
+            android:src="@drawable/campus_detail_line"/>
+
+        <RelativeLayout
+            android:id="@+id/campus_detail_time"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+            <ImageView
+                android:id="@+id/campus_image_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/campus_detail_image_time"/>
+            <TextView
+                android:id="@+id/campus_time"
+                android:layout_toRightOf="@id/campus_image_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="2015-08-02"
+                android:textColor="#868686"
+                android:textSize="18sp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/campus_detail_image_alarm"/>
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/campus_detail_line"/>
+
+        <RelativeLayout
+            android:id="@+id/campus_detail_location"
+            android:layout_width="match_parent"
+            android:layout_height="89dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+            <ImageView
+                android:id="@+id/campus_detail_image_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/campus_detail_mark"/>
+            <TextView
+                android:id="@+id/campus_detail_school"
+                android:layout_toRightOf="@id/campus_detail_image_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="武汉理工大学"
+                android:textSize="18sp"
+                android:textColor="#868686"/>
+            <TextView
+                android:id="@+id/campus_detail_province"
+                android:layout_below="@id/campus_detail_school"
+                android:layout_alignLeft="@id/campus_detail_school"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="湖北"
+                android:textSize="18sp"
+                android:textColor="#868686"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/campus_detail_next"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:background="#ECECEC">
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/campus_detail_job_detail"
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/campus_detail_image_job_detail"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:textSize="23dp"
+                android:textColor="#E95644"
+                android:layout_gravity="center_vertical"
+                android:text="招聘详情"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/campus_detail_line"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
-            android:textSize="23dp"
-            android:textColor="#E95644"
-            android:layout_gravity="center_vertical"
-            android:text="招聘详情"/>
+            android:layout_marginBottom="20dp"
+            android:textSize="@dimen/campus_detail_text_size"
+            android:textColor="#343434"
+            android:text="@string/company_introduction"/>
+
+        <TextView
+            android:id="@+id/company_introduction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:textSize="19sp"
+            android:text="嘉环公司成立与1998年，"
+            android:textColor="#343434"/>
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/campus_detail_text_size"
-        android:text="@string/company_introduction"/>
-
-    <TextView
-        android:id="@+id/company_introduction"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/campus_detail_text_size"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/campus_detail_text_size"
-        android:text="@string/content"/>
-
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/campus_detail_text_size"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/campus_detail_text_size"
-        android:text="@string/time"/>
-
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/campus_detail_text_size"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/campus_detail_text_size"
-        android:text="@string/address"/>
-
-    <TextView
-        android:id="@+id/address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/campus_detail_text_size"/>
-
-    <Button
-        android:id="@+id/set_remind"
-        android:layout_width="@dimen/campus_detail_button_size"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+</ScrollView>
