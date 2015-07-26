@@ -5,7 +5,7 @@
 	android:paddingLeft="9dp"
     android:paddingRight="9dp" 
     android:scrollbars="none"
-    android:background="@color/white"
+    android:background="@drawable/time_line_bg"
     android:divider="@color/white"
     android:dividerHeight="0dp">
     
