@@ -19,7 +19,7 @@ public class MeFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.activity_me_v2, container, false);
+		View view = inflater.inflate(R.layout.activity_me, container, false);
 		mViewPager = (ViewPager)view.findViewById(R.id.viewpager);
 		mViewPager.setAdapter(new MePagerAdapter());
 		final ImageView indicatorImage = (ImageView)view.findViewById(R.id.indicator_image);

@@ -3,10 +3,7 @@ package com.campus.xiaozhao.activity;
 import java.util.Calendar;
 
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -129,23 +126,7 @@ public class MainActivity extends SlidingFragmentActivity {
 		Logger.i(TAG, "===Click Id ==>" + v.getId());
 		int id = v.getId();
 		switch (v.getId()) {
-		case R.id.more_alarms:
-		    if (!CampusSharePreference.isLogin(this)) {
-		        new AlertDialog.Builder(this)
-		            .setTitle(R.string.dialog_title_login_hint)
-		            .setMessage(R.string.dialog_body_login)
-		            .setPositiveButton(R.string.ok, new OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            LoginActivity.startFrom(MainActivity.this);
-                        }
-                    }).create().show();
-		        return;
-		    }
-			break;
-		case R.id.more_feedback:
-			break;
-		case R.id.more_check_new_ver:
+		case R.id.feedback:
 			break;
 
         case R.id.fragment_info:
@@ -183,6 +164,7 @@ public class MainActivity extends SlidingFragmentActivity {
     	        break;
     	    case R.id.feedback:
     	        Toast.makeText(this, "Feedback clicked", Toast.LENGTH_SHORT).show();
+    	        startActivityById(R.id.feedback);
     	        break;
     	    case R.id.update:
     	        Toast.makeText(this, "Update clicked", Toast.LENGTH_SHORT).show();
@@ -196,14 +178,8 @@ public class MainActivity extends SlidingFragmentActivity {
 	private void startActivityById(int id) {
 		Class<?> classes = null; 
 		switch (id) {
-		case R.id.more_feedback:
+		case R.id.feedback:
 			classes = FeedbackActivity.class;
-			break;
-		case R.id.more_alarms:
-			classes = AlarmActivity.class;
-			break;
-		case R.id.more_check_new_ver:
-			classes = UpdateActivity.class;
 			break;
 		default:
 			break;

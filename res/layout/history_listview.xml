@@ -6,8 +6,8 @@
     android:paddingRight="9dp" 
     android:scrollbars="none"
     android:paddingTop="15dp"
-    android:background="@android:color/white"
-    android:divider="@android:color/white"
+    android:background="@color/white"
+    android:divider="@color/white"
     android:dividerHeight="15dp">
     
 

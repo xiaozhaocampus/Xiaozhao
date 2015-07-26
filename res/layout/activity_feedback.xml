@@ -1,41 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:background="#fff5f7fa"
-  xmlns:android="http://schemas.android.com/apk/res/android" >
-    <RelativeLayout android:gravity="center_vertical" android:id="@+id/shake_title_bar" android:background="@drawable/title_bar" android:layout_width="fill_parent" android:layout_height="45.0dip">
-        <Button android:textSize="14.0sp" android:textColor="#ffffffff" android:background="@drawable/title_btn_back" android:layout_width="70.0dip" android:layout_height="wrap_content" android:text="@string/back" android:layout_centerVertical="true" android:onClick="back" />
-        <TextView android:textSize="20.0sp" android:textColor="#ffffffff" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/feedback" android:layout_centerInParent="true" />
-    </RelativeLayout>
-    <EditText android:id="@+id/feedback_edit"
-        android:hint="@string/feedback_hint"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/feedback_qq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="9dp"
+        android:layout_marginRight="9dp"
+        android:layout_marginTop="21dp"
+        android:background="@null"
+        android:drawableBottom="@drawable/line"
+        android:drawablePadding="21dp"
+        android:gravity="left|top"
+        android:hint="@string/feedback_qq_hint"
+        android:inputType="number"
+        android:maxLength="12"
+        android:minLines="1"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/feedback_suggestion"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="top"
-        android:minLines="10"
-        android:textSize="18sp"
-        android:maxLength="140" />
-    
-    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal"
-        android:gravity="center_vertical" android:layout_marginTop="20sp" >
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5sp"
-            android:text="@string/your_email" android:textSize="16sp" android:textColor="@color/black" />
-	    <EditText android:id="@+id/email_edit"
-	        android:hint="@string/email_hint"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:gravity="center_vertical"
-	        android:maxLines="1"
-	        android:textSize="14sp"
-	        android:maxLength="40"
-	        android:inputType="textEmailAddress">
-        </EditText>
-    </LinearLayout>
-    
-    <Button android:id="@+id/feedback_submit"
-            android:layout_width="80sp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="20dip"
-            android:text="@string/submit"
-            android:onClick="submit" >
-    </Button>
+        android:layout_marginLeft="9dp"
+        android:layout_marginRight="9dp"
+        android:layout_marginTop="21dp"
+        android:background="@null"
+        android:drawableBottom="@drawable/line"
+        android:drawablePadding="21dp"
+        android:gravity="center_vertical"
+        android:hint="@string/feedback_suggestion"
+        android:textSize="15sp" />
+	<GridView
+	    android:id="@+id/feedback_items"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:numColumns="5"
+	    android:background="@color/white" 
+	    android:layout_marginLeft="16dp"
+	    android:layout_marginRight="16dp"
+	    android:layout_marginTop="15dp"
+	    />
+	<ImageView
+	    android:id="@+id/feedback_choose_pic" 
+	    android:layout_width="55dp"
+	    android:layout_height="55dp"
+	    android:contentDescription="@null"
+	    android:layout_marginTop="15dp"
+	    android:layout_marginLeft="15dp"
+	    android:scaleType="center"
+	    android:src="@drawable/choose_pic"/>
 </LinearLayout>

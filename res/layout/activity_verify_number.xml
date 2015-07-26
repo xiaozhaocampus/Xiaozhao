@@ -58,7 +58,7 @@
 	        android:layout_marginRight="10dp"
 	        android:background="@drawable/get_verify_code_btn_invalid"
 	        android:onClick="clickOnGetVerificationCode"
-	        android:textColor="@android:color/white"
+	        android:textColor="@color/white"
 	        android:textSize="14sp" />
     </RelativeLayout>
     

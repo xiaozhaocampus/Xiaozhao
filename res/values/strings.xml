@@ -7,7 +7,7 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_verify_number">VerifyNumberActivity</string>
-    <string name="title_activity_feedback">FeedbackActivity</string>
+    <string name="title_activity_feedback">问题反馈</string>
     <string name="title_activity_reset_password">ResetPasswordActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="login">登陆</string>
@@ -70,8 +70,8 @@
     <string name="content">内容</string>
     <string name="time">时间</string>
     <string name="address">地点</string>
-    <string name="feedback_hint">请输入您的建议，这将帮助我们将产品做得更好，谢谢</string>
-    <string name="email_hint">选填，以便我们给您回复</string>
+    <string name="feedback_qq_hint">请输入您的QQ号（选填）</string>
+    <string name="feedback_suggestion">请填写您的建议</string>
     <string name="your_email">您的邮箱：</string>
     <string name="feedback">问题反馈</string>
     <string name="submit">提交</string>
