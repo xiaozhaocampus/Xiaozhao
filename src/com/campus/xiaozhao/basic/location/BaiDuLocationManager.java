@@ -4,11 +4,11 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.campus.xiaozhao.activity.MainActivity;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.campus.xiaozhao.fragment.InfoFragment;
 import com.component.logger.Logger;

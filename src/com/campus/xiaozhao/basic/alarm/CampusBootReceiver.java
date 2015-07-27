@@ -5,11 +5,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import com.campus.xiaozhao.basic.data.CampusInfoItemData;
-import com.campus.xiaozhao.basic.db.CampusDBProcessor;
-import com.campus.xiaozhao.basic.db.CampusModel;
-
-import java.util.List;
 
 /**
  * Created by frankenliu on 2015/6/1.

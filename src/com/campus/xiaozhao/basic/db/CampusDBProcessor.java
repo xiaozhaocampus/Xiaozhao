@@ -1,14 +1,15 @@
 package com.campus.xiaozhao.basic.db;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
 import com.component.logger.Logger;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by frankenliu on 2015/6/2.

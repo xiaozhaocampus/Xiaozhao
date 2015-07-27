@@ -17,10 +17,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+
 import com.baidu.location.BDLocation;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.activity.CampusDetailActivity;

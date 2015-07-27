@@ -2,7 +2,6 @@ package com.campus.xiaozhao.activity;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,7 +11,6 @@ import org.apache.http.Header;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;

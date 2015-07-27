@@ -8,9 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PowerManager;
+
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.activity.CampusDetailActivity;
-import com.campus.xiaozhao.activity.MainActivity;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
 import com.campus.xiaozhao.basic.db.CampusDBProcessor;
 import com.component.logger.Logger;

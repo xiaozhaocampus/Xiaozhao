@@ -52,6 +52,6 @@
 	    android:contentDescription="@null"
 	    android:layout_marginTop="15dp"
 	    android:layout_marginLeft="15dp"
-	    android:scaleType="center"
+	    android:scaleType="centerInside"
 	    android:src="@drawable/choose_pic"/>
 </LinearLayout>

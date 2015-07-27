@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -33,8 +32,8 @@ import com.campus.xiaozhao.basic.utils.NumberUtils;
 import com.campus.xiaozhao.basic.widget.CountDownTimerView;
 import com.campus.xiaozhao.sms.CloudSms;
 import com.campus.xiaozhao.sms.CloudSmsManager;
-import com.campus.xiaozhao.sms.CloudSmsThread;
 import com.campus.xiaozhao.sms.CloudSmsManager.SmsObserver;
+import com.campus.xiaozhao.sms.CloudSmsThread;
 import com.component.logger.Logger;
 
 public class ResetPasswordActivity extends Activity {

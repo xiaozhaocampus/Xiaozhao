@@ -1,13 +1,13 @@
 package com.campus.xiaozhao.activity;
 
-import com.campus.xiaozhao.R;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ToggleButton;
+
+import com.campus.xiaozhao.R;
 
 public class FeedbackGridAdaptor extends BaseAdapter {
 	private String[] mSelections = {"界面","网络","定位","提醒","内容","推送"};

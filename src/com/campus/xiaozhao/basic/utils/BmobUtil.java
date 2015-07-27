@@ -2,14 +2,14 @@ package com.campus.xiaozhao.basic.utils;
 
 import java.util.List;
 
-import com.campus.xiaozhao.Configuration;
-import com.campus.xiaozhao.R;
-
 import android.content.Context;
 import android.text.TextUtils;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.FindListener;
+
+import com.campus.xiaozhao.Configuration;
+import com.campus.xiaozhao.R;
 
 public class BmobUtil {
 	

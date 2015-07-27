@@ -1,8 +1,8 @@
 package com.campus.xiaozhao;
 
 import android.app.Application;
-
 import android.os.Handler;
+
 import com.campus.xiaozhao.basic.alarm.CampusAlarmManager;
 import com.campus.xiaozhao.http.HttpEngine;
 import com.component.logger.Logger;

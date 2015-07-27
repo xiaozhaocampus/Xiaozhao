@@ -1,10 +1,10 @@
 package com.campus.xiaozhao.basic.data;
 
-import android.content.ContentValues;
-import com.campus.xiaozhao.basic.db.CampusDBHelper;
-import com.campus.xiaozhao.basic.db.CampusModel;
-
 import java.io.Serializable;
+
+import android.content.ContentValues;
+
+import com.campus.xiaozhao.basic.db.CampusModel;
 
 /**
  * 客户端使用
