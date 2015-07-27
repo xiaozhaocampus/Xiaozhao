@@ -26,7 +26,7 @@ import com.component.logger.Logger;
  */
 public class CampusDetailActivity extends Activity {
     private static final String TAG = "CampusDetailActivity";
-    private TextView mIntroduce, mContent, mTime, mAddress;
+    private TextView mCompanyName, mPublishTime, mInformationCome, mJobTime, mAddress, mProvince, mCompanyIntrodction;
     private Button mSetRemind;
     private CampusInfoItemData mItemData;
     private CampusDBProcessor mDBProcessor;
@@ -43,15 +43,17 @@ public class CampusDetailActivity extends Activity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(mItemData.getCompany());
 
-        mIntroduce = (TextView) findViewById(R.id.company_introduction);
-        mContent = (TextView) findViewById(R.id.content);
-        mAddress = (TextView) findViewById(R.id.address);
-        mTime = (TextView) findViewById(R.id.time);
-        mSetRemind = (Button) findViewById(R.id.set_remind);
-        mIntroduce.setText(mItemData.getIntroduction());
-        mContent.setText(mItemData.getContent());
+        mCompanyName = (TextView) findViewById(R.id.company_name);
+        mPublishTime = (TextView) findViewById(R.id.publish_time);
+        mInformationCome = (TextView) findViewById(R.id.information_come);
+        mJobTime = (TextView) findViewById(R.id.campus_time);
+        mAddress = (TextView) findViewById(R.id.campus_detail_school);
+        mProvince = (TextView) findViewById(R.id.campus_detail_province);
+        mCompanyIntrodction = (TextView) findViewById(R.id.company_introduction);
+        mCompanyName.setText(mItemData.getCompany());
+        mJobTime.setText(DateUtils.transferTimeToDate(mItemData.getTime()));
         mAddress.setText(mItemData.getAddress());
-        mTime.setText(DateUtils.transferTimeToDate(mItemData.getTime()));
+        mCompanyIntrodction.setText(mItemData.getIntroduction());
 
         mDBProcessor = CampusDBProcessor.getInstance(getApplicationContext());
         setButtonState();
@@ -183,6 +185,8 @@ public class CampusDetailActivity extends Activity {
                 break;
             case R.id.info_share:
                 Logger.d(TAG, "share");
+                break;
+            case R.id.info_save:
                 break;
         }
         return super.onOptionsItemSelected(item);
