@@ -160,7 +160,7 @@ public class MainActivity extends SlidingFragmentActivity {
 	public void onMenuItemClicked(View view) {
 	    switch (view.getId()) {
     	    case R.id.filter:
-    	        Toast.makeText(this, "Filter clicked", Toast.LENGTH_SHORT).show();
+    	        MainFilterActivity.startFrom(this);
     	        break;
     	    case R.id.feedback:
     	        Toast.makeText(this, "Feedback clicked", Toast.LENGTH_SHORT).show();
