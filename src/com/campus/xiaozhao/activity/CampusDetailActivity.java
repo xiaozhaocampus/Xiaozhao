@@ -40,8 +40,11 @@ public class CampusDetailActivity extends Activity {
         Intent intent = getIntent();
         mItemData = (CampusInfoItemData)intent.getSerializableExtra("detail_data");
         ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(mItemData.getCompany());
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setCustomView(R.layout.campus_detail_action_layout);
+        initActionBar(actionBar);
 
         mCompanyName = (TextView) findViewById(R.id.company_name);
         mPublishTime = (TextView) findViewById(R.id.publish_time);
@@ -56,7 +59,28 @@ public class CampusDetailActivity extends Activity {
         mCompanyIntrodction.setText(mItemData.getIntroduction());
 
         mDBProcessor = CampusDBProcessor.getInstance(getApplicationContext());
-        setButtonState();
+//        setButtonState();
+    }
+
+    private void initActionBar(ActionBar actionBar) {
+        actionBar.getCustomView().findViewById(R.id.campus_detail_action_image_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CampusDetailActivity.this.finish();
+            }
+        });
+        actionBar.getCustomView().findViewById(R.id.campus_detail_action_image_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO 点击收藏按钮弹出dialog
+            }
+        });
+        actionBar.getCustomView().findViewById(R.id.campus_detail_action_image_share).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO 点击分享按钮
+            }
+        });
     }
 
     /**
@@ -172,8 +196,8 @@ public class CampusDetailActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.campus_detail, menu);
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.campus_detail, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
