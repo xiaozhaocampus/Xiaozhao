@@ -5,13 +5,14 @@
     tools:context=".MainFilterActivity" >
 
     <ListView
-        android:id="@+id/main_lv"
+        android:id="@+id/main_category_lv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/main_category_bottom_height" />
     
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="73dp"
+        android:layout_height="@dimen/main_category_bottom_height"
         android:layout_alignParentBottom="true"
         android:background="#f0f0f0" >
         

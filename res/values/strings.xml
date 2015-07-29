@@ -104,5 +104,6 @@
     <string name="menu_update">版本更新</string>
     <string name="menu_about">关于</string>
     <string name="ok">确定</string>
+    <string name="sample_main_category_title_1">IT/互联网/通信/电子</string>
 
 </resources>

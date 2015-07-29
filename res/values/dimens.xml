@@ -33,5 +33,7 @@
 
     <!-- -->
     <dimen name="campus_detail_company_info_height">154dp</dimen>
+    
+    <dimen name="main_category_bottom_height">73dp</dimen>
 
 </resources>

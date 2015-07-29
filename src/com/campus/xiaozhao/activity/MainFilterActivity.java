@@ -1,17 +1,24 @@
 package com.campus.xiaozhao.activity;
 
+import java.util.ArrayList;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.basic.data.MainCategory;
 
 public class MainFilterActivity extends Activity {
 
+    private ListView mCategoryListView;
+    private MainCategoryAdapter mCategoryAdapter;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +35,10 @@ public class MainFilterActivity extends Activity {
             }
         });
         ((TextView) actionBar.getCustomView().findViewById(R.id.title_tv)).setText(R.string.subscribe_settings);
+        
+        mCategoryListView = (ListView) findViewById(R.id.main_category_lv);
+        loadData();
+        mCategoryListView.setAdapter(mCategoryAdapter);
     }
 
     public static void startFrom(Context context) {
@@ -36,5 +47,16 @@ public class MainFilterActivity extends Activity {
 
     public void onClickOK(View view) {
         
+    }
+    
+    private void loadData() {
+        ArrayList<MainCategory> categories = new ArrayList<MainCategory>();
+        for (int i=0; i<10; i++) {
+            MainCategory category = new MainCategory();
+            category.id = String.valueOf(i);
+            category.title = getString(R.string.sample_main_category_title_1);
+            categories.add(category);
+        }
+        mCategoryAdapter = new MainCategoryAdapter(this, categories);
     }
 }
