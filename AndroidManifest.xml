@@ -173,6 +173,10 @@
             android:name="com.campus.xiaozhao.activity.MainCategoryActivity"
             android:label="@string/title_activity_main_category" >
         </activity>
+        <activity
+            android:name="com.campus.xiaozhao.activity.SubCategoryActivity"
+            android:label="@string/title_activity_sub_category" >
+        </activity>
     </application>
 
 </manifest>

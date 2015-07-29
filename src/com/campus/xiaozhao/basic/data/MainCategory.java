@@ -1,7 +1,10 @@
 package com.campus.xiaozhao.basic.data;
 
-public class MainCategory {
+import java.io.Serializable;
 
+public class MainCategory implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     public String id;
     public String title;
 }
