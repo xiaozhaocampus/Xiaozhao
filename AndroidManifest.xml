@@ -170,8 +170,8 @@
         </receiver>
 
         <activity
-            android:name="com.campus.xiaozhao.activity.MainFilterActivity"
-            android:label="@string/title_activity_main_filter" >
+            android:name="com.campus.xiaozhao.activity.MainCategoryActivity"
+            android:label="@string/title_activity_main_category" >
         </activity>
     </application>
 

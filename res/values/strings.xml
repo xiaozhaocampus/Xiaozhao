@@ -10,7 +10,7 @@
     <string name="title_activity_feedback">问题反馈</string>
     <string name="title_activity_reset_password">ResetPasswordActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
-    <string name="title_activity_main_filter">MainFilterActivity</string>
+    <string name="title_activity_main_category">MainCategoryActivity</string>
     <string name="login">登陆</string>
     <string name="register">注册</string>
     <string name="quick_register">快速注册</string>

@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.data.MainCategory;
 
-public class MainFilterActivity extends Activity {
+public class MainCategoryActivity extends Activity {
 
     private ListView mCategoryListView;
     private MainCategoryAdapter mCategoryAdapter;
@@ -22,7 +22,7 @@ public class MainFilterActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_filter);
+        setContentView(R.layout.activity_main_category);
         
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -42,7 +42,7 @@ public class MainFilterActivity extends Activity {
     }
 
     public static void startFrom(Context context) {
-        context.startActivity(new Intent(context, MainFilterActivity.class));
+        context.startActivity(new Intent(context, MainCategoryActivity.class));
     }
 
     public void onClickOK(View view) {
