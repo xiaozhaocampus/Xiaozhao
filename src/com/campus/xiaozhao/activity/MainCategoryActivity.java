@@ -55,7 +55,8 @@ public class MainCategoryActivity extends Activity {
     }
 
     public void onClickOK(View view) {
-        
+        saveData();
+        finish();
     }
     
     private void loadData() {
@@ -67,5 +68,9 @@ public class MainCategoryActivity extends Activity {
             categories.add(category);
         }
         mCategoryAdapter = new MainCategoryAdapter(this, categories);
+    }
+    
+    private void saveData() {
+        
     }
 }

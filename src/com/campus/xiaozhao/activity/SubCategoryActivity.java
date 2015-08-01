@@ -78,6 +78,11 @@ public class SubCategoryActivity extends Activity {
         context.startActivity(intent);
     }
     
+    public void onClickOK(View view) {
+        saveData();
+        finish();
+    }
+    
     private void loadData() {
         ArrayList<SubCategory> categories = new ArrayList<SubCategory>();
         for (int i=0; i<10; i++) {
@@ -87,5 +92,9 @@ public class SubCategoryActivity extends Activity {
             categories.add(category);
         }
         mCategoryAdapter = new SubCategoryAdapter(this, categories);
+    }
+    
+    private void saveData() {
+        
     }
 }

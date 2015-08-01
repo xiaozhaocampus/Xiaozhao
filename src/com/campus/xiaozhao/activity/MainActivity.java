@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -173,6 +174,12 @@ public class MainActivity extends SlidingFragmentActivity {
     	        Toast.makeText(this, "About clicked", Toast.LENGTH_SHORT).show();
     	        break;
 	    }
+	    new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getSlidingMenu().toggle();
+            }
+        }, 300);
 	}
 
 	private void startActivityById(int id) {
