@@ -7,10 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,11 +26,12 @@ import com.component.logger.Logger;
 public class CampusDetailActivity extends Activity {
     private static final String TAG = "CampusDetailActivity";
     private TextView mCompanyName, mPublishTime, mInformationCome, mJobTime, mAddress, mProvince, mCompanyIntrodction;
-    private Button mSetRemind;
     private CampusInfoItemData mItemData;
     private CampusDBProcessor mDBProcessor;
     private String[] mTypes = null; // 提醒类型, 用于用户点击确定后可选的范围
     private String mType;
+
+    private RelativeLayout mRemindTime, mLocation;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +46,8 @@ public class CampusDetailActivity extends Activity {
         actionBar.setCustomView(R.layout.campus_detail_action_layout);
         initActionBar(actionBar);
 
+        mRemindTime = (RelativeLayout) findViewById(R.id.campus_detail_time);
+        mLocation = (RelativeLayout) findViewById(R.id.campus_detail_location);
         mCompanyName = (TextView) findViewById(R.id.company_name);
         mPublishTime = (TextView) findViewById(R.id.publish_time);
         mInformationCome = (TextView) findViewById(R.id.information_come);
@@ -59,7 +61,7 @@ public class CampusDetailActivity extends Activity {
         mCompanyIntrodction.setText(mItemData.getIntroduction());
 
         mDBProcessor = CampusDBProcessor.getInstance(getApplicationContext());
-//        setButtonState();
+        setButtonState();
     }
 
     private void initActionBar(ActionBar actionBar) {
@@ -87,12 +89,6 @@ public class CampusDetailActivity extends Activity {
      * 设置Button的状态
      */
     private void setButtonState() {
-        // 校招时间小于或等于当前时间
-        if(mItemData.getTime() <= System.currentTimeMillis()) {
-            mSetRemind.setText("信息过期");
-            mSetRemind.setClickable(false);
-            return;
-        }
         final CampusInfoItemData itemData = mDBProcessor.getCampusInfoByCampsuID(mItemData.getCampusID());
         if(itemData != null) {
             mItemData.setIsRemind(itemData.isRemind());
@@ -100,8 +96,6 @@ public class CampusDetailActivity extends Activity {
         }
 
         if(itemData != null && itemData.isRemind()) { // 该校招信息已经设置过定时提醒
-            mSetRemind.setText("已设提醒");
-            mSetRemind.setClickable(false);
             if(itemData.getTime() != mItemData.getTime()) {
                 // 重新设置定时
                 CampusAlarmManager.getInstance().stopAlarm(CampusDetailActivity.this, mItemData.getCampusID());
@@ -111,42 +105,41 @@ public class CampusDetailActivity extends Activity {
                 mDBProcessor.updateCampus(mItemData);
             }
         } else { // 该校招信息没有设置过定时提醒
-            mSetRemind.setText("提醒");
-            mSetRemind.setOnClickListener(new View.OnClickListener() {
+            mRemindTime.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // 检查校招时间跟当前时间的差值
-                    int checkRes =DateUtils.checkTime(mItemData.getTime());
+                    int checkRes = DateUtils.checkTime(mItemData.getTime());
 
                     switch (checkRes) {
                         case -1:
                             Toast.makeText(CampusDetailActivity.this, "信息已过期!", Toast.LENGTH_LONG).show();
                             break;
                         case 1:
-                            mTypes = new String[] {RemindType.REMIND_NAME_15_MINUTES, RemindType.REMIND_NAME_30_MINUTES,
+                            mTypes = new String[]{RemindType.REMIND_NAME_15_MINUTES, RemindType.REMIND_NAME_30_MINUTES,
                                     RemindType.REMIND_NAME_1_HOUR, RemindType.REMIND_NAME_3_HOUR, RemindType.REMIND_NAME_6_HOUR};
                             break;
                         case 2:
-                            mTypes = new String[] {RemindType.REMIND_NAME_15_MINUTES, RemindType.REMIND_NAME_30_MINUTES,
+                            mTypes = new String[]{RemindType.REMIND_NAME_15_MINUTES, RemindType.REMIND_NAME_30_MINUTES,
                                     RemindType.REMIND_NAME_1_HOUR, RemindType.REMIND_NAME_3_HOUR};
                             break;
                         case 3:
-                            mTypes = new String[] {RemindType.REMIND_NAME_15_MINUTES, RemindType.REMIND_NAME_30_MINUTES,
+                            mTypes = new String[]{RemindType.REMIND_NAME_15_MINUTES, RemindType.REMIND_NAME_30_MINUTES,
                                     RemindType.REMIND_NAME_1_HOUR};
                             break;
                         case 4:
-                            mTypes = new String[] {RemindType.REMIND_NAME_15_MINUTES, RemindType.REMIND_NAME_30_MINUTES};
+                            mTypes = new String[]{RemindType.REMIND_NAME_15_MINUTES, RemindType.REMIND_NAME_30_MINUTES};
                             break;
                         case 5:
-                            mTypes = new String[] {RemindType.REMIND_NAME_15_MINUTES};
+                            mTypes = new String[]{RemindType.REMIND_NAME_15_MINUTES};
                             break;
                         case 6:
                             Toast.makeText(CampusDetailActivity.this, "距离校招开始还有不到6小时的时间, 请做好准备!", Toast.LENGTH_LONG).show();
                             break;
 
                     }
-                    if(mTypes != null) {
-                        mType =  mTypes[0];
+                    if (mTypes != null) {
+                        mType = mTypes[0];
                         new AlertDialog.Builder(CampusDetailActivity.this).setTitle("请选择提醒时间")
                                 .setIcon(android.R.drawable.ic_dialog_info)
                                 .setSingleChoiceItems(mTypes, 0, new DialogInterface.OnClickListener() {
@@ -181,8 +174,6 @@ public class CampusDetailActivity extends Activity {
                                         mItemData.setIsRemind(true);
                                         mDBProcessor.addCampusInfo(mItemData); // 这个地方先入库，数据库ID在设置定时提醒时唯一标示一个定时提醒
                                         CampusAlarmManager.getInstance().startAlarm(CampusDetailActivity.this, remindTime, mItemData.getCampusID());
-                                        mSetRemind.setText("已设提醒");
-                                        mSetRemind.setClickable(false);
                                         Toast.makeText(CampusDetailActivity.this, "系统将于" + DateUtils.transferTimeToDate(remindTime) + "提醒您!", Toast.LENGTH_LONG).show();
                                     }
                                 })
