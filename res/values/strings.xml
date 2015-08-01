@@ -106,5 +106,6 @@
     <string name="menu_about">关于</string>
     <string name="ok">确定</string>
     <string name="sample_main_category_title_1">IT/互联网/通信/电子</string>
+    <string name="sample_sub_category_title_1">软件工程师</string>
 
 </resources>

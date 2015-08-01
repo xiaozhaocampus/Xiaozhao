@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,6 +41,13 @@ public class MainCategoryActivity extends Activity {
         mCategoryListView = (ListView) findViewById(R.id.main_category_lv);
         loadData();
         mCategoryListView.setAdapter(mCategoryAdapter);
+        mCategoryListView.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SubCategoryActivity.startFrom(MainCategoryActivity.this, (MainCategory) mCategoryAdapter.getItem(position));
+            }
+        });
     }
 
     public static void startFrom(Context context) {

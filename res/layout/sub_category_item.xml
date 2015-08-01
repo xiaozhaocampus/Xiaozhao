@@ -15,13 +15,14 @@
         android:text="@string/sample_main_category_title_1" />
     
     <ImageView
-        android:id="@+id/arrow_iv"
+        android:id="@+id/check_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/category_item_margin_right"
-        android:src="@drawable/ic_right_arrow"
-        android:contentDescription="@null" />
+        android:src="@drawable/ic_check"
+        android:contentDescription="@null"
+        android:visibility="gone" />
     
 </RelativeLayout>

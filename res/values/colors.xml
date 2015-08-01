@@ -13,6 +13,8 @@
     <color name="indicator_focused">#D24E3E</color>
     <color name="menu_item">#00ffffff</color>
     <color name="menu_item_pressed">#60333333</color>
+    <color name="category_title_default_color">#343434</color>
+    <color name="category_title_checked_color">@color/main</color>
     
 </resources>
 
