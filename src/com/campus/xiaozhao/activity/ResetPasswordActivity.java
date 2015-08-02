@@ -67,6 +67,7 @@ public class ResetPasswordActivity extends Activity {
         mVerifyCodeEditText = (EditText) findViewById(R.id.verification_code_et);
         mCountDownTimerView = (CountDownTimerView) findViewById(R.id.request_verification_code);
         mCountDownTimerView.setText(R.string.get_verification_code);
+        mCountDownTimerView.setEnabled(false);
         mPhoneNumberEditText = (EditText) findViewById(R.id.phone_number_et);
         mPhoneNumberEditText.addTextChangedListener(new TextWatcher() {
             @Override

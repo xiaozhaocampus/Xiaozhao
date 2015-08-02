@@ -167,7 +167,7 @@ public class MainActivity extends SlidingFragmentActivity {
     	    	if (!CampusSharePreference.isLogin(getApplicationContext())) {
     	    		new AlertDialog.Builder(this)
 		            .setTitle(R.string.dialog_title_login_hint)
-		            .setMessage(R.string.dialog_body_login)
+		            .setMessage(R.string.dialog_body_login_for_filter)
 		            .setPositiveButton(R.string.ok, new OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
