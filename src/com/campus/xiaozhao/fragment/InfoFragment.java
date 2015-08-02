@@ -112,6 +112,11 @@ public class InfoFragment extends Fragment implements Handler.Callback{
         }else{
             query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);    // 如果没有缓存的话，则设置策略为NETWORK_ELSE_CACHE
         }
+        // 设置分页查询
+        query.setLimit(1);
+        int currentCount = CampusSharePreference.getServerDataCount(getActivity());
+        query.setSkip(currentCount);
+
         query.include("companyInfo");
         query.findObjects(getActivity(), new FindListener<CampusInfo>() {
             @Override
@@ -135,6 +140,10 @@ public class InfoFragment extends Fragment implements Handler.Callback{
                     }
                     Message msg = mHandler.obtainMessage(MSG_RECEIVE_DATA_FROM_BMOB);
                     mHandler.sendMessage(msg);
+
+                    // 缓存已经获取的条数
+                    int count = CampusSharePreference.getServerDataCount(getActivity());
+                    CampusSharePreference.setServerDataCount(getActivity(), count + list.size());
                 }
                 Logger.d(TAG, "get success");
             }
@@ -197,6 +206,7 @@ public class InfoFragment extends Fragment implements Handler.Callback{
 
         @Override
         protected Void doInBackground(Void... params) {
+            getDataFromBmob();
             return null;
         }
 
