@@ -15,15 +15,12 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.LogInListener;
 
 import com.campus.xiaozhao.Configuration;
 import com.campus.xiaozhao.R;
-import com.campus.xiaozhao.basic.data.CampusUser;
 import com.campus.xiaozhao.basic.utils.BmobUtil;
-import com.campus.xiaozhao.basic.utils.CampusSharePreference;
+import com.campus.xiaozhao.basic.utils.LoginHelper;
+import com.campus.xiaozhao.basic.utils.LoginHelper.LoginListener;
 import com.campus.xiaozhao.basic.utils.NumberUtils;
 import com.component.logger.Logger;
 
@@ -178,21 +175,18 @@ public class LoginActivity extends Activity {
 	 * @param pwd
 	 */
 	private void login(String number, String pwd) {
-		final ProgressDialog dialog = ProgressDialog.show(this, null, getString(R.string.loading_login));
-		
-		BmobUser.loginByAccount(this, number, pwd, new LogInListener<CampusUser>() {
+		LoginHelper.login(this, number, pwd, new LoginListener() {
 			@Override
-			public void done(CampusUser user, BmobException ex) {
-				dialog.dismiss();
-				if (ex != null) {
-					Logger.e(TAG, "loginByAccount failed: code=" + ex.getErrorCode()
-							+ ", msg=" + ex.getLocalizedMessage());
-					toast(getString(R.string.toast_login_failed) + ": " + ex.getLocalizedMessage());
-					return;
-				}
+			public void onSuccess() {
 				toast(getString(R.string.toast_welcome_back));
-				CampusSharePreference.setLogin(LoginActivity.this, true);
 				MainActivity.startFrom(LoginActivity.this);
+			}
+			
+			@Override
+			public void onError(int errCode, String errMsg) {
+				Logger.e(TAG, "loginByAccount failed: errCode=" + errCode
+						+ ", errMsg=" + errMsg);
+				toast(getString(R.string.toast_login_failed) + ": " + errMsg);
 			}
 		});
 	}

@@ -18,16 +18,15 @@ import android.widget.Toast;
 import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.RequestSMSCodeListener;
 import cn.bmob.v3.listener.ResetPasswordByCodeListener;
 
 import com.campus.xiaozhao.Configuration;
 import com.campus.xiaozhao.R;
-import com.campus.xiaozhao.basic.data.CampusUser;
 import com.campus.xiaozhao.basic.utils.BmobUtil;
 import com.campus.xiaozhao.basic.utils.BmobUtil.QueryUserListener;
-import com.campus.xiaozhao.basic.utils.CampusSharePreference;
+import com.campus.xiaozhao.basic.utils.LoginHelper;
+import com.campus.xiaozhao.basic.utils.LoginHelper.LoginListener;
 import com.campus.xiaozhao.basic.utils.NumberUtils;
 import com.campus.xiaozhao.basic.widget.CountDownTimerView;
 import com.campus.xiaozhao.sms.CloudSms;
@@ -267,18 +266,18 @@ public class ResetPasswordActivity extends Activity {
     }
     
     private void login(String number, String pwd) {
-		BmobUser.loginByAccount(this, number, pwd, new LogInListener<CampusUser>() {
+		LoginHelper.login(this, number, pwd, new LoginListener() {
 			@Override
-			public void done(CampusUser user, BmobException ex) {
-				if (ex != null) {
-					Logger.e(TAG, "loginByAccount failed: code=" + ex.getErrorCode()
-							+ ", msg=" + ex.getLocalizedMessage());
-					toast(getString(R.string.toast_login_failed) + ": " + ex.getLocalizedMessage());
-					return;
-				}
+			public void onSuccess() {
 				toast(getString(R.string.toast_reset_password_success));
-				CampusSharePreference.setLogin(ResetPasswordActivity.this, true);
 				MainActivity.startFrom(ResetPasswordActivity.this);
+			}
+			
+			@Override
+			public void onError(int errCode, String errMsg) {
+				Logger.e(TAG, "loginByAccount failed: code=" + errCode
+						+ ", msg=" + errMsg);
+				toast(getString(R.string.toast_login_failed) + ": " + errMsg);
 			}
 		});
 	}

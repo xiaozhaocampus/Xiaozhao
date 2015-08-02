@@ -25,7 +25,8 @@ import com.campus.xiaozhao.Configuration;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.data.CampusUser;
 import com.campus.xiaozhao.basic.utils.BmobUtil;
-import com.campus.xiaozhao.basic.utils.CampusSharePreference;
+import com.campus.xiaozhao.basic.utils.LoginHelper;
+import com.campus.xiaozhao.basic.utils.LoginHelper.LoginListener;
 import com.campus.xiaozhao.basic.widget.CountDownTimerView;
 import com.campus.xiaozhao.basic.widget.CountDownTimerView.OnCountDownListener;
 import com.campus.xiaozhao.sms.CloudSms;
@@ -217,9 +218,20 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
 		user.signUp(this, new SaveListener() {
 			@Override
 			public void onSuccess() {
-				toast(getString(R.string.toast_verification_success));
-				CampusSharePreference.setLogin(VerifyNumberActivity.this, true);
-				MainActivity.startFrom(VerifyNumberActivity.this);
+				LoginHelper.login(VerifyNumberActivity.this, mPhoneNumber, mPassword, new LoginListener() {
+					
+					@Override
+					public void onSuccess() {
+						toast(getString(R.string.toast_verification_success));
+						MainActivity.startFrom(VerifyNumberActivity.this);
+					}
+					
+					@Override
+					public void onError(int errCode, String errMsg) {
+						Logger.e(TAG, "signUp failed: errCode=" + errCode + ", errMsg=" + errMsg);
+						toast(getString(R.string.toast_verification_failed) + ": " + errMsg);
+					}
+				});
 			}
 			
 			@Override

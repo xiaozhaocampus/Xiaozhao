@@ -3,7 +3,10 @@ package com.campus.xiaozhao.activity;
 import java.util.Calendar;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -161,7 +164,19 @@ public class MainActivity extends SlidingFragmentActivity {
 	public void onMenuItemClicked(View view) {
 	    switch (view.getId()) {
     	    case R.id.filter:
-    	        MainCategoryActivity.startFrom(this);
+    	    	if (!CampusSharePreference.isLogin(getApplicationContext())) {
+    	    		new AlertDialog.Builder(this)
+		            .setTitle(R.string.dialog_title_login_hint)
+		            .setMessage(R.string.dialog_body_login)
+		            .setPositiveButton(R.string.ok, new OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            LoginActivity.startFrom(MainActivity.this);
+                        }
+                    }).create().show();
+    	    		return;
+    	    	}
+    	    	MainCategoryActivity.startFrom(this);
     	        break;
     	    case R.id.feedback:
     	        Toast.makeText(this, "Feedback clicked", Toast.LENGTH_SHORT).show();
