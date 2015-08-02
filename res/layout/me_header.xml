@@ -34,11 +34,13 @@
 	    android:layout_marginLeft="10dp"
 	    android:layout_marginRight="11dp"
 	    android:layout_alignParentLeft="true"
+	    android:onClick="onClick"
 	    android:src="@drawable/login_photo"
 	    />
 	
 		
-	<TextView 
+	<TextView
+	    android:id="@+id/personal" 
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_alignTop="@id/me_header_photo"
@@ -46,6 +48,8 @@
 	    android:layout_toRightOf="@id/me_header_photo"
 	    android:gravity="center"
 	    android:textSize="27sp"
+	    android:onClick="onClick"
+	    android:clickable="true"
 	    android:textColor="@android:color/white"
 	    android:text="Single"/>
 	

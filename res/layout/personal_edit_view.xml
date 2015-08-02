@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.campus.xiaozhao.activity.PersonalEditListView
+        android:id="@+id/personal_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:childDivider="@android:color/darker_gray"
+        android:paddingLeft="10dp"
+        android:layout_alignParentTop="true"
+        android:paddingRight="10dp"
+        android:scrollbars="none" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+		android:background="@android:color/darker_gray"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:text="资料完成度20%"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            android:progressDrawable="@drawable/personal_progress"
+            android:background="@drawable/personal_edit_done_bg"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:maxHeight="4dp"
+            android:indeterminate="false"
+            android:indeterminateOnly="false"
+            android:progress="20"
+            android:layout_gravity="center_vertical"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

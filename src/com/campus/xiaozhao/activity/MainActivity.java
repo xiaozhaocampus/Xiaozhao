@@ -156,7 +156,9 @@ public class MainActivity extends SlidingFragmentActivity {
                 getSupportFragmentManager().beginTransaction().add(R.id.tab_content, mSelfFragment).commit();
             }
             break;
-
+        case R.id.me_header_photo:
+        	id = R.id.personal; 
+        	break;
 		}
 		startActivityById(id);
 	}
@@ -203,6 +205,9 @@ public class MainActivity extends SlidingFragmentActivity {
 		case R.id.feedback:
 			classes = FeedbackActivity.class;
 			break;
+		case R.id.personal:
+			classes = PersonalActivity.class;
+			break;
 		default:
 			break;
 		}
@@ -237,4 +242,5 @@ public class MainActivity extends SlidingFragmentActivity {
         
 	    return interval >= Configuration.SPLASH_START_UP_INTERVAL;
 	}
+	
 }

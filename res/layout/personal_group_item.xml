@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+    <TextView
+        android:id="@+id/personal_group_item_title"
+        android:layout_width="match_parent"
+        android:textIsSelectable="false"
+        android:layout_height="40dp"
+        android:textColor="@color/red"
+        android:gravity="left|center_vertical"
+		android:layout_gravity="left|center_vertical"
+        android:paddingLeft="4dp"
+        android:drawableBottom="@drawable/personal_group_line"
+        android:textSize="15sp"/>
+        
+
+</LinearLayout>

@@ -8,6 +8,7 @@
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_verify_number">VerifyNumberActivity</string>
     <string name="title_activity_feedback">问题反馈</string>
+    <string name="title_activity_personal">个人资料</string>
     <string name="title_activity_reset_password">ResetPasswordActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_main_category">MainCategoryActivity</string>
@@ -107,5 +108,20 @@
     <string name="ok">确定</string>
     <string name="sample_main_category_title_1">IT/互联网/通信/电子</string>
     <string name="sample_sub_category_title_1">软件工程师</string>
-
+	<!-- 个人资料 -->
+	<string name="personal_base_group_title">基本资料</string>
+	<string name="personal_photo">头像</string>
+	<string name="personal_nickname">昵称</string>
+	<string name="personal_nickname_default">达人%s</string>
+	<string name="personal_gender">性别</string>
+	<string-array name="personal_gender_options">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+	<string name="personal_phone">手机</string>
+	<string name="personal_mail">邮箱</string>
+	<string name="personal_more_group_title">更多资料</string>
+	<string name="personal_school">学校</string>
+	<string name="personal_major">专业</string>
+	<string name="personal_grade">年级</string>
 </resources>

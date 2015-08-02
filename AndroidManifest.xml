@@ -104,6 +104,11 @@
             android:label="@string/title_activity_feedback"
             android:screenOrientation="portrait" >
         </activity>
+		<activity
+            android:name="com.campus.xiaozhao.activity.PersonalActivity"
+            android:label="@string/title_activity_personal"
+            android:screenOrientation="portrait" >
+        </activity>
         <activity
             android:name="com.campus.xiaozhao.activity.AlarmActivity"
             android:label="@string/title_activity_feedback"
