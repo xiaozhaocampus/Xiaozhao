@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -58,6 +59,12 @@ public class InfoFragment extends Fragment implements Handler.Callback{
             location = "暂无定位";
         }
         mLocation.setText(location);
+        mLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "其他城市正在开发中", Toast.LENGTH_LONG).show();
+            }
+        });
         initData();
         return view;
     }

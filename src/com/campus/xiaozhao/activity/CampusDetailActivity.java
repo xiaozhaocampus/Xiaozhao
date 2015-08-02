@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,8 @@ public class CampusDetailActivity extends Activity {
     private CampusDBProcessor mDBProcessor;
     private String[] mTypes = null; // 提醒类型, 用于用户点击确定后可选的范围
     private String mType;
+
+    private ImageView mSave; // actionBar中得收藏按钮
 
     private RelativeLayout mRemindTime, mLocation;
     @Override
@@ -65,16 +68,23 @@ public class CampusDetailActivity extends Activity {
     }
 
     private void initActionBar(ActionBar actionBar) {
+        mSave = (ImageView) actionBar.getCustomView().findViewById(R.id.campus_detail_action_image_save);
         actionBar.getCustomView().findViewById(R.id.campus_detail_action_image_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CampusDetailActivity.this.finish();
             }
         });
-        actionBar.getCustomView().findViewById(R.id.campus_detail_action_image_save).setOnClickListener(new View.OnClickListener() {
+        mSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO 点击收藏按钮弹出dialog
+                //TODO 点击收藏按钮
+                if (mDBProcessor != null && mDBProcessor.getCampusInfoByCampsuID(mItemData.getCampusID()) == null) {
+                    mDBProcessor.addCampusInfo(mItemData);
+                    mSave.setClickable(false);
+                    mSave.setBackground(getResources().getDrawable(R.drawable.campus_detail_image_save_on));
+                    Toast.makeText(getApplicationContext(), "收藏成功", Toast.LENGTH_LONG).show();
+                }
             }
         });
         actionBar.getCustomView().findViewById(R.id.campus_detail_action_image_share).setOnClickListener(new View.OnClickListener() {
@@ -93,6 +103,9 @@ public class CampusDetailActivity extends Activity {
         if(itemData != null) {
             mItemData.setIsRemind(itemData.isRemind());
             mItemData.setRemindType(itemData.getRemindType());
+
+            mSave.setClickable(false);
+            mSave.setBackground(getResources().getDrawable(R.drawable.campus_detail_image_save_on));
         }
 
         if(itemData != null && itemData.isRemind()) { // 该校招信息已经设置过定时提醒
@@ -170,9 +183,19 @@ public class CampusDetailActivity extends Activity {
                                             remindTime = mItemData.getTime() - DateUtils.REMIND_TIME_DISTANCE_15_MINUTES;
                                         }
 
-                                        mItemData.setRemindTime(remindTime);
-                                        mItemData.setIsRemind(true);
-                                        mDBProcessor.addCampusInfo(mItemData); // 这个地方先入库，数据库ID在设置定时提醒时唯一标示一个定时提醒
+                                        CampusInfoItemData infoItemData = mDBProcessor.getCampusInfoByCampsuID(mItemData.getCampusID());
+                                        if (infoItemData != null) {
+                                            mItemData.setRemindTime(remindTime);
+                                            mItemData.setIsRemind(true);
+                                            mDBProcessor.updateCampus(mItemData);
+                                            CampusAlarmManager.getInstance().stopAlarm(getApplicationContext(), infoItemData.getCampusID());
+                                        } else {
+                                            mItemData.setRemindTime(remindTime);
+                                            mItemData.setIsRemind(true);
+                                            mDBProcessor.addCampusInfo(mItemData); // 这个地方先入库，数据库ID在设置定时提醒时唯一标示一个定时提醒
+                                            mSave.setClickable(false);
+                                            mSave.setBackground(getResources().getDrawable(R.drawable.campus_detail_image_save_on));
+                                        }
                                         CampusAlarmManager.getInstance().startAlarm(CampusDetailActivity.this, remindTime, mItemData.getCampusID());
                                         Toast.makeText(CampusDetailActivity.this, "系统将于" + DateUtils.transferTimeToDate(remindTime) + "提醒您!", Toast.LENGTH_LONG).show();
                                     }
