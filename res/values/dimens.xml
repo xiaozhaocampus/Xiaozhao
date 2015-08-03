@@ -6,7 +6,7 @@
     <dimen name="sum_nav_text_size">18.0sp</dimen>
 
 
-    <dimen name="campus_detail_text_size">21sp</dimen>
+    <dimen name="campus_detail_text_size">14sp</dimen>
     <dimen name="campus_detail_button_size">240dp</dimen>
     
     <!-- 校招信息list参数设定 -->
@@ -32,7 +32,7 @@
     <dimen name="list_padding">10dp</dimen>
 
     <!-- -->
-    <dimen name="campus_detail_company_info_height">154dp</dimen>
+    <dimen name="campus_detail_company_info_height">102.7dp</dimen>
     
     <dimen name="main_category_bottom_height">73dp</dimen>
     <dimen name="category_item_margin_left">17dp</dimen>

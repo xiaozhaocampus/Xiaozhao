@@ -16,19 +16,19 @@
                 android:id="@+id/company_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="23dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="13.3dp"
+                android:layout_marginTop="13.3dp"
                 android:text="南京嘉环科技有限公司"
-                android:textSize="23sp"
+                android:textSize="15.3sp"
                 android:textColor="#343434"/>
             <TextView
                 android:id="@+id/publish_time"
                 android:layout_below="@id/company_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="23dp"
+                android:layout_marginBottom="15.3dp"
                 android:text="发布时间:2015-03-26"
-                android:textSize="18sp"
+                android:textSize="12sp"
                 android:textColor="#c9c9c9"/>
             <TextView
                 android:id="@+id/information_come"
@@ -36,15 +36,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="信息来源:广州大学就业网"
-                android:textSize="18sp"
+                android:textSize="12sp"
                 android:textColor="#c9c9c9"/>
             <ImageView
                 android:id="@+id/company_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_toRightOf="@id/company_name"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/icon_head"/>
         </RelativeLayout>
 
         <ImageView
@@ -55,7 +56,7 @@
         <RelativeLayout
             android:id="@+id/campus_detail_time"
             android:layout_width="match_parent"
-            android:layout_height="66dp"
+            android:layout_height="44dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp">
             <ImageView
@@ -73,7 +74,7 @@
                 android:layout_centerVertical="true"
                 android:text="2015-08-02"
                 android:textColor="#868686"
-                android:textSize="18sp"/>
+                android:textSize="12sp"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,14 +93,14 @@
         <RelativeLayout
             android:id="@+id/campus_detail_location"
             android:layout_width="match_parent"
-            android:layout_height="89dp"
+            android:layout_height="59.3dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp">
             <ImageView
                 android:id="@+id/campus_detail_image_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="13.3dp"
                 android:layout_marginRight="10dp"
                 android:src="@drawable/campus_detail_mark"/>
             <TextView
@@ -107,9 +108,9 @@
                 android:layout_toRightOf="@id/campus_detail_image_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="13.3dp"
                 android:text="武汉理工大学"
-                android:textSize="18sp"
+                android:textSize="12sp"
                 android:textColor="#868686"/>
             <TextView
                 android:id="@+id/campus_detail_province"
@@ -117,9 +118,9 @@
                 android:layout_alignLeft="@id/campus_detail_school"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="6.7dp"
                 android:text="湖北"
-                android:textSize="18sp"
+                android:textSize="12sp"
                 android:textColor="#868686"/>
             <ImageView
                 android:layout_width="wrap_content"
@@ -131,14 +132,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="22dp"
+            android:layout_height="14.7dp"
             android:background="#ECECEC">
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/campus_detail_job_detail"
             android:layout_width="match_parent"
-            android:layout_height="68dp"
+            android:layout_height="45.3dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:orientation="horizontal">
@@ -151,7 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:textSize="23dp"
+                android:textSize="15.3dp"
                 android:textColor="#E95644"
                 android:layout_gravity="center_vertical"
                 android:text="招聘详情"/>
@@ -176,7 +177,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
-            android:textSize="19sp"
+            android:textSize="12.7sp"
             android:text="嘉环公司成立与1998年，"
             android:textColor="#343434"/>
     </LinearLayout>
