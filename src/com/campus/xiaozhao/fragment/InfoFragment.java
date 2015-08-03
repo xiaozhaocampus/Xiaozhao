@@ -1,7 +1,9 @@
 package com.campus.xiaozhao.fragment;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import android.content.Intent;
@@ -31,6 +33,7 @@ import com.campus.xiaozhao.basic.data.CampusInfoItemData;
 import com.campus.xiaozhao.basic.data.CampusType;
 import com.campus.xiaozhao.basic.location.BaiDuLocationManager;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
+import com.campus.xiaozhao.basic.utils.DateUtils;
 import com.component.logger.Logger;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -47,6 +50,7 @@ public class InfoFragment extends Fragment implements Handler.Callback{
     private List<CampusInfoItemData> mDatas;
     private TextView mLocation;
     private Handler mHandler;
+    private Set<String> mCampusIDs = new HashSet<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,24 +89,48 @@ public class InfoFragment extends Fragment implements Handler.Callback{
         mCampusList.setAdapter(mInfoAdapter);
         ListItemClickListener listener = new ListItemClickListener();
         mCampusList.setOnItemClickListener(listener);
-        getDataFromBmob();
+        pullDataForward();
 
         mCampusList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 Logger.d(TAG, "pull down");
-                new GetDataTask().execute();
+                //设置上一次刷新的提示标签
+                refreshView.getLoadingLayoutProxy().setLastUpdatedLabel("最后更新时间:" + DateUtils.transferTimeToDate(System.currentTimeMillis(), "MM月dd日 a hh:mm"));
+                new GetDataTask().execute(true);
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 Logger.d(TAG, "pull up");
-                new GetDataTask().execute();
+                //设置上一次刷新的提示标签
+                refreshView.getLoadingLayoutProxy().setLastUpdatedLabel("最后更新时间:" + DateUtils.transferTimeToDate(System.currentTimeMillis(), "MM月dd日 a hh:mm"));
+                new GetDataTask().execute(false);
             }
         });
     }
 
-    private void getDataFromBmob() {
+    /**
+     * 向前获取数据(最新的数据)
+     */
+    private void pullDataForward() {
+        int currentCount = CampusSharePreference.getServerDataCount(getActivity());
+        getDataFromBmob(currentCount);
+    }
+
+    /**
+     * 向后拉取数据(较早的数据)
+     */
+    private void pullDataBackword() {
+        int currentCount = CampusSharePreference.getServerDataCount(getActivity());
+        int start = currentCount - mDatas.size() - 1;
+        if(start < 0) {
+            start = 0;
+        }
+        getDataFromBmob(start);
+    }
+
+    private void getDataFromBmob(final int startPosition) {
         BmobQuery<CampusInfo> query = new BmobQuery<CampusInfo>();
         query.setMaxCacheAge(TimeUnit.DAYS.toMillis(3));//此表示缓存三天
         //判断是否有缓存
@@ -110,12 +138,11 @@ public class InfoFragment extends Fragment implements Handler.Callback{
         if(isCache){
             query.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);    // 如果有缓存的话，则设置策略为CACHE_ELSE_NETWORK
         }else{
-            query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);    // 如果没有缓存的话，则设置策略为NETWORK_ELSE_CACHE
+            query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ONLY);    // 如果没有缓存的话，则设置策略为NETWORK_ELSE_CACHE
         }
         // 设置分页查询
         query.setLimit(1);
-        int currentCount = CampusSharePreference.getServerDataCount(getActivity());
-        query.setSkip(currentCount);
+        query.setSkip(startPosition);
 
         query.include("companyInfo");
         query.findObjects(getActivity(), new FindListener<CampusInfo>() {
@@ -135,7 +162,12 @@ public class InfoFragment extends Fragment implements Handler.Callback{
                             itemData.setTime(info.getDate());
                             itemData.setVersion(info.getVersion());
                             itemData.setType(info.getType());
-                            mDatas.add(itemData);
+                            if(mCampusIDs.contains(itemData.getCampusID())) {
+                                continue;
+                            } else {
+                                mDatas.add(itemData);
+                                mCampusIDs.add(itemData.getCampusID());
+                            }
                         }
                     }
                     Message msg = mHandler.obtainMessage(MSG_RECEIVE_DATA_FROM_BMOB);
@@ -143,14 +175,24 @@ public class InfoFragment extends Fragment implements Handler.Callback{
 
                     // 缓存已经获取的条数
                     int count = CampusSharePreference.getServerDataCount(getActivity());
+                    if(startPosition < count) { // 获取较早的数据不缓存条数
+                        return;
+                    }
                     CampusSharePreference.setServerDataCount(getActivity(), count + list.size());
                 }
                 Logger.d(TAG, "get success");
+
+                if(mCampusList != null) {
+                    mCampusList.onRefreshComplete();
+                }
             }
 
             @Override
             public void onError(int i, String s) {
                 Logger.d(TAG, "get fail");
+                if(mCampusList != null) {
+                    mCampusList.onRefreshComplete();
+                }
             }
         });
     }
@@ -202,11 +244,18 @@ public class InfoFragment extends Fragment implements Handler.Callback{
         }
     }
 
-    class GetDataTask extends AsyncTask<Void, Void, Void> {
+    /**
+     * 获取数据成功后刷新UI(上拉下拉)
+     */
+    class GetDataTask extends AsyncTask<Boolean, Void, Void> {
 
         @Override
-        protected Void doInBackground(Void... params) {
-            getDataFromBmob();
+        protected Void doInBackground(Boolean... params) {
+            if(params[0]) {
+                pullDataForward();
+            } else {
+                pullDataBackword();
+            }
             return null;
         }
 
