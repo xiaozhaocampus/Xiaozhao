@@ -42,6 +42,7 @@ public class CampusDetailActivity extends Activity {
 
         Intent intent = getIntent();
         mItemData = (CampusInfoItemData)intent.getSerializableExtra("detail_data");
+        mDBProcessor = CampusDBProcessor.getInstance(getApplicationContext());
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setDisplayShowCustomEnabled(true);
@@ -62,8 +63,6 @@ public class CampusDetailActivity extends Activity {
         mJobTime.setText(DateUtils.transferTimeToDate(mItemData.getTime()));
         mAddress.setText(mItemData.getAddress());
         mCompanyIntrodction.setText(mItemData.getIntroduction());
-
-        mDBProcessor = CampusDBProcessor.getInstance(getApplicationContext());
         setButtonState();
     }
 
@@ -79,11 +78,22 @@ public class CampusDetailActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //TODO 点击收藏按钮
-                if (mDBProcessor != null && mDBProcessor.getCampusInfoByCampsuID(mItemData.getCampusID()) == null) {
-                    mDBProcessor.addCampusInfo(mItemData);
-                    mSave.setClickable(false);
-                    mSave.setBackground(getResources().getDrawable(R.drawable.campus_detail_image_save_on));
-                    Toast.makeText(getApplicationContext(), "收藏成功", Toast.LENGTH_LONG).show();
+                if (mDBProcessor != null) {
+                    CampusInfoItemData itemData = mDBProcessor.getCampusInfoByCampsuID(mItemData.getCampusID());
+                    if(itemData == null) {
+                        mItemData.setIsSave(true);
+                        mDBProcessor.addCampusInfo(mItemData);
+                        mSave.setBackground(getResources().getDrawable(R.drawable.campus_detail_image_save_on));
+                        Toast.makeText(getApplicationContext(), "收藏成功", Toast.LENGTH_LONG).show();
+                    } else {
+                        if(!itemData.isSave()) {
+                            mItemData.setIsSave(true);
+                            mDBProcessor.updateCampus(mItemData);
+                            Toast.makeText(getApplicationContext(), "收藏成功", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "已收藏", Toast.LENGTH_LONG).show();
+                        }
+                    }
                 }
             }
         });
@@ -103,9 +113,11 @@ public class CampusDetailActivity extends Activity {
         if(itemData != null) {
             mItemData.setIsRemind(itemData.isRemind());
             mItemData.setRemindType(itemData.getRemindType());
+            mItemData.setIsSave(itemData.isSave());
 
-            mSave.setClickable(false);
-            mSave.setBackground(getResources().getDrawable(R.drawable.campus_detail_image_save_on));
+            if(mItemData.isSave()) {
+                mSave.setBackground(getResources().getDrawable(R.drawable.campus_detail_image_save_on));
+            }
         }
 
         if(itemData != null && itemData.isRemind()) { // 该校招信息已经设置过定时提醒

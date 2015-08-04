@@ -16,7 +16,7 @@ public class CampusSharePreference {
     private static final String KEY_LAST_MAX_VERSION = "key_last_max_version";
     /** 缓存地址位置 */
     private static final String KEY_LOCATION = "key_location";
-    /** 已获取服务器数据的条数，用于分页查询 */
+    /** 已获取服务器数据的条数(最大版本号)，用于分页查询 */
     private static final String KEY_GET_SERVER_DATA_COUNT = "key_get_server_data_count";
 
     /**
@@ -60,8 +60,8 @@ public class CampusSharePreference {
      * @param context
      * @return
      */
-    public static int getServerDataCount(Context context) {
-        return getPreference(context).getInt(KEY_GET_SERVER_DATA_COUNT, 0);
+    public static long getServerDataCount(Context context) {
+        return getPreference(context).getLong(KEY_GET_SERVER_DATA_COUNT, 0);
     }
 
     /**
@@ -69,8 +69,8 @@ public class CampusSharePreference {
      * @param context
      * @param count
      */
-    public static void setServerDataCount(Context context, int count) {
-        getPreference(context).edit().putInt(KEY_GET_SERVER_DATA_COUNT, count).commit();
+    public static void setServerDataCount(Context context, long count) {
+        getPreference(context).edit().putLong(KEY_GET_SERVER_DATA_COUNT, count).commit();
     }
     
     /**

@@ -25,7 +25,6 @@ import com.campus.xiaozhao.activity.InfoPagerAdapter;
 import com.campus.xiaozhao.basic.location.BaiDuLocationManager;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.component.logger.Logger;
-import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +44,6 @@ public class InfoFragment extends Fragment implements Handler.Callback{
     private TextView mTabMyFilterTitle; // 我的订阅tab中的title
     private ImageView mTabMyFilterImage; // 我的订阅tab中的image
     private int offset = 0; // 动画图片偏移量
-    private View mViewAll, mViewMyFilter; // 各个页卡
-    private List<View> views;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,12 +65,7 @@ public class InfoFragment extends Fragment implements Handler.Callback{
 
         // 初始化ViewPager
         mViewPager = (ViewPager)view.findViewById(R.id.info_pager);
-        views = new ArrayList<>();
-        mViewAll = inflater.inflate(R.layout.info_all, null);
-        mViewMyFilter = inflater.inflate(R.layout.info_filter, null);
-        views.add(mViewAll);
-        views.add(mViewMyFilter);
-        mViewPager.setAdapter(new InfoPagerAdapter(getActivity(), views));
+        mViewPager.setAdapter(new InfoPagerAdapter(getActivity()));
         mViewPager.setCurrentItem(0);
         mTabMyFilterTitle = (TextView) view.findViewById(R.id.tab_my_filter_title);
         mTabMyFilterImage = (ImageView) view.findViewById(R.id.tab_my_filter_image);

@@ -46,5 +46,8 @@ public class CampusModel {
 
         /** 用户设置此校招的提醒时间(只有REMIND_TYPE为自定义时有效) */
         public static final String REMIND_TIME = "remind_time";
+
+        /** 用户是否已收藏该校招 */
+        public static final String IS_SAVE = "is_save";
     }
 }

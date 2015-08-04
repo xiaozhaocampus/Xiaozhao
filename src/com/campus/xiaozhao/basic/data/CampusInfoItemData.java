@@ -40,6 +40,8 @@ public class CampusInfoItemData implements Serializable{
     private int remindType;
     /** 13 用户设置校招提醒的提醒时间(只有remindType为自定义时有效) */
     private long remindTime;
+    /** 14 用户是否设置收藏 */
+    private boolean isSave;
 
     public long getTime() {
         return time;
@@ -153,6 +155,14 @@ public class CampusInfoItemData implements Serializable{
         this.remindTime = remindTime;
     }
 
+    public boolean isSave() {
+        return isSave;
+    }
+
+    public void setIsSave(boolean isSave) {
+        this.isSave = isSave;
+    }
+
     public void onAddToDatabase(ContentValues values) {
         values.put(CampusModel.CampusInfoItemColumn.CAMPUS_ID, campusID);
         values.put(CampusModel.CampusInfoItemColumn.COMPANY_NAME, company);
@@ -167,5 +177,6 @@ public class CampusInfoItemData implements Serializable{
         values.put(CampusModel.CampusInfoItemColumn.IS_REMIND, isRemind);
         values.put(CampusModel.CampusInfoItemColumn.REMIND_TYPE, remindType);
         values.put(CampusModel.CampusInfoItemColumn.REMIND_TIME, remindTime);
+        values.put(CampusModel.CampusInfoItemColumn.IS_SAVE, isSave);
     }
 }

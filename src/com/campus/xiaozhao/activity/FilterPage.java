@@ -2,12 +2,8 @@ package com.campus.xiaozhao.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,12 +11,10 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import com.campus.xiaozhao.R;
-import com.campus.xiaozhao.XZApplication;
 import com.campus.xiaozhao.basic.data.CampusInfo;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
 import com.campus.xiaozhao.basic.data.CampusType;
 import com.campus.xiaozhao.basic.db.CampusDBProcessor;
-import com.campus.xiaozhao.basic.db.CampusModel;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.campus.xiaozhao.basic.utils.DateUtils;
 import com.component.logger.Logger;
@@ -34,107 +28,66 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by frankenliu on 15/8/3.
+ * Created by frankenliu on 2015/8/4.
  */
-public class InfoPagerAdapter extends PagerAdapter {
-
-    private static final String TAG = "InfoPagerAdapter";
+public class FilterPage {
+    private static final String TAG = "FilterPage";
     private Context mContext;
+    private View mView;
     private PullToRefreshListView mCampusList;
-    private CampusInfoAdapter mInfoAdapter;
     private List<CampusInfoItemData> mDatas;
+    private CampusInfoAdapter mInfoAdapter;
     private Set<String> mCampusIDs = new HashSet<>();
+    private long cacheMaxVersion;
+    private long cacheMinVersion;
 
-
-    public InfoPagerAdapter(Context context) {
+    public FilterPage(Context context, View view) {
         this.mContext = context;
-    }
-    @Override
-    public int getCount() {
-        return 2;
+        this.mView = view;
+        doInit();
     }
 
-    @Override
-    public boolean isViewFromObject(View view, Object o) {
-        return view == o;
-    }
-
-    @Override
-    public Object instantiateItem(android.view.ViewGroup container,
-                                  int position) {
-        LayoutInflater inflater = LayoutInflater.from(container.getContext());
-        View view = null;
-        if(position == 0) {
-            view = inflater.inflate(R.layout.info_all, null);
-            mCampusList = (PullToRefreshListView)view.findViewById(R.id.campus_list);
-            mDatas = new ArrayList<>();
-
-            // 获取本地缓存的数据
-            String orderStr = CampusModel.CampusInfoItemColumn.VERSION + " DESC";
-            List<CampusInfoItemData> datas = CampusDBProcessor.getInstance(mContext).getCampusInfos(null, null, orderStr);
-            if(datas != null && datas.size() > 0) {
-                mDatas.addAll(datas);
+    private void doInit() {
+        mCampusList = (PullToRefreshListView) mView.findViewById(R.id.info_filter_list);
+        mDatas = new ArrayList<>();
+        mInfoAdapter = new CampusInfoAdapter(mContext, mDatas);
+        mCampusList.setAdapter(mInfoAdapter);
+        mCampusList.setOnItemClickListener(new ListItemClickListener());
+        pullDataForward();
+        mCampusList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                Logger.d(TAG, "pull down");
+                //设置上一次刷新的提示标签
+                refreshView.getLoadingLayoutProxy().setLastUpdatedLabel("最后更新时间:" + DateUtils.transferTimeToDate(System.currentTimeMillis(), "MM月dd日 a hh:mm"));
+                new GetDataTask().execute(true);
             }
-            mCampusList.setMode(PullToRefreshBase.Mode.BOTH);
-            mInfoAdapter = new CampusInfoAdapter(container.getContext(), mDatas);
-            mCampusList.setAdapter(mInfoAdapter);
-            ListItemClickListener listener = new ListItemClickListener();
-            mCampusList.setOnItemClickListener(listener);
-            pullDataForward();
-            mCampusList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
-                @Override
-                public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                    Logger.d(TAG, "pull down");
-                    //设置上一次刷新的提示标签
-                    refreshView.getLoadingLayoutProxy().setLastUpdatedLabel("最后更新时间:" + DateUtils.transferTimeToDate(System.currentTimeMillis(), "MM月dd日 a hh:mm"));
-                    new GetDataTask().execute(true);
-                }
 
-                @Override
-                public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                    Logger.d(TAG, "pull up");
-                    //设置上一次刷新的提示标签
-                    refreshView.getLoadingLayoutProxy().setLastUpdatedLabel("最后更新时间:" + DateUtils.transferTimeToDate(System.currentTimeMillis(), "MM月dd日 a hh:mm"));
-                    new GetDataTask().execute(false);
-                }
-            });
-        }
-        if(position == 1) {
-            view = inflater.inflate(R.layout.info_filter, null);
-            new FilterPage(mContext, view);
-        }
-        container.addView(view);
-        return view;
-    }
-
-    @Override
-    public void destroyItem(android.view.ViewGroup container, int position,
-                            Object object) {
-        ((ViewPager) container)
-                .removeView((View) object);
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                Logger.d(TAG, "pull up");
+                //设置上一次刷新的提示标签
+                refreshView.getLoadingLayoutProxy().setLastUpdatedLabel("最后更新时间:" + DateUtils.transferTimeToDate(System.currentTimeMillis(), "MM月dd日 a hh:mm"));
+                new GetDataTask().execute(false);
+            }
+        });
     }
 
     /**
      * 向前获取数据(最新的数据)
      */
     private void pullDataForward() {
-        long currentCount = CampusSharePreference.getServerDataCount(mContext);
-        getDataFromBmob(currentCount, true);
+        getDataFromBmob(true);
     }
 
     /**
      * 向后拉取数据(较早的数据)
      */
     private void pullDataBackword() {
-        long currentCount = CampusSharePreference.getServerDataCount(mContext);
-        long start = currentCount - mDatas.size() - 10;
-        if(start < 0) {
-            start = 0;
-        }
-        getDataFromBmob(start, false);
+        getDataFromBmob(false);
     }
 
-    private void getDataFromBmob(long startPosition, final boolean isCache) {
+    private void getDataFromBmob(boolean isUp) {
         BmobQuery<CampusInfo> query = new BmobQuery<CampusInfo>();
         query.setMaxCacheAge(TimeUnit.DAYS.toMillis(3));//此表示缓存三天
         //判断是否有缓存
@@ -144,10 +97,18 @@ public class InfoPagerAdapter extends PagerAdapter {
         }else{
             query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ONLY);    // 如果没有缓存的话，则设置策略为NETWORK_ELSE_CACHE
         }
-        // 设置分页查询
-        query.setLimit(10);
-        query.addWhereGreaterThan("version",startPosition);
 
+        query.setLimit(10);
+        query.order("version");
+        if(isUp) {
+            if(cacheMaxVersion != 0) {
+                query.addWhereGreaterThan("version",cacheMaxVersion);
+            }
+        } else {
+            if(cacheMinVersion != 0) {
+                query.addWhereLessThan("version", cacheMinVersion);
+            }
+        }
         query.include("companyInfo");
         query.findObjects(mContext, new FindListener<CampusInfo>() {
             @Override
@@ -167,19 +128,19 @@ public class InfoPagerAdapter extends PagerAdapter {
                             itemData.setVersion(info.getVersion());
                             itemData.setType(info.getType());
 
-                            if(isCache) { // 缓存最新的数据
-                                CampusDBProcessor.getInstance(mContext).addCampusInfo(itemData);
-                                // TODO 待删除数据库中旧数据(不算已收藏的)
-                            }
                             if (mCampusIDs.contains(itemData.getCampusID())) {
                                 continue;
                             } else {
                                 mDatas.add(itemData);
                                 mCampusIDs.add(itemData.getCampusID());
                             }
-                            long version = CampusSharePreference.getServerDataCount(mContext);
-                            if(itemData.getVersion() > version)
-                                CampusSharePreference.setServerDataCount(mContext, itemData.getVersion());
+
+                            if(cacheMaxVersion < itemData.getVersion()) {
+                                cacheMaxVersion = itemData.getVersion();
+                            }
+                            if(cacheMinVersion > itemData.getVersion()) {
+                                cacheMinVersion = itemData.getVersion();
+                            }
                         }
                     }
 
