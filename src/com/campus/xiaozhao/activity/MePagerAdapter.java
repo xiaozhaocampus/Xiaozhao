@@ -51,13 +51,13 @@ public class MePagerAdapter extends PagerAdapter{
 		}
 		container.addView(view);
 		return view;
-	};
+	}
 
 	@Override
 	public void destroyItem(android.view.ViewGroup container, int position,
 			Object object) {
 		((ViewPager) container)
 				.removeView((View)object);
-	};
+	}
 
 }
