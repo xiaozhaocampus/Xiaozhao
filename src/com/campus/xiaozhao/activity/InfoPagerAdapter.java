@@ -174,7 +174,7 @@ public class InfoPagerAdapter extends PagerAdapter {
                             if (mCampusIDs.contains(itemData.getCampusID())) {
                                 continue;
                             } else {
-                                mDatas.add(itemData);
+                                mDatas.add(0, itemData);
                                 mCampusIDs.add(itemData.getCampusID());
                             }
                             long version = CampusSharePreference.getServerDataCount(mContext);

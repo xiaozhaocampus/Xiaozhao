@@ -131,7 +131,8 @@ public class FilterPage {
                             if (mCampusIDs.contains(itemData.getCampusID())) {
                                 continue;
                             } else {
-                                mDatas.add(itemData);
+                                //TODO 待增加过滤条件，第一期过滤在终端做
+                                mDatas.add(0, itemData);
                                 mCampusIDs.add(itemData.getCampusID());
                             }
 
