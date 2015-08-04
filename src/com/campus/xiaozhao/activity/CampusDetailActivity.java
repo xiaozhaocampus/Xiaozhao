@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -83,12 +84,13 @@ public class CampusDetailActivity extends Activity {
                     if(itemData == null) {
                         mItemData.setIsSave(true);
                         mDBProcessor.addCampusInfo(mItemData);
-                        mSave.setBackground(getResources().getDrawable(R.drawable.campus_detail_image_save_on));
+                        mSave.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.campus_detail_image_save_on));
                         Toast.makeText(getApplicationContext(), "收藏成功", Toast.LENGTH_LONG).show();
                     } else {
                         if(!itemData.isSave()) {
                             mItemData.setIsSave(true);
                             mDBProcessor.updateCampus(mItemData);
+                            mSave.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.campus_detail_image_save_on));
                             Toast.makeText(getApplicationContext(), "收藏成功", Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(getApplicationContext(), "已收藏", Toast.LENGTH_LONG).show();
@@ -116,7 +118,7 @@ public class CampusDetailActivity extends Activity {
             mItemData.setIsSave(itemData.isSave());
 
             if(mItemData.isSave()) {
-                mSave.setBackground(getResources().getDrawable(R.drawable.campus_detail_image_save_on));
+                mSave.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.campus_detail_image_save_on));
             }
         }
 
