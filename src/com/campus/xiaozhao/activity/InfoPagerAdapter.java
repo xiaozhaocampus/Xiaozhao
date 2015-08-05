@@ -134,7 +134,7 @@ public class InfoPagerAdapter extends PagerAdapter {
         getDataFromBmob(start, false);
     }
 
-    private void getDataFromBmob(long startPosition, final boolean isCache) {
+    private void getDataFromBmob(long startPosition, final boolean isUp) {
         BmobQuery<CampusInfo> query = new BmobQuery<CampusInfo>();
         query.setMaxCacheAge(TimeUnit.DAYS.toMillis(3));//此表示缓存三天
         //判断是否有缓存
@@ -167,14 +167,18 @@ public class InfoPagerAdapter extends PagerAdapter {
                             itemData.setVersion(info.getVersion());
                             itemData.setType(info.getType());
 
-                            if(isCache) { // 缓存最新的数据
+                            if(isUp) { // 缓存最新的数据
                                 CampusDBProcessor.getInstance(mContext).addCampusInfo(itemData);
                                 // TODO 待删除数据库中旧数据(不算已收藏的)
                             }
                             if (mCampusIDs.contains(itemData.getCampusID())) {
                                 continue;
                             } else {
-                                mDatas.add(0, itemData);
+                                if(isUp) { // 手指向下拉获取最新数据时，添加到list的最前面
+                                    mDatas.add(0, itemData);
+                                } else { // 手指向上拉获取老数据时，添加到list的后面
+                                    mDatas.add(itemData);
+                                }
                                 mCampusIDs.add(itemData.getCampusID());
                             }
                             long version = CampusSharePreference.getServerDataCount(mContext);

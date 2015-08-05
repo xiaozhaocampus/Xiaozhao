@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -52,23 +54,42 @@ public class FilterPage {
         mDatas = new ArrayList<>();
         mInfoAdapter = new CampusInfoAdapter(mContext, mDatas);
         mCampusList.setAdapter(mInfoAdapter);
+        mCampusList.setMode(PullToRefreshBase.Mode.BOTH);
         mCampusList.setOnItemClickListener(new ListItemClickListener());
-        pullDataForward();
+
+        // 用户未设置过滤条件，提示用户
+        if(TextUtils.isEmpty(CampusSharePreference.getCacheCategoryFilter(mContext))) {
+            Toast.makeText(mContext, "未设置过滤条件，请设置", Toast.LENGTH_LONG).show();
+        } else {
+            pullDataForward();
+        }
         mCampusList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 Logger.d(TAG, "pull down");
-                //设置上一次刷新的提示标签
-                refreshView.getLoadingLayoutProxy().setLastUpdatedLabel("最后更新时间:" + DateUtils.transferTimeToDate(System.currentTimeMillis(), "MM月dd日 a hh:mm"));
-                new GetDataTask().execute(true);
+                // 用户未设置过滤条件，提示用户
+                if(TextUtils.isEmpty(CampusSharePreference.getCacheCategoryFilter(mContext))) {
+                    Toast.makeText(mContext, "未设置过滤条件，请设置", Toast.LENGTH_LONG).show();
+                    mCampusList.onRefreshComplete();
+                } else {
+                    //设置上一次刷新的提示标签
+                    refreshView.getLoadingLayoutProxy().setLastUpdatedLabel("最后更新时间:" + DateUtils.transferTimeToDate(System.currentTimeMillis(), "MM月dd日 a hh:mm"));
+                    new GetDataTask().execute(true);
+                }
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 Logger.d(TAG, "pull up");
-                //设置上一次刷新的提示标签
-                refreshView.getLoadingLayoutProxy().setLastUpdatedLabel("最后更新时间:" + DateUtils.transferTimeToDate(System.currentTimeMillis(), "MM月dd日 a hh:mm"));
-                new GetDataTask().execute(false);
+                // 用户未设置过滤条件，提示用户
+                if(TextUtils.isEmpty(CampusSharePreference.getCacheCategoryFilter(mContext))) {
+                    Toast.makeText(mContext, "未设置过滤条件，请设置", Toast.LENGTH_LONG).show();
+                    mCampusList.onRefreshComplete();
+                } else {
+                    //设置上一次刷新的提示标签
+                    refreshView.getLoadingLayoutProxy().setLastUpdatedLabel("最后更新时间:" + DateUtils.transferTimeToDate(System.currentTimeMillis(), "MM月dd日 a hh:mm"));
+                    new GetDataTask().execute(false);
+                }
             }
         });
     }
@@ -87,7 +108,7 @@ public class FilterPage {
         getDataFromBmob(false);
     }
 
-    private void getDataFromBmob(boolean isUp) {
+    private void getDataFromBmob(final boolean isUp) {
         BmobQuery<CampusInfo> query = new BmobQuery<CampusInfo>();
         query.setMaxCacheAge(TimeUnit.DAYS.toMillis(3));//此表示缓存三天
         //判断是否有缓存
@@ -129,17 +150,23 @@ public class FilterPage {
                             itemData.setType(info.getType());
 
                             if (mCampusIDs.contains(itemData.getCampusID())) {
-                                continue;
+
                             } else {
                                 //TODO 待增加过滤条件，第一期过滤在终端做
-                                mDatas.add(0, itemData);
-                                mCampusIDs.add(itemData.getCampusID());
+                               if(isInFilter(itemData.getType())) {
+                                   if (isUp) { // 手指向下拉获取最新数据时，添加到list的最前面
+                                       mDatas.add(0, itemData);
+                                   } else { // 手指向上拉获取老数据时，添加到list的后面
+                                       mDatas.add(itemData);
+                                   }
+                                   mCampusIDs.add(itemData.getCampusID());
+                               }
                             }
 
-                            if(cacheMaxVersion < itemData.getVersion()) {
+                            if (cacheMaxVersion < itemData.getVersion()) {
                                 cacheMaxVersion = itemData.getVersion();
                             }
-                            if(cacheMinVersion > itemData.getVersion()) {
+                            if (cacheMinVersion > itemData.getVersion()) {
                                 cacheMinVersion = itemData.getVersion();
                             }
                         }
@@ -162,6 +189,26 @@ public class FilterPage {
                 }
             }
         });
+    }
+
+    private boolean isInFilter(String type) {
+        if(TextUtils.isEmpty(type)) {
+            return false;
+        }
+        String filter = CampusSharePreference.getCacheCategoryFilter(mContext);
+        if(TextUtils.isEmpty(filter)) {
+            return false;
+        }
+        String[] temps = filter.split(";");
+
+        if(temps != null && temps.length > 0) {
+            for(String str : temps) {
+                if(type.contains(str)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**

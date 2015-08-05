@@ -18,6 +18,8 @@ public class CampusSharePreference {
     private static final String KEY_LOCATION = "key_location";
     /** 已获取服务器数据的条数(最大版本号)，用于分页查询 */
     private static final String KEY_GET_SERVER_DATA_COUNT = "key_get_server_data_count";
+    /** 缓存用户设置的过滤条件 */
+    private static final String KEY_CACHE_CATEGORY_FILTER = "key_cache_category_filter";
 
     /**
      * 获取终端最大版本号
@@ -88,6 +90,24 @@ public class CampusSharePreference {
     
     public static long getLastStartUpTime(Context context) {
         return getPreference(context).getLong(KEY_LAST_START_UP_TIME, 0);
+    }
+
+    /**
+     * 缓存用户设置的过滤条件
+     * @param context
+     * @param filter
+     */
+    public static void setCacheCategoryFilter(Context context, String filter) {
+        getPreference(context).edit().putString(KEY_CACHE_CATEGORY_FILTER, filter).commit();
+    }
+
+    /**
+     * 获取用户设置的过滤条件
+     * @param context
+     * @return
+     */
+    public static String getCacheCategoryFilter(Context context) {
+       return getPreference(context).getString(KEY_CACHE_CATEGORY_FILTER, "");
     }
 
     private static SharedPreferences getPreference(Context context) {

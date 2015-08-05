@@ -170,7 +170,7 @@ public class MainActivity extends SlidingFragmentActivity {
     	    		new AlertDialog.Builder(this)
 		            .setTitle(R.string.dialog_title_login_hint)
 		            .setMessage(R.string.dialog_body_login_for_filter)
-		            .setPositiveButton(R.string.ok, new OnClickListener() {
+		            .setPositiveButton(R.string.be_sure, new OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             LoginActivity.startFrom(MainActivity.this);
