@@ -65,7 +65,7 @@ public class MainCategoryActivity extends Activity {
     }
     
     private void loadData() {
-        mMainCategories = new ArrayList<>();
+        mMainCategories = new ArrayList<MainCategory>();
         mCategoryAdapter = new MainCategoryAdapter(this, mMainCategories);
         getDataFromBmob();
     }

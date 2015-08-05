@@ -51,9 +51,9 @@ public class SubCategoryAdapter extends BaseAdapter {
         boolean isSelected = category.selected;
         if(isSelected) {
             Set<String> filters = CampusSharePreference.getCacheCategoryFilter(mContext);
-            Set<String> temp = new HashSet<>();
+            Set<String> temp = new HashSet<String>();
             if(filters == null) {
-                filters = new HashSet<>();
+                filters = new HashSet<String>();
                 filters.add(category.id);
                 CampusSharePreference.setCacheCategoryFilter(mContext, filters);
             } else {
@@ -68,7 +68,7 @@ public class SubCategoryAdapter extends BaseAdapter {
             }
         } else {
             Set<String> filters = CampusSharePreference.getCacheCategoryFilter(mContext);
-            Set<String> temp = new HashSet<>();
+            Set<String> temp = new HashSet<String>();
             if(filters != null) {
                 temp.addAll(filters);
                 if(temp.contains(category.id)) {

@@ -40,7 +40,7 @@ public class FilterPage {
     private PullToRefreshListView mCampusList;
     private List<CampusInfoItemData> mDatas;
     private CampusInfoAdapter mInfoAdapter;
-    private Set<String> mCampusIDs = new HashSet<>();
+    private Set<String> mCampusIDs = new HashSet<String>();
     private long cacheMaxVersion;
     private long cacheMinVersion;
 
@@ -52,7 +52,7 @@ public class FilterPage {
 
     private void doInit() {
         mCampusList = (PullToRefreshListView) mView.findViewById(R.id.info_filter_list);
-        mDatas = new ArrayList<>();
+        mDatas = new ArrayList<CampusInfoItemData>();
         mInfoAdapter = new CampusInfoAdapter(mContext, mDatas);
         mCampusList.setAdapter(mInfoAdapter);
         mCampusList.setMode(PullToRefreshBase.Mode.BOTH);

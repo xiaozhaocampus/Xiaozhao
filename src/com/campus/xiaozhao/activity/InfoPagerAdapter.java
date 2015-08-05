@@ -43,7 +43,7 @@ public class InfoPagerAdapter extends PagerAdapter {
     private PullToRefreshListView mCampusList;
     private CampusInfoAdapter mInfoAdapter;
     private List<CampusInfoItemData> mDatas;
-    private Set<String> mCampusIDs = new HashSet<>();
+    private Set<String> mCampusIDs = new HashSet<String>();
 
     private FilterPage mFilterPage;
 
@@ -69,7 +69,7 @@ public class InfoPagerAdapter extends PagerAdapter {
         if(position == 0) {
             view = inflater.inflate(R.layout.info_all, null);
             mCampusList = (PullToRefreshListView)view.findViewById(R.id.campus_list);
-            mDatas = new ArrayList<>();
+            mDatas = new ArrayList<CampusInfoItemData>();
 
             // 获取本地缓存的数据
             String orderStr = CampusModel.CampusInfoItemColumn.VERSION + " DESC";
