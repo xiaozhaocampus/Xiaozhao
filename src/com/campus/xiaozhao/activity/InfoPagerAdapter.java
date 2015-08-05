@@ -45,6 +45,8 @@ public class InfoPagerAdapter extends PagerAdapter {
     private List<CampusInfoItemData> mDatas;
     private Set<String> mCampusIDs = new HashSet<>();
 
+    private FilterPage mFilterPage;
+
 
     public InfoPagerAdapter(Context context) {
         this.mContext = context;
@@ -104,7 +106,7 @@ public class InfoPagerAdapter extends PagerAdapter {
         }
         if(position == 1) {
             view = inflater.inflate(R.layout.info_filter, null);
-            new FilterPage(mContext, view);
+            mFilterPage = new FilterPage(mContext, view);
         }
         container.addView(view);
         return view;
@@ -256,6 +258,27 @@ public class InfoPagerAdapter extends PagerAdapter {
             bundle.putSerializable("detail_data", mDatas.get(position - 1));
             intent.putExtras(bundle);
             mContext.startActivity(intent);
+        }
+    }
+
+    public void refreshData() {
+       if(mDatas != null) {
+           for(CampusInfoItemData itemData : mDatas) {
+               CampusInfoItemData dbData = CampusDBProcessor.getInstance(mContext).getCampusInfoByCampsuID(itemData.getCampusID());
+               if(dbData != null) {
+                   itemData.setIsSave(dbData.isSave());
+                   itemData.setRemindTime(dbData.getRemindTime());
+                   itemData.setRemindType(dbData.getRemindType());
+                   itemData.setIsRemind(dbData.isRemind());
+               }
+           }
+       }
+        if(mInfoAdapter != null) {
+            mInfoAdapter.notifyDataSetChanged();
+        }
+
+        if(mFilterPage != null) {
+            mFilterPage.refreshData();
         }
     }
 }

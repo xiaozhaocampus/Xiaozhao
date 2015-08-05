@@ -244,4 +244,21 @@ public class FilterPage {
             mContext.startActivity(intent);
         }
     }
+
+    public void refreshData() {
+        if(mDatas != null) {
+            for(CampusInfoItemData itemData : mDatas) {
+                CampusInfoItemData dbData = CampusDBProcessor.getInstance(mContext).getCampusInfoByCampsuID(itemData.getCampusID());
+                if(dbData != null) {
+                    itemData.setIsSave(dbData.isSave());
+                    itemData.setRemindTime(dbData.getRemindTime());
+                    itemData.setRemindType(dbData.getRemindType());
+                    itemData.setIsRemind(dbData.isRemind());
+                }
+            }
+        }
+        if(mInfoAdapter != null) {
+            mInfoAdapter.notifyDataSetChanged();
+        }
+    }
 }
