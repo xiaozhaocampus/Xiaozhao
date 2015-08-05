@@ -74,6 +74,9 @@ public class InfoPagerAdapter extends PagerAdapter {
             List<CampusInfoItemData> datas = CampusDBProcessor.getInstance(mContext).getCampusInfos(null, null, orderStr);
             if(datas != null && datas.size() > 0) {
                 mDatas.addAll(datas);
+                for(CampusInfoItemData itemData : datas) {
+                    mCampusIDs.add(itemData.getCampusID());
+                }
             }
             mCampusList.setMode(PullToRefreshBase.Mode.BOTH);
             mInfoAdapter = new CampusInfoAdapter(container.getContext(), mDatas);

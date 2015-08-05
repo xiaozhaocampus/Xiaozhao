@@ -69,7 +69,10 @@ public class MainCategoryActivity extends Activity {
         mCategoryAdapter = new MainCategoryAdapter(this, mMainCategories);
         getDataFromBmob();
     }
-    
+
+    /**
+     * 暂时无用
+     */
     private void saveData() {
         
     }

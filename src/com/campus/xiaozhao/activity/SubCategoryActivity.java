@@ -98,15 +98,12 @@ public class SubCategoryActivity extends Activity {
         mCategoryAdapter = new SubCategoryAdapter(this, mSubCategories);
         getDataFromBmob();
     }
-    
-    private void saveData() {
-        Set<String> filters = CampusSharePreference.getCacheCategoryFilter(getApplicationContext());
-        if(filters == null) {
-            filters = new HashSet<>();
-        }
-        for(SubCategory category : mSubCategories) {
 
-        }
+    /**
+     * 暂时无用
+     */
+    private void saveData() {
+
     }
 
     private void getDataFromBmob() {

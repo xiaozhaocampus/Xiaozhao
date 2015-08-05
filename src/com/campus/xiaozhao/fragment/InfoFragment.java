@@ -28,9 +28,6 @@ import com.campus.xiaozhao.basic.location.BaiDuLocationManager;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.component.logger.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by frankenliu on 15/6/7.
  */
