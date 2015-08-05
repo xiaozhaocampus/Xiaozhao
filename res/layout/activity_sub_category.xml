@@ -25,7 +25,7 @@
             android:onClick="onClickOK"
             android:textColor="@color/white"
             android:textSize="17sp"
-            android:text="@string/ok" />
+            android:text="@string/be_sure" />
     </FrameLayout>
 
 </RelativeLayout>

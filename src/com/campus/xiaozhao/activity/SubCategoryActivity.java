@@ -1,6 +1,9 @@
 package com.campus.xiaozhao.activity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -13,9 +16,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.data.MainCategory;
 import com.campus.xiaozhao.basic.data.SubCategory;
+import com.campus.xiaozhao.basic.data.job_group;
+import com.campus.xiaozhao.basic.data.job_type;
+import com.campus.xiaozhao.basic.utils.CampusSharePreference;
+import com.campus.xiaozhao.basic.utils.StringUtils;
 import com.component.logger.Logger;
 
 public class SubCategoryActivity extends Activity {
@@ -27,6 +36,7 @@ public class SubCategoryActivity extends Activity {
     private ListView mCategoryListView;
     private SubCategoryAdapter mCategoryAdapter;
     private MainCategory mMainCategory;
+    private ArrayList<SubCategory> mSubCategories;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,17 +94,51 @@ public class SubCategoryActivity extends Activity {
     }
     
     private void loadData() {
-        ArrayList<SubCategory> categories = new ArrayList<SubCategory>();
-        for (int i=0; i<10; i++) {
-            SubCategory category = new SubCategory();
-            category.id = String.valueOf(i);
-            category.title = getString(R.string.sample_sub_category_title_1);
-            categories.add(category);
-        }
-        mCategoryAdapter = new SubCategoryAdapter(this, categories);
+        mSubCategories = new ArrayList<SubCategory>();
+        mCategoryAdapter = new SubCategoryAdapter(this, mSubCategories);
+        getDataFromBmob();
     }
     
     private void saveData() {
-        
+        Set<String> filters = CampusSharePreference.getCacheCategoryFilter(getApplicationContext());
+        if(filters == null) {
+            filters = new HashSet<>();
+        }
+        for(SubCategory category : mSubCategories) {
+
+        }
+    }
+
+    private void getDataFromBmob() {
+        BmobQuery<job_type> query = new BmobQuery<job_type>();
+        query.setLimit(50);
+        query.addWhereEqualTo("group_id", mMainCategory.id);
+        query.order("createdAt");
+        query.findObjects(getApplicationContext(), new FindListener<job_type>() {
+            @Override
+            public void onSuccess(List<job_type> list) {
+                if(list != null && list.size() > 0) {
+                    for(job_type jobType : list) {
+                        if(jobType != null) {
+                            SubCategory subCategory = new SubCategory();
+                            subCategory.id = jobType.getType_id();
+                            subCategory.title = jobType.getType_name();
+                            if(StringUtils.isInFilter(getApplicationContext(), subCategory.id)) {
+                                subCategory.selected = true;
+                            }
+                            mSubCategories.add(subCategory);
+                        }
+                    }
+                }
+
+                mCategoryAdapter.notifyDataSetChanged();
+                Logger.d(TAG, "get success");
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                Logger.d(TAG, "get fail, i:" + i + ", s:" + s);
+            }
+        });
     }
 }

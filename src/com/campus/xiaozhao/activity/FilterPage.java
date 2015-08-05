@@ -19,6 +19,7 @@ import com.campus.xiaozhao.basic.data.CampusType;
 import com.campus.xiaozhao.basic.db.CampusDBProcessor;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.campus.xiaozhao.basic.utils.DateUtils;
+import com.campus.xiaozhao.basic.utils.StringUtils;
 import com.component.logger.Logger;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -58,7 +59,8 @@ public class FilterPage {
         mCampusList.setOnItemClickListener(new ListItemClickListener());
 
         // 用户未设置过滤条件，提示用户
-        if(TextUtils.isEmpty(CampusSharePreference.getCacheCategoryFilter(mContext))) {
+        Set<String> filters = CampusSharePreference.getCacheCategoryFilter(mContext);
+        if(filters == null || filters.size() <= 0) {
             Toast.makeText(mContext, "未设置过滤条件，请设置", Toast.LENGTH_LONG).show();
         } else {
             pullDataForward();
@@ -68,7 +70,8 @@ public class FilterPage {
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 Logger.d(TAG, "pull down");
                 // 用户未设置过滤条件，提示用户
-                if(TextUtils.isEmpty(CampusSharePreference.getCacheCategoryFilter(mContext))) {
+                Set<String> filters = CampusSharePreference.getCacheCategoryFilter(mContext);
+                if (filters == null || filters.size() <= 0) {
                     Toast.makeText(mContext, "未设置过滤条件，请设置", Toast.LENGTH_LONG).show();
                     mCampusList.onRefreshComplete();
                 } else {
@@ -82,7 +85,8 @@ public class FilterPage {
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 Logger.d(TAG, "pull up");
                 // 用户未设置过滤条件，提示用户
-                if(TextUtils.isEmpty(CampusSharePreference.getCacheCategoryFilter(mContext))) {
+                Set<String> filters = CampusSharePreference.getCacheCategoryFilter(mContext);
+                if (filters == null || filters.size() <= 0) {
                     Toast.makeText(mContext, "未设置过滤条件，请设置", Toast.LENGTH_LONG).show();
                     mCampusList.onRefreshComplete();
                 } else {
@@ -153,7 +157,7 @@ public class FilterPage {
 
                             } else {
                                 //TODO 待增加过滤条件，第一期过滤在终端做
-                               if(isInFilter(itemData.getType())) {
+                               if(StringUtils.isInFilter(mContext, itemData.getType())) {
                                    if (isUp) { // 手指向下拉获取最新数据时，添加到list的最前面
                                        mDatas.add(0, itemData);
                                    } else { // 手指向上拉获取老数据时，添加到list的后面
@@ -189,26 +193,6 @@ public class FilterPage {
                 }
             }
         });
-    }
-
-    private boolean isInFilter(String type) {
-        if(TextUtils.isEmpty(type)) {
-            return false;
-        }
-        String filter = CampusSharePreference.getCacheCategoryFilter(mContext);
-        if(TextUtils.isEmpty(filter)) {
-            return false;
-        }
-        String[] temps = filter.split(";");
-
-        if(temps != null && temps.length > 0) {
-            for(String str : temps) {
-                if(type.contains(str)) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     /**

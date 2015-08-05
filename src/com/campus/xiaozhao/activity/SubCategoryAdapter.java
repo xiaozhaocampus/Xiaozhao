@@ -1,7 +1,9 @@
 package com.campus.xiaozhao.activity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,19 +13,21 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.data.SubCategory;
+import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 
 public class SubCategoryAdapter extends BaseAdapter {
 
     private Context mContext;
-    private ArrayList<SubCategory> mCategoryList = new ArrayList<SubCategory>();
+    private List<SubCategory> mCategoryList;
     
     public SubCategoryAdapter(Context context, List<SubCategory> categoryList) {
         assert (context != null);
         assert (categoryList != null);
         mContext = context;
-        mCategoryList.addAll(categoryList);
+        mCategoryList = categoryList;
     }
     
     public void setChecked(int position, boolean checked) {
@@ -34,7 +38,45 @@ public class SubCategoryAdapter extends BaseAdapter {
     
     public void toggle(int position) {
         mCategoryList.get(position).selected = !mCategoryList.get(position).selected;
+        saveFilter(position);
         notifyDataSetChanged();
+    }
+
+    /**
+     * 缓存用户设置的过滤
+     * @param position
+     */
+    private void saveFilter(int position) {
+        SubCategory category = mCategoryList.get(position);
+        boolean isSelected = category.selected;
+        if(isSelected) {
+            Set<String> filters = CampusSharePreference.getCacheCategoryFilter(mContext);
+            Set<String> temp = new HashSet<>();
+            if(filters == null) {
+                filters = new HashSet<>();
+                filters.add(category.id);
+                CampusSharePreference.setCacheCategoryFilter(mContext, filters);
+            } else {
+                temp.addAll(filters);
+                if(temp.size() >= 5) {
+                    category.selected = false;
+                    Toast.makeText(mContext, "订阅数不能大于5个", Toast.LENGTH_LONG).show();
+                } else {
+                    temp.add(category.id);
+                    CampusSharePreference.setCacheCategoryFilter(mContext, temp);
+                }
+            }
+        } else {
+            Set<String> filters = CampusSharePreference.getCacheCategoryFilter(mContext);
+            Set<String> temp = new HashSet<>();
+            if(filters != null) {
+                temp.addAll(filters);
+                if(temp.contains(category.id)) {
+                    temp.remove(category.id);
+                    CampusSharePreference.setCacheCategoryFilter(mContext, temp);
+                }
+            }
+        }
     }
     
     @Override

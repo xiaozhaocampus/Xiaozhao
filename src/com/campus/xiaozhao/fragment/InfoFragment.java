@@ -1,5 +1,6 @@
 package com.campus.xiaozhao.fragment;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.baidu.location.BDLocation;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.activity.InfoPagerAdapter;
+import com.campus.xiaozhao.activity.MainCategoryActivity;
 import com.campus.xiaozhao.basic.location.BaiDuLocationManager;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.component.logger.Logger;
@@ -72,8 +74,9 @@ public class InfoFragment extends Fragment implements Handler.Callback{
         mTabMyFilterImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO 跳转到过滤设置界面
-                Toast.makeText(getActivity(), "test", Toast.LENGTH_LONG).show();
+                Intent intent =new Intent();
+                intent.setClass(getActivity().getApplicationContext(), MainCategoryActivity.class);
+                startActivity(intent);
             }
         });
         //如果我们要对ViewPager设置监听，用indicator设置就行了

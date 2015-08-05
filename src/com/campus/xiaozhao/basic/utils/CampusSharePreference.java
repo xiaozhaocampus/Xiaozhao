@@ -4,6 +4,8 @@ import cn.bmob.v3.BmobUser;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Set;
+
 /**
  * Created by frankenliu on 15/5/29.
  */
@@ -97,8 +99,8 @@ public class CampusSharePreference {
      * @param context
      * @param filter
      */
-    public static void setCacheCategoryFilter(Context context, String filter) {
-        getPreference(context).edit().putString(KEY_CACHE_CATEGORY_FILTER, filter).commit();
+    public static void setCacheCategoryFilter(Context context, Set<String> filter) {
+        getPreference(context).edit().putStringSet(KEY_CACHE_CATEGORY_FILTER, filter).commit();
     }
 
     /**
@@ -106,8 +108,8 @@ public class CampusSharePreference {
      * @param context
      * @return
      */
-    public static String getCacheCategoryFilter(Context context) {
-       return getPreference(context).getString(KEY_CACHE_CATEGORY_FILTER, "");
+    public static Set<String> getCacheCategoryFilter(Context context) {
+       return getPreference(context).getStringSet(KEY_CACHE_CATEGORY_FILTER, null);
     }
 
     private static SharedPreferences getPreference(Context context) {

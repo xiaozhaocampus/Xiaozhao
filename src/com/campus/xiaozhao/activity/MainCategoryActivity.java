@@ -1,7 +1,7 @@
 package com.campus.xiaozhao.activity;
 
 import java.util.ArrayList;
-
+import java.util.List;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
@@ -12,14 +12,19 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.data.MainCategory;
+import com.campus.xiaozhao.basic.data.job_group;
+import com.component.logger.Logger;
 
 public class MainCategoryActivity extends Activity {
 
+    private static final String TAG = "MainCategoryActivity";
     private ListView mCategoryListView;
     private MainCategoryAdapter mCategoryAdapter;
+    private ArrayList<MainCategory> mMainCategories;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,17 +65,41 @@ public class MainCategoryActivity extends Activity {
     }
     
     private void loadData() {
-        ArrayList<MainCategory> categories = new ArrayList<MainCategory>();
-        for (int i=0; i<10; i++) {
-            MainCategory category = new MainCategory();
-            category.id = String.valueOf(i);
-            category.title = getString(R.string.sample_main_category_title_1);
-            categories.add(category);
-        }
-        mCategoryAdapter = new MainCategoryAdapter(this, categories);
+        mMainCategories = new ArrayList<>();
+        mCategoryAdapter = new MainCategoryAdapter(this, mMainCategories);
+        getDataFromBmob();
     }
     
     private void saveData() {
         
+    }
+
+    private void getDataFromBmob() {
+        BmobQuery<job_group> query = new BmobQuery<job_group>();
+        query.setLimit(50);
+        query.order("createdAt");
+        query.findObjects(getApplicationContext(), new FindListener<job_group>() {
+            @Override
+            public void onSuccess(List<job_group> list) {
+                if(list != null && list.size() > 0) {
+                    for(job_group jobGroup : list) {
+                        if(jobGroup != null) {
+                            MainCategory mainCategory = new MainCategory();
+                            mainCategory.id = jobGroup.getGroup_id();
+                            mainCategory.title = jobGroup.getGroup_name();
+                            mMainCategories.add(mainCategory);
+                        }
+                    }
+                }
+
+                mCategoryAdapter.notifyDataSetChanged();
+                Logger.d(TAG, "get success");
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                Logger.d(TAG, "get fail, i:" + i + ", s:" + s);
+            }
+        });
     }
 }

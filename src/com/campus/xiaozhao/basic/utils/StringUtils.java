@@ -6,10 +6,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Formatter;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 /**
  * Class StringUtils
@@ -249,5 +251,22 @@ public final class StringUtils {
     	String result = timeFormat.format(new Date(time));
 
 		return result;
+    }
+
+    public static boolean isInFilter(Context context, String type) {
+        if(TextUtils.isEmpty(type)) {
+            return false;
+        }
+        Set<String> filters = CampusSharePreference.getCacheCategoryFilter(context);
+        if(filters == null || filters.size() <= 0) {
+            return false;
+        }
+
+        for(String str : filters) {
+            if(type.contains(str)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

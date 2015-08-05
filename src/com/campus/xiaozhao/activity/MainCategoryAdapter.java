@@ -16,13 +16,13 @@ import android.widget.TextView;
 public class MainCategoryAdapter extends BaseAdapter {
     
     private Context mContext;
-    private ArrayList<MainCategory> mCategoryList = new ArrayList<MainCategory>();
+    private List<MainCategory> mCategoryList;
     
     public MainCategoryAdapter(Context context, List<MainCategory> categoryList) {
         assert (context != null);
         assert (categoryList != null);
         mContext = context.getApplicationContext();
-        mCategoryList.addAll(categoryList);
+        mCategoryList = categoryList;
     }
 
     @Override
