@@ -14,8 +14,8 @@ public class CampusModel {
         /** 发布此校招信息的公司名称 */
         public static final String COMPANY_NAME = "company_name";
 
-        /** 发布此校招信息的公司简介 */
-        public static final String COMPANY_INTRODUCTION = "company_introduction";
+        /** 发布此校招信息的时间 */
+        public static final String PUBLISH_TIME = "publish_time";
 
         /** 校招城市 */
         public static final String CITY = "city";
@@ -49,5 +49,8 @@ public class CampusModel {
 
         /** 用户是否已收藏该校招 */
         public static final String IS_SAVE = "is_save";
+
+        /** 此校招信息的来源 */
+        public static final String SOURCE = "source";
     }
 }

@@ -126,4 +126,7 @@
 	<string name="personal_school">学校</string>
 	<string name="personal_major">专业</string>
 	<string name="personal_grade">年级</string>
+
+    <string name="publish_time">发布时间:%1$s</string>
+    <string name="campus_source">信息来源:%1$s</string>
 </resources>

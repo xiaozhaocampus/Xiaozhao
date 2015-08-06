@@ -22,7 +22,7 @@ public class CampusDBProcessor {
             CampusModel.CampusInfoItemColumn._ID,
             CampusModel.CampusInfoItemColumn.CAMPUS_ID,
             CampusModel.CampusInfoItemColumn.COMPANY_NAME,
-            CampusModel.CampusInfoItemColumn.COMPANY_INTRODUCTION,
+            CampusModel.CampusInfoItemColumn.PUBLISH_TIME,
             CampusModel.CampusInfoItemColumn.CITY,
             CampusModel.CampusInfoItemColumn.TYPE,
             CampusModel.CampusInfoItemColumn.TITLE,
@@ -33,7 +33,8 @@ public class CampusDBProcessor {
             CampusModel.CampusInfoItemColumn.IS_REMIND,
             CampusModel.CampusInfoItemColumn.REMIND_TYPE,
             CampusModel.CampusInfoItemColumn.REMIND_TIME,
-            CampusModel.CampusInfoItemColumn.IS_SAVE
+            CampusModel.CampusInfoItemColumn.IS_SAVE,
+            CampusModel.CampusInfoItemColumn.SOURCE
     };
 
     private static volatile CampusDBProcessor mInstance;
@@ -210,7 +211,8 @@ public class CampusDBProcessor {
                         itemData.setId(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn._ID)));
                         itemData.setCampusID(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.CAMPUS_ID)));
                         itemData.setCompany(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.COMPANY_NAME)));
-                        itemData.setIntroduction(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.COMPANY_INTRODUCTION)));
+                        itemData.setCity(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.CITY)));
+                        itemData.setPtime(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.PUBLISH_TIME)));
                         itemData.setType(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.TYPE)));
                         itemData.setTitle(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.TITLE)));
                         itemData.setContent(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.CONTENT)));
@@ -221,6 +223,7 @@ public class CampusDBProcessor {
                         itemData.setRemindType(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.REMIND_TYPE)));
                         itemData.setRemindTime(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.REMIND_TIME)));
                         itemData.setIsSave(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.IS_SAVE)) > 0 ? true : false);
+                        itemData.setSource(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.SOURCE)));
                         list.add(itemData);
                     }
                 }
@@ -255,7 +258,8 @@ public class CampusDBProcessor {
                         itemData.setId(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn._ID)));
                         itemData.setCampusID(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.CAMPUS_ID)));
                         itemData.setCompany(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.COMPANY_NAME)));
-                        itemData.setIntroduction(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.COMPANY_INTRODUCTION)));
+                        itemData.setCity(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.CITY)));
+                        itemData.setPtime(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.PUBLISH_TIME)));
                         itemData.setType(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.TYPE)));
                         itemData.setTitle(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.TITLE)));
                         itemData.setContent(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.CONTENT)));
@@ -266,6 +270,7 @@ public class CampusDBProcessor {
                         itemData.setRemindType(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.REMIND_TYPE)));
                         itemData.setRemindTime(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.REMIND_TIME)));
                         itemData.setIsSave(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.IS_SAVE)) > 0 ? true : false);
+                        itemData.setSource(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.SOURCE)));
                         return itemData;
                     }
                 }

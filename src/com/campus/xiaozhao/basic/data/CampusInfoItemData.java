@@ -18,15 +18,15 @@ public class CampusInfoItemData implements Serializable{
     private String campusID;
     /** 2 校招信息发布的公司 */
     private String company;
-    /** 3 公司简介 */
-    private String introduction;
+    /** 2 校招信息发布的时间 */
+    private long ptime;
     /** 4 校招城市 */
     private String city;
     /** 5 校招信息的类型 */
     private String type;
     /** 6 校招信息的标题 */
     private String title;
-    /** 7 校招信息的内容 */
+    /** 7 校招信息的内容(公司简介合入此项中) */
     private String content;
     /** 8 校招地址 */
     private String address;
@@ -42,6 +42,8 @@ public class CampusInfoItemData implements Serializable{
     private long remindTime;
     /** 14 用户是否设置收藏 */
     private boolean isSave;
+    /** 15 校招信息的来源 */
+    private String source;
 
     public long getTime() {
         return time;
@@ -107,14 +109,6 @@ public class CampusInfoItemData implements Serializable{
         this.address = address;
     }
 
-    public String getIntroduction() {
-        return introduction;
-    }
-
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction;
-    }
-
     public String getContent() {
         return content;
     }
@@ -163,11 +157,27 @@ public class CampusInfoItemData implements Serializable{
         this.isSave = isSave;
     }
 
+    public long getPtime() {
+        return ptime;
+    }
+
+    public void setPtime(long ptime) {
+        this.ptime = ptime;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
     public void onAddToDatabase(ContentValues values) {
         values.put(CampusModel.CampusInfoItemColumn.CAMPUS_ID, campusID);
         values.put(CampusModel.CampusInfoItemColumn.COMPANY_NAME, company);
-        values.put(CampusModel.CampusInfoItemColumn.COMPANY_INTRODUCTION, introduction);
         values.put(CampusModel.CampusInfoItemColumn.CITY, city);
+        values.put(CampusModel.CampusInfoItemColumn.PUBLISH_TIME, ptime);
         values.put(CampusModel.CampusInfoItemColumn.TYPE, type);
         values.put(CampusModel.CampusInfoItemColumn.TITLE, title);
         values.put(CampusModel.CampusInfoItemColumn.CONTENT, content);
@@ -178,5 +188,6 @@ public class CampusInfoItemData implements Serializable{
         values.put(CampusModel.CampusInfoItemColumn.REMIND_TYPE, remindType);
         values.put(CampusModel.CampusInfoItemColumn.REMIND_TIME, remindTime);
         values.put(CampusModel.CampusInfoItemColumn.IS_SAVE, isSave);
+        values.put(CampusModel.CampusInfoItemColumn.SOURCE, source);
     }
 }

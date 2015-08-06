@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15.3dp"
-                android:text="发布时间:2015-03-26"
+                android:text="@string/publish_time"
                 android:textSize="12sp"
                 android:textColor="#c9c9c9"/>
             <TextView
@@ -35,7 +35,7 @@
                 android:layout_below="@id/publish_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="信息来源:广州大学就业网"
+                android:text="@string/campus_source"
                 android:textSize="12sp"
                 android:textColor="#c9c9c9"/>
             <ImageView

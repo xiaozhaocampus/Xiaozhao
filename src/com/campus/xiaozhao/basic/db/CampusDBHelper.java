@@ -24,7 +24,7 @@ public class CampusDBHelper extends SQLiteOpenHelper {
             + CampusModel.CampusInfoItemColumn._ID + " INTEGER PRIMARY KEY,"
             + CampusModel.CampusInfoItemColumn.CAMPUS_ID + " LONG UNIQUE,"
             + CampusModel.CampusInfoItemColumn.COMPANY_NAME + " TEXT,"
-            + CampusModel.CampusInfoItemColumn.COMPANY_INTRODUCTION + " TEXT,"
+            + CampusModel.CampusInfoItemColumn.PUBLISH_TIME + " LONG DEFAULT -1,"
             + CampusModel.CampusInfoItemColumn.CITY + " TEXT,"
             + CampusModel.CampusInfoItemColumn.TYPE + " TEXT,"
             + CampusModel.CampusInfoItemColumn.TITLE + " TEXT,"
@@ -35,7 +35,8 @@ public class CampusDBHelper extends SQLiteOpenHelper {
             + CampusModel.CampusInfoItemColumn.IS_REMIND + " INTEGER NOT NULL DEFAULT 0,"
             + CampusModel.CampusInfoItemColumn.REMIND_TYPE + " INTEGER NOT NULL DEFAULT 0,"
             + CampusModel.CampusInfoItemColumn.REMIND_TIME + " LONG DEFAULT -1,"
-            + CampusModel.CampusInfoItemColumn.IS_SAVE + " INTEGER NOT NULL DEFAULT 0);";
+            + CampusModel.CampusInfoItemColumn.IS_SAVE + " INTEGER NOT NULL DEFAULT 0,"
+            + CampusModel.CampusInfoItemColumn.SOURCE + " TEXT);";
 
     /** 删除 校招信息数据表 */
     public static final String DROP_TABLE_CAMPUS_INFO = "DROP TABLE IF EXISTS " + TABLE_CAMPUS_INFO;

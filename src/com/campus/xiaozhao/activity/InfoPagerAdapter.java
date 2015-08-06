@@ -163,14 +163,15 @@ public class InfoPagerAdapter extends PagerAdapter {
                             CampusInfoItemData itemData = new CampusInfoItemData();
                             itemData.setCampusID(info.getObjectId());
                             itemData.setCity(info.getCity());
-                            itemData.setCompany(info.getCompanyInfo().getName());
-                            itemData.setIntroduction(info.getCompanyInfo().getIntroduction());
+                            itemData.setCompany(info.getCompany());
                             itemData.setAddress(info.getAddress());
                             itemData.setTitle(info.getTitle());
                             itemData.setContent(info.getContent());
                             itemData.setTime(info.getDate());
                             itemData.setVersion(info.getVersion());
                             itemData.setType(info.getType());
+                            itemData.setSource(info.getSource());
+                            itemData.setPtime(info.getPtime());
 
                             if(isUp) { // 缓存最新的数据
                                 CampusDBProcessor.getInstance(mContext).addCampusInfo(itemData);

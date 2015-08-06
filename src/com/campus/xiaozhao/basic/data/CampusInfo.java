@@ -20,9 +20,13 @@ public class CampusInfo extends BmobObject {
 
     private String type;
 
-    private CompanyInfo companyInfo;
-
     private long time;
+
+    private String company;
+
+    private long ptime;
+
+    private String source;
 
     public String getCity() {
         return city;
@@ -72,12 +76,12 @@ public class CampusInfo extends BmobObject {
         this.type = type;
     }
 
-    public CompanyInfo getCompanyInfo() {
-        return companyInfo;
+    public String getCompany() {
+        return company;
     }
 
-    public void setCompanyInfo(CompanyInfo companyInfo) {
-        this.companyInfo = companyInfo;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     public long getDate() {
@@ -86,5 +90,21 @@ public class CampusInfo extends BmobObject {
 
     public void setDate(long time) {
         this.time = time;
+    }
+
+    public long getPtime() {
+        return ptime;
+    }
+
+    public void setPtime(long ptime) {
+        this.ptime = ptime;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }

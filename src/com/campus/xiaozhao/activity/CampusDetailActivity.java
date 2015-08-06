@@ -55,15 +55,22 @@ public class CampusDetailActivity extends Activity {
         mLocation = (RelativeLayout) findViewById(R.id.campus_detail_location);
         mCompanyName = (TextView) findViewById(R.id.company_name);
         mPublishTime = (TextView) findViewById(R.id.publish_time);
+        String time = getResources().getString(R.string.publish_time);
+        time = String.format(time, DateUtils.transferTimeToDate(mItemData.getPtime(), "yyyy-MM-dd"));
+        mPublishTime.setText(time);
         mInformationCome = (TextView) findViewById(R.id.information_come);
+        String source = getResources().getString(R.string.campus_source);
+        source = String.format(source, mItemData.getSource());
+        mInformationCome.setText(source);
         mJobTime = (TextView) findViewById(R.id.campus_time);
         mAddress = (TextView) findViewById(R.id.campus_detail_school);
         mProvince = (TextView) findViewById(R.id.campus_detail_province);
+        mProvince.setText(mItemData.getCity());
         mCompanyIntrodction = (TextView) findViewById(R.id.company_introduction);
         mCompanyName.setText(mItemData.getCompany());
         mJobTime.setText(DateUtils.transferTimeToDate(mItemData.getTime()));
         mAddress.setText(mItemData.getAddress());
-        mCompanyIntrodction.setText(mItemData.getIntroduction());
+        mCompanyIntrodction.setText(mItemData.getContent());
         setButtonState();
     }
 
