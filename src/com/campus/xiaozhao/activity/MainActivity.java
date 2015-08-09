@@ -12,7 +12,6 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -75,12 +74,12 @@ public class MainActivity extends SlidingFragmentActivity {
     }
 
     private void setupUI() {
-    	final View main = LayoutInflater.from(this).inflate(R.layout.activity_main, null);
-    	setContentView(main);
-//		setContentView(R.layout.activity_main);
+    	setTheme(R.style.StyledIndicators);
+		setContentView(R.layout.activity_main);
 
 		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+		actionBar.setDisplayShowCustomEnabled(true);
 		actionBar.setCustomView(R.layout.actionbar_main);
 		actionBar.getCustomView().findViewById(R.id.actionbar_location_city).setOnClickListener(new View.OnClickListener() {
 			@Override
