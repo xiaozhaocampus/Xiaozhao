@@ -1,8 +1,6 @@
 package com.campus.xiaozhao.fragment;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;

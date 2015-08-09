@@ -1,8 +1,13 @@
 package com.campus.xiaozhao.activity;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -14,8 +19,8 @@ import android.widget.ListView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+
 import com.campus.xiaozhao.R;
-import com.campus.xiaozhao.XZApplication;
 import com.campus.xiaozhao.basic.data.CampusInfo;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
 import com.campus.xiaozhao.basic.data.CampusType;
@@ -26,12 +31,6 @@ import com.campus.xiaozhao.basic.utils.DateUtils;
 import com.component.logger.Logger;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by frankenliu on 15/8/3.

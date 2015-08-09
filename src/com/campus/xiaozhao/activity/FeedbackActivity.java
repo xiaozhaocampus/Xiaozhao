@@ -16,6 +16,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.basic.utils.PicChooseUtils;
 import com.component.logger.Logger;
 
 public class FeedbackActivity extends Activity implements OnItemClickListener,
@@ -70,22 +71,12 @@ public class FeedbackActivity extends Activity implements OnItemClickListener,
 			finish();
 			break;
 		case R.id.feedback_choose_pic:
-			choosePic();
+			PicChooseUtils.choosePic(this);
 			break;
 		default:
 			break;
 		}
 
-	}
-
-	private void choosePic() {
-		Intent intent = new Intent();
-		/* 开启Pictures画面Type设定为image */
-		intent.setType("image/*");
-		/* 使用Intent.ACTION_GET_CONTENT这个Action */
-		intent.setAction(Intent.ACTION_GET_CONTENT);
-		/* 取得相片后返回本画面 */
-		startActivityForResult(intent, 1);
 	}
 
 	@Override

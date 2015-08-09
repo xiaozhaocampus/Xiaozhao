@@ -7,66 +7,32 @@ import java.util.List;
 import android.content.Context;
 import android.content.res.Resources;
 import android.net.Uri;
-import android.text.InputType;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.XZApplication;
+import com.campus.xiaozhao.basic.utils.PersonalUtils;
+import com.campus.xiaozhao.basic.utils.PersonalUtils.PersonalEditBaseItem;
+import com.campus.xiaozhao.basic.utils.PersonalUtils.PersonalEditPhotoItem;
+import com.campus.xiaozhao.basic.utils.PersonalUtils.PersonalEditTextItem;
+import com.campus.xiaozhao.basic.utils.PersonalUtils.PersonalOptionItem;
 
 public class PersonalEditAdaptor extends BaseExpandableListAdapter {
 
-	private static final int TYPE_PERSONAL_PHOTO = 0;
-	private static final int TYPE_PERSONAL_TEXT = 1;
-	private static final int TYPE_PERSONAL_TEXT_PHONE_NUM = 2;
-	private static final int TYPE_PERSONAL_TEXT_MAIL = 3;
-	private static final int TYPE_PERSONAL_OPTION = 4;
 	private Context mContext;
 	private ExpandableListView mExpandableListView;
 	private SparseArray<List<PersonalEditBaseItem>> mItemGroups = new SparseArray<List<PersonalEditBaseItem>>();
-	private class PersonalEditBaseItem {
-		public int mType;
-		public int mTitleResId;
-		public PersonalEditBaseItem(int type, int titleResId){
-			mType = type;
-			mTitleResId = titleResId;
-		}
+	public SparseArray<List<PersonalEditBaseItem>> getItemGroups() {
+		return mItemGroups;
 	}
-	
-	private class PersonalEditPhotoItem extends PersonalEditBaseItem {
-		public String mPhotoUrl;//可能是本地的也可能是网络的
-		public PersonalEditPhotoItem(int type, int titleResId, String photoUrl){
-			super(type, titleResId);
-			mPhotoUrl = photoUrl;
-		}
-	}
-	
-	private class PersonalEditTextItem extends PersonalEditBaseItem {
-		public String mContent;//填写的内容
-		public PersonalEditTextItem(int type, int titleResId, String content){
-			super(type, titleResId);
-			mContent = content;
-		}
-	}
-	
-	private class PersonalOptionItem extends PersonalEditBaseItem {
-		public List<? extends Object> mOptions;//提供的选项
-		public int mSelectionIndex;//选择的结果
-		public PersonalOptionItem(int type, int titleResId, List<? extends Object> options,int index){
-			super(type, titleResId);
-			mOptions = options;
-			mSelectionIndex = index;
-		}		
-	}	
+
 
 	public PersonalEditAdaptor(Context context, ExpandableListView listview) {
 		mContext = context;
@@ -95,10 +61,10 @@ public class PersonalEditAdaptor extends BaseExpandableListAdapter {
 		List<PersonalEditBaseItem> items = (List<PersonalEditBaseItem>)getGroup(pos0);
 		PersonalEditBaseItem item = items.get(pos1);
 		((TextView)view.findViewById(R.id.personal_title)).setText(item.mTitleResId); 
-		final EditText editText = (EditText)view.findViewById(R.id.personal_value);
+		final TextView editText = (TextView)view.findViewById(R.id.personal_value);
 		ImageView image = (ImageView)view.findViewById(R.id.personal_photo);
 		switch (item.mType) {
-		case TYPE_PERSONAL_PHOTO:
+		case PersonalUtils.TYPE_PERSONAL_PHOTO:
 			editText.setVisibility(View.GONE);
 			String url = ((PersonalEditPhotoItem)item).mPhotoUrl;
 			if(url != null && !url.isEmpty()) {
@@ -106,41 +72,28 @@ public class PersonalEditAdaptor extends BaseExpandableListAdapter {
 			}
 			image.setVisibility(View.VISIBLE);
 			return view;
-		case TYPE_PERSONAL_TEXT:
-			editText.setInputType(InputType.TYPE_CLASS_TEXT);
+		case PersonalUtils.TYPE_PERSONAL_TEXT:
+//			editText.setInputType(InputType.TYPE_CLASS_TEXT);
 			break;
-		case TYPE_PERSONAL_TEXT_PHONE_NUM:
-			editText.setInputType(InputType.TYPE_CLASS_PHONE);
+		case PersonalUtils.TYPE_PERSONAL_TEXT_PHONE_NUM:
+//			editText.setInputType(InputType.TYPE_CLASS_PHONE);
 			break;
-		case TYPE_PERSONAL_TEXT_MAIL:
-			//TODO:暂时可以输入所有
-			editText.setInputType(InputType.TYPE_CLASS_TEXT);
+		case PersonalUtils.TYPE_PERSONAL_TEXT_MAIL:
+//			//TODO:暂时可以输入所有
+//			editText.setInputType(InputType.TYPE_CLASS_TEXT);
 			break;
-		case TYPE_PERSONAL_OPTION:
+		case PersonalUtils.TYPE_PERSONAL_OPTION:
 			PersonalOptionItem op = ((PersonalOptionItem)item);
 			int index = op.mSelectionIndex;
 			editText.setText(op.mOptions.get(index).toString());
 			editText.setFocusable(false);
-			editText.setFocusableInTouchMode(false);
+			editText.setFocusableInTouchMode(false);			
 			return view;
 		default:
 			break;
 		}
-		editText.setOnFocusChangeListener(new OnFocusChangeListener() {
-			
-			@Override
-			public void onFocusChange(View arg0, boolean focused) {
-				if(focused) {
-					InputMethodManager inputMethodManager = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-
-					// 接受软键盘输入的编辑文本或其它视图
-
-					inputMethodManager.showSoftInput(editText,InputMethodManager.SHOW_FORCED);
-				}
-			}
-		});
-		editText.setFocusable(true);
-		editText.setFocusableInTouchMode(true);
+		editText.setFocusable(false);
+		editText.setFocusableInTouchMode(false);
 		editText.setText(((PersonalEditTextItem)item).mContent);
 		editText.setVisibility(View.VISIBLE);
 		image.setVisibility(View.GONE);
@@ -179,12 +132,12 @@ public class PersonalEditAdaptor extends BaseExpandableListAdapter {
 
 	@Override
 	public boolean hasStableIds() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isChildSelectable(int arg0, int arg1) {
-		return false;
+		return true;
 	}
 
 	/**
@@ -194,17 +147,17 @@ public class PersonalEditAdaptor extends BaseExpandableListAdapter {
 		List<PersonalEditBaseItem> baseItems = new ArrayList<PersonalEditBaseItem>();
 		//由资源文件获取URI
 		Resources r = XZApplication.getInstance().getResources();
-		baseItems.add(new PersonalEditPhotoItem(TYPE_PERSONAL_PHOTO, R.string.personal_photo, ""));
-		baseItems.add(new PersonalEditTextItem(TYPE_PERSONAL_TEXT, R.string.personal_nickname, r.getString(R.string.personal_nickname_default)));
+		baseItems.add(new PersonalEditPhotoItem(PersonalUtils.TYPE_PERSONAL_PHOTO, R.string.personal_photo, ""));
+		baseItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT, R.string.personal_nickname, r.getString(R.string.personal_nickname_default)));
 		String[] options = r.getStringArray(R.array.personal_gender_options);
-		baseItems.add(new PersonalOptionItem(TYPE_PERSONAL_OPTION, R.string.personal_gender, Arrays.asList(options), 0));
-		baseItems.add(new PersonalEditTextItem(TYPE_PERSONAL_TEXT_PHONE_NUM, R.string.personal_phone, ""));
-		baseItems.add(new PersonalEditTextItem(TYPE_PERSONAL_TEXT_MAIL, R.string.personal_mail, ""));
+		baseItems.add(new PersonalOptionItem(PersonalUtils.TYPE_PERSONAL_OPTION, R.string.personal_gender, Arrays.asList(options), 0));
+		baseItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT_PHONE_NUM, R.string.personal_phone, ""));
+		baseItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT_MAIL, R.string.personal_mail, ""));
 		
 		List<PersonalEditBaseItem> moreItems = new ArrayList<PersonalEditBaseItem>();
-		moreItems.add(new PersonalEditTextItem(TYPE_PERSONAL_TEXT, R.string.personal_school, ""));
-		moreItems.add(new PersonalEditTextItem(TYPE_PERSONAL_TEXT, R.string.personal_major, ""));
-		moreItems.add(new PersonalEditTextItem(TYPE_PERSONAL_TEXT, R.string.personal_grade, ""));
+		moreItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT, R.string.personal_school, ""));
+		moreItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT, R.string.personal_major, ""));
+		moreItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT, R.string.personal_grade, ""));
 		mItemGroups.put(R.string.personal_base_group_title, baseItems);
 		mItemGroups.put(R.string.personal_more_group_title, moreItems);
 	}
@@ -224,4 +177,5 @@ public class PersonalEditAdaptor extends BaseExpandableListAdapter {
 			mExpandableListView.expandGroup(i);  
 		} 
 	}
+
 }

@@ -1,9 +1,7 @@
 package com.campus.xiaozhao.activity;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -15,15 +13,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
+
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.data.MainCategory;
 import com.campus.xiaozhao.basic.data.SubCategory;
-import com.campus.xiaozhao.basic.data.job_group;
 import com.campus.xiaozhao.basic.data.job_type;
-import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.campus.xiaozhao.basic.utils.StringUtils;
 import com.component.logger.Logger;
 

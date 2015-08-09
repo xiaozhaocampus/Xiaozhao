@@ -1,10 +1,6 @@
 package com.campus.xiaozhao.activity;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import com.campus.xiaozhao.R;
-import com.campus.xiaozhao.basic.data.MainCategory;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.basic.data.MainCategory;
 
 public class MainCategoryAdapter extends BaseAdapter {
     

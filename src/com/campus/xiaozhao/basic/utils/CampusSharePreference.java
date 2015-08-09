@@ -1,10 +1,10 @@
 package com.campus.xiaozhao.basic.utils;
 
-import cn.bmob.v3.BmobUser;
+import java.util.Set;
+
 import android.content.Context;
 import android.content.SharedPreferences;
-
-import java.util.Set;
+import cn.bmob.v3.BmobUser;
 
 /**
  * Created by frankenliu on 15/5/29.

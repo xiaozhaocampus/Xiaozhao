@@ -1,10 +1,15 @@
 package com.campus.xiaozhao.activity;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -12,6 +17,7 @@ import android.widget.Toast;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.data.CampusInfo;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
@@ -23,12 +29,6 @@ import com.campus.xiaozhao.basic.utils.StringUtils;
 import com.component.logger.Logger;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by frankenliu on 2015/8/4.

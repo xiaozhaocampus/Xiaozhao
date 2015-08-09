@@ -1,6 +1,5 @@
 package com.campus.xiaozhao.activity;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import android.widget.Toast;
+
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.data.SubCategory;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
