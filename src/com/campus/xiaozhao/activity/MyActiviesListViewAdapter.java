@@ -15,11 +15,13 @@ import com.campus.xiaozhao.basic.utils.DateUtils;
 public class MyActiviesListViewAdapter extends BaseExpandableListAdapter {
 	private ExpandableListView mExpandableListView;
 	private Context mContext = null;
-	private String[] mGroupTitles = {"今天","明天","8月8日"};
-	private String[][][] mInfos = {{{"中兴集团校园招聘会","4:30PM","华中科大活动中心"},
-		{"华为集团校园招聘会","5:30PM","武汉大学学生活动中心"}},{{"魅族集团校园招聘会","6月28 4:30","华中科大活动中心"},
-			{"酷派集团校园招聘会","6月28 4:30","武汉理工大学生活动中心"}},{{"小米集团校园招聘会","8月8 4:30","华中科大活动中心"},
-			{"锤子集团校园招聘会","8月8 4:30","武汉科技大学生活动中心"}}};
+//	private String[] mGroupTitles = {"今天","明天","8月8日"};
+//	private String[][][] mInfos = {{{"中兴集团校园招聘会","4:30PM","华中科大活动中心"},
+//		{"华为集团校园招聘会","5:30PM","武汉大学学生活动中心"}},{{"魅族集团校园招聘会","6月28 4:30","华中科大活动中心"},
+//			{"酷派集团校园招聘会","6月28 4:30","武汉理工大学生活动中心"}},{{"小米集团校园招聘会","8月8 4:30","华中科大活动中心"},
+//			{"锤子集团校园招聘会","8月8 4:30","武汉科技大学生活动中心"}}};
+	private String[] mGroupTitles = {};
+	private String[][][] mInfos = {{{}}};
 	public MyActiviesListViewAdapter(Context context, ExpandableListView expandableListView) {
 		mContext = context;
 		mExpandableListView = expandableListView;

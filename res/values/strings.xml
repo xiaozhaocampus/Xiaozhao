@@ -129,4 +129,6 @@
 
     <string name="publish_time">发布时间:%1$s</string>
     <string name="campus_source">信息来源:%1$s</string>
+    <string name="no_activities">暂无活动</string>
+    <string name="no_history">暂无历史</string>
 </resources>

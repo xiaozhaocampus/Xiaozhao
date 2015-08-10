@@ -3,6 +3,7 @@ package com.campus.xiaozhao.basic.data;
 import java.io.Serializable;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 
 import com.campus.xiaozhao.basic.db.CampusModel;
 
@@ -189,5 +190,25 @@ public class CampusInfoItemData implements Serializable{
         values.put(CampusModel.CampusInfoItemColumn.REMIND_TIME, remindTime);
         values.put(CampusModel.CampusInfoItemColumn.IS_SAVE, isSave);
         values.put(CampusModel.CampusInfoItemColumn.SOURCE, source);
+    }
+    
+    public static final CampusInfoItemData from(Cursor cur) {
+    	CampusInfoItemData campusInfoItemData = new CampusInfoItemData();
+    	campusInfoItemData.setAddress(cur.getString(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.ADDRESS)));
+    	campusInfoItemData.setCampusID(cur.getString(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.CAMPUS_ID)));
+    	campusInfoItemData.setCity(cur.getString(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.CITY)));
+    	campusInfoItemData.setCompany(cur.getString(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.COMPANY_NAME)));
+    	campusInfoItemData.setContent(cur.getString(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.CONTENT)));
+    	campusInfoItemData.setId(0);
+    	campusInfoItemData.setIsRemind(cur.getInt(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.IS_REMIND)) == 1);
+    	campusInfoItemData.setIsSave(cur.getInt(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.IS_REMIND)) == 1);
+    	campusInfoItemData.setPtime(cur.getLong(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.PUBLISH_TIME)));
+    	campusInfoItemData.setRemindTime(cur.getLong(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.REMIND_TIME)));
+    	campusInfoItemData.setRemindType(cur.getInt(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.REMIND_TIME)));
+    	campusInfoItemData.setSource(cur.getString(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.SOURCE)));
+    	campusInfoItemData.setTitle(cur.getString(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.TITLE)));
+    	campusInfoItemData.setType(cur.getString(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.TYPE)));
+    	campusInfoItemData.setVersion(cur.getInt(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.VERSION)));
+    	return campusInfoItemData;
     }
 }

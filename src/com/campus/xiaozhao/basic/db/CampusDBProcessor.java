@@ -242,6 +242,15 @@ public class CampusDBProcessor {
         return list;
     }
 
+    public Cursor query(String whereClause, String[] args, String sortOrder){
+        SQLiteDatabase db = getWriteDatabase();
+        if(db == null ) {
+            return null;
+        }
+        final Cursor cursor = query(db, CampusDBHelper.TABLE_CAMPUS_INFO, CAMPUS_INFO, whereClause, args, null, null, sortOrder);
+        return cursor;
+    }
+    
     public CampusInfoItemData getCampusInfoByCampsuID(String campusID) {
         SQLiteDatabase db = getWriteDatabase();
         if(db == null ) {

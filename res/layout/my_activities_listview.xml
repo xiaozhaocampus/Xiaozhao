@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.campus.xiaozhao.activity.MyActiviesListView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-	android:paddingLeft="9dp"
-    android:paddingRight="9dp" 
-    android:scrollbars="none"
-    android:background="@drawable/time_line_bg"
-    android:divider="@color/white"
-    android:dividerHeight="0dp">
-    
+    android:orientation="vertical" >
 
-</com.campus.xiaozhao.activity.MyActiviesListView>
+    <com.campus.xiaozhao.activity.MyActiviesListView
+        android:id="@+id/my_activies_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/time_line_bg"
+        android:divider="@color/white"
+        android:dividerHeight="0dp"
+        android:paddingLeft="9dp"
+        android:paddingRight="9dp"
+        android:scrollbars="none" />
+
+    <include
+        android:id="@+id/my_activies_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/empty_view" />
+
+</LinearLayout>
