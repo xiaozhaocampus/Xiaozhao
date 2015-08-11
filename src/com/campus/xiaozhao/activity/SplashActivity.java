@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Window;
 
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
@@ -13,6 +14,7 @@ public class SplashActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         
