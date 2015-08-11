@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/time_line_bg"
+        android:listSelector="@android:color/transparent"
         android:divider="@color/white"
         android:dividerHeight="0dp"
         android:paddingLeft="9dp"

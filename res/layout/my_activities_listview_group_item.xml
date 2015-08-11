@@ -15,6 +15,7 @@
         android:layout_marginRight="6dp"
         android:gravity="center"
         android:textColor="#999999"
+        android:clickable="false"
         android:textIsSelectable="false"
         android:textSize="18sp" />
 
@@ -26,6 +27,7 @@
         android:layout_toRightOf="@id/group_title"
         android:gravity="left|bottom"
         android:textColor="#999999"
+        android:clickable="false"
         android:textIsSelectable="false"
         android:textSize="12sp" />
 

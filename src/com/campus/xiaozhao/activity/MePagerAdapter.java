@@ -1,10 +1,8 @@
 package com.campus.xiaozhao.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -18,6 +16,7 @@ import com.campus.xiaozhao.XZApplication;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
 import com.campus.xiaozhao.basic.db.CampusDBProcessor;
 import com.campus.xiaozhao.basic.db.CampusModel;
+import com.campus.xiaozhao.basic.utils.ActivityUtils;
 
 public class MePagerAdapter extends PagerAdapter implements OnItemClickListener {
 
@@ -49,6 +48,7 @@ public class MePagerAdapter extends PagerAdapter implements OnItemClickListener 
 		View view = null;
 		TextView emptyView = null;
 		Context context = container.getContext();
+		//历史记录
 		if(position == 1) {
 			view = inflater.inflate(R.layout.history_listview, null);
 			HistoryListView list = ((HistoryListView)view.findViewById(R.id.history_list));
@@ -56,22 +56,21 @@ public class MePagerAdapter extends PagerAdapter implements OnItemClickListener 
 			emptyView.setText(R.string.no_history);
 			list.setEmptyView(emptyView);
 			list.setOnItemClickListener(this);
-			HistoryListAdaptor adaptor = new HistoryListAdaptor(context, null, true);
+			Cursor cur = CampusDBProcessor.getInstance(context).query("("+ CampusModel.CampusInfoItemColumn.IS_SAVE + " =? OR " + CampusModel.CampusInfoItemColumn.IS_REMIND + " =?) AND " + CampusModel.CampusInfoItemColumn.TIME + " <? ", new String[]{String.valueOf(1),String.valueOf(1),String.valueOf(System.currentTimeMillis()) }, CampusModel.CampusInfoItemColumn.TIME);
+			HistoryListAdaptor adaptor = new HistoryListAdaptor(context, cur, true);
 			list.setAdapter(adaptor);
-			Cursor cur = CampusDBProcessor.getInstance(context).query("("+ CampusModel.CampusInfoItemColumn.IS_SAVE + " =? OR " + CampusModel.CampusInfoItemColumn.IS_REMIND + " =?) AND " + CampusModel.CampusInfoItemColumn.TIME + " <? ", new String[]{String.valueOf(1),String.valueOf(1),String.valueOf(System.currentTimeMillis()) }, String.valueOf(CampusModel.CampusInfoItemColumn.TIME));
-			adaptor.changeCursor(cur);
-		}
-		if(position == 0) {
+		} else if(position == 0) {
+			//我的活动
 			view = inflater.inflate(R.layout.my_activities_listview, null);
 			MyActiviesListView expListView = ((MyActiviesListView)view.findViewById(R.id.my_activies_list));
 			expListView.setGroupIndicator(null);
-			expListView.setOnItemClickListener(this);
 			MyActiviesListViewAdapter adapter = new MyActiviesListViewAdapter(context,expListView);
 			expListView.setAdapter(adapter);
 			adapter.notifyDataSetChanged();
 			emptyView = (TextView)view.findViewById(R.id.my_activies_empty_view);
 			emptyView.setText(R.string.no_activities);
 			expListView.setEmptyView(emptyView);
+			adapter.refresh();
 		}
 		container.addView(view);
 		return view;
@@ -89,12 +88,6 @@ public class MePagerAdapter extends PagerAdapter implements OnItemClickListener 
 		Context context = view.getContext();
 		Cursor cur = (Cursor) adapter.getAdapter().getItem(pos);
         cur.moveToPosition(pos);
-        Intent intent = new Intent(context, CampusDetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("detail_data", CampusInfoItemData.from(cur));
-        intent.putExtras(bundle);
-        context.startActivity(intent);
-        
+        ActivityUtils.showCampusDetailActivity(context, CampusInfoItemData.from(cur));
 	}
-
 }
