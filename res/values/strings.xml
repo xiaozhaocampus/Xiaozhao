@@ -134,4 +134,16 @@
     <string name="today">今天</string>
     <string name="yesterday">昨天</string>
     <string name="time_pattern">MM月 dd日</string>
+    
+    <string name="toast_no_feedback_content">请填写反馈内容</string>
+	<string name="toast_feedback_success">反馈成功</string>
+	<string name="toast_feedback_fail">反馈失败，请确保您的网络连接</string>
+        
+    <string-array name="feedback_options">
+        <item>界面</item>
+        <item>网络</item>
+        <item>提醒</item>
+        <item>内容</item>
+        <item>推送</item>
+    </string-array>
 </resources>
