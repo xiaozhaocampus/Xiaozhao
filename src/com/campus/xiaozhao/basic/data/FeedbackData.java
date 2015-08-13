@@ -1,7 +1,6 @@
 package com.campus.xiaozhao.basic.data;
 
 import cn.bmob.v3.BmobObject;
-import cn.bmob.v3.datatype.BmobFile;
 
 public class FeedbackData extends BmobObject {
 	
@@ -11,7 +10,7 @@ public class FeedbackData extends BmobObject {
 	
 	private String classify = "";//分类放到一个String中用|间隔开
 	
-	private BmobFile screenShot = null;
+	private String screenShotUrl = null;
 
 	public String getQQCode() {
 		return QQCode;
@@ -37,11 +36,11 @@ public class FeedbackData extends BmobObject {
 		this.classify = classify;
 	}
 
-	public BmobFile getScreenShot() {
-		return screenShot;
+	public String getScreenShot() {
+		return screenShotUrl;
 	}
 
-	public void setScreenShot(BmobFile screenShot) {
-		this.screenShot = screenShot;
+	public void setScreenShot(String screenShot) {
+		this.screenShotUrl = screenShot;
 	}
 }

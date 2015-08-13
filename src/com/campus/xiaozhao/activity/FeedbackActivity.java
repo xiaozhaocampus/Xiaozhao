@@ -59,58 +59,34 @@ public class FeedbackActivity extends Activity implements OnItemClickListener,
 
 	// 提交反馈
 	public void submit(View view) {
-		String suggestion = ((TextView)findViewById(R.id.feedback_qq)).getText().toString();
+		final String suggestion = ((TextView)findViewById(R.id.feedback_qq)).getText().toString();
 		if(suggestion == null || suggestion.trim().isEmpty()) {
 			Toast.makeText(this, R.string.toast_no_feedback_content, Toast.LENGTH_SHORT).show();
 			return;
 		}
-		FeedbackData data = new FeedbackData();
-		data.setQQCode(((TextView)findViewById(R.id.feedback_qq)).getText().toString());
-		data.setSuggestion(suggestion);
 		if(mScreenShot != null && mScreenShot.exists()) {
 			BmobProFile.getInstance(this).upload(mScreenShot.getAbsolutePath(),new UploadListener() {
 				
 				@Override
 				public void onError(int paramInt, String paramString) {
 					Logger.e(TAG, "Error:" + paramString);
+					Toast.makeText(FeedbackActivity.this, R.string.toast_feedback_fail, Toast.LENGTH_SHORT).show();
+					finish();
 				}
 				
 				@Override
-				public void onSuccess(String paramString1, String paramString2) {
-					Logger.i(TAG, "Success:" + paramString2);
+				public void onSuccess(String paramString1, String mScreenShotUrl) {
+					Logger.i(TAG, "Upload File Success Url:  " + mScreenShotUrl);
+					upload(suggestion, mScreenShotUrl);
 				}
 				
 				@Override
 				public void onProgress(int paramInt) {
 				}
 			});
+		} else {
+			upload(suggestion, null);
 		}
-		String selection = "";
-		List<Selection> selections = ((FeedbackGridAdaptor)((GridView)findViewById(R.id.feedback_items)).getAdapter()).getSelections();
-		int size = selections.size();
-		for (int i = 0; i < size; i++) {
-			if(i != 0) {
-				selection += "|";
-			}
-			if(selections.get(i).mIsSelected) {
-				selection += selections.get(i).mSelTitle;
-			}
-		}
-		data.setClassify(selection);
-		data.save(this, new SaveListener() {
-			
-			@Override
-			public void onSuccess() {
-				Toast.makeText(FeedbackActivity.this, R.string.toast_feedback_success, Toast.LENGTH_SHORT).show();
-				finish();
-			}
-			
-			@Override
-			public void onFailure(int paramInt, String paramString) {
-				Toast.makeText(FeedbackActivity.this, R.string.toast_feedback_fail, Toast.LENGTH_SHORT).show();
-				finish();
-			}
-		});
 	}
 
 	@Override
@@ -165,5 +141,36 @@ public class FeedbackActivity extends Activity implements OnItemClickListener,
 	    }
 	    cursor.close();
 	    return res;
+	}
+	
+	private void upload(String suggestion,String mScreenShotUrl) {
+		FeedbackData data = new FeedbackData();
+		data.setQQCode(((TextView)findViewById(R.id.feedback_qq)).getText().toString());
+		data.setSuggestion(suggestion);
+		String selection = "";
+		List<Selection> selections = ((FeedbackGridAdaptor)((GridView)findViewById(R.id.feedback_items)).getAdapter()).getSelections();
+		int size = selections.size();
+		for (int i = 0; i < size; i++) {
+			if(i != 0 && selections.get(i).mIsSelected) {
+				selection += "|";
+				selection += selections.get(i).mSelTitle;
+			}
+		}
+		data.setClassify(selection);
+		data.setScreenShot(mScreenShotUrl);
+		data.save(this, new SaveListener() {
+			
+			@Override
+			public void onSuccess() {
+				Toast.makeText(FeedbackActivity.this, R.string.toast_feedback_success, Toast.LENGTH_SHORT).show();
+				finish();
+			}
+			
+			@Override
+			public void onFailure(int paramInt, String paramString) {
+				Toast.makeText(FeedbackActivity.this, R.string.toast_feedback_fail, Toast.LENGTH_SHORT).show();
+				finish();
+			}
+		});
 	}
 }
