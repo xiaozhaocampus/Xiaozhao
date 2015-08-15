@@ -63,6 +63,7 @@ public class CampusProvider extends ContentProvider{
             case CampusUriFactory.URI_MATCH_CAMPUS_INFO:
                 long id = insert(db, CampusDBHelper.TABLE_CAMPUS_INFO, null, values);
                 Uri insertUri = ContentUris.withAppendedId(uri, id);
+                mContext.getContentResolver().notifyChange(uri, null);
                 return insertUri;
             default:
                 throw new IllegalArgumentException("this is unknow uri:" + uri);
@@ -78,6 +79,7 @@ public class CampusProvider extends ContentProvider{
         switch (CampusUriFactory.getMatcher().match(uri)) {
             case CampusUriFactory.URI_MATCH_CAMPUS_INFO:
                int id = delete(db, CampusDBHelper.TABLE_CAMPUS_INFO, selection, selectionArgs);
+                mContext.getContentResolver().notifyChange(uri, null);
                 return id;
             default:
                 throw new IllegalArgumentException("this is unknow uri:" + uri);
@@ -93,6 +95,7 @@ public class CampusProvider extends ContentProvider{
         switch (CampusUriFactory.getMatcher().match(uri)) {
             case CampusUriFactory.URI_MATCH_CAMPUS_INFO:
                int id = update(db, CampusDBHelper.TABLE_CAMPUS_INFO, values, selection, selectionArgs);
+                mContext.getContentResolver().notifyChange(uri, null);
                 return id;
             default:
                 throw new IllegalArgumentException("this is unknow uri:" + uri);
