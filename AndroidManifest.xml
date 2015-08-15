@@ -182,6 +182,10 @@
             android:name="com.campus.xiaozhao.activity.SubCategoryActivity"
             android:label="@string/title_activity_sub_category" >
         </activity>
+
+        <provider
+            android:authorities="com.campus.xiaozhao.providers.campusProvider"
+            android:name="com.campus.xiaozhao.basic.db.CampusProvider" />
     </application>
 
 </manifest>

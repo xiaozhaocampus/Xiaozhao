@@ -3,11 +3,13 @@ package com.campus.xiaozhao.basic.db;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.campus.xiaozhao.basic.data.CampusInfo;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
 import com.component.logger.Logger;
 
@@ -39,11 +41,9 @@ public class CampusDBProcessor {
 
     private static volatile CampusDBProcessor mInstance;
 
-    private CampusDBHelper mDBHelper;
+    private static Context mContext;
 
     private CampusDBProcessor(Context context) {
-        mDBHelper = new CampusDBHelper(context);
-        initDbIfNotExist();
     }
 
     public static CampusDBProcessor getInstance(Context context) {
@@ -51,140 +51,48 @@ public class CampusDBProcessor {
             synchronized (CampusDBProcessor.class) {
                 if(mInstance == null) {
                     mInstance = new CampusDBProcessor(context);
+                    mContext = context;
                 }
             }
         }
         return mInstance;
     }
 
-    private void initDbIfNotExist() {
-        try {
-            mDBHelper.getWritableDatabase();
-        } catch (Exception e) {
-            Logger.w(TAG, e);
-        }
-    }
-
-    /******************************************************************  数据库基本封装开始 *****************************************************************************************/
-    private SQLiteDatabase getWriteDatabase() {
-        try {
-            return mDBHelper.getWritableDatabase();
-        } catch (Exception e) {
-            Logger.w(TAG, e);
-            return null;
-        }
-    }
-
-    private SQLiteDatabase getReadDatabase() {
-        try {
-            return mDBHelper.getReadableDatabase();
-        } catch (Exception e) {
-            Logger.w(TAG, e);
-            return null;
-        }
-    }
-
-    private int delete(SQLiteDatabase db, String table, String whereClause, String[] whereArgs) {
-        try {
-            return db.delete(table, whereClause, whereArgs);
-        } catch (Exception e) {
-            Logger.w(TAG, e.getMessage());
-            return -1;
-        }
-    }
-
-    private int update(SQLiteDatabase db, String table, ContentValues values, String whereClause, String[] whereArgs) {
-        try {
-            return db.update(table, values, whereClause, whereArgs);
-        } catch (Exception e) {
-            Logger.w(TAG, e.getMessage());
-            return -1;
-        }
-    }
-
-    private long insert(SQLiteDatabase db, String table, String nullColumnHack, ContentValues values) {
-        try {
-            return db.insert(table, nullColumnHack, values);
-        } catch (Exception e) {
-            Logger.w(TAG, e.getMessage());
-            return -1;
-        }
-    }
-
-    private Cursor query(SQLiteDatabase db, String table, String[] columns, String selection,
-                         String[] selectionArgs, String groupBy, String having,
-                         String orderBy) {
-        try {
-            return db.query(table, columns, selection, selectionArgs, groupBy, having, orderBy);
-        } catch (Exception e) {
-            Logger.w(TAG, e.getMessage());
-            return null;
-        }
-    }
-    /******************************************************************  数据库基本封装结束 *****************************************************************************************/
-
     public void addCampusInfo(CampusInfoItemData itemData) {
-        SQLiteDatabase db = getWriteDatabase();
-        if(db == null ) {
-            return;
-        }
-
         final ContentValues values = new ContentValues();
         itemData.onAddToDatabase(values);
-        insert(db, CampusDBHelper.TABLE_CAMPUS_INFO, null, values);
+        mContext.getContentResolver().insert(CampusUriFactory.getCampusInfoUri(), values);
     }
 
     public void addCampusInfo(List<CampusInfoItemData> list) {
         if(list == null && list.size() < 1) {
             return;
         }
-        SQLiteDatabase db = getWriteDatabase();
-        if(db == null ) {
-            return;
-        }
         try {
-            db.beginTransaction();
+            ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
             for(CampusInfoItemData itemData : list) {
                 ContentValues values = new ContentValues();
                 itemData.onAddToDatabase(values);
-                insert(db, CampusDBHelper.TABLE_CAMPUS_INFO, null, values);
+               ops.add(ContentProviderOperation.newInsert(CampusUriFactory.getCampusInfoUri()).withValues(values).build());
             }
-            db.setTransactionSuccessful();
+            mContext.getContentResolver().applyBatch(CampusUriFactory.getCampusInfoUri().getAuthority(), ops);
         } catch (Exception e) {
             Logger.e(TAG, e);
-        } finally {
-            try {
-                db.endTransaction();
-            } catch (Exception e) {
-                Logger.e(TAG, e);
-            }
         }
     }
 
     public void deleteCampusInfo(String whereClause, String[] whereArgs) {
-        SQLiteDatabase db = getWriteDatabase();
-        if(db == null ) {
-            return;
-        }
-        delete(db, CampusDBHelper.TABLE_CAMPUS_INFO, whereClause, whereArgs);
+        mContext.getContentResolver().delete(CampusUriFactory.getCampusInfoUri(), whereClause, whereArgs);
     }
 
     public void deleteCampusIfoByCampusId(String campusId) {
-        SQLiteDatabase db = getWriteDatabase();
-        if(db == null ) {
-            return;
-        }
         String whereClause = CampusModel.CampusInfoItemColumn.CAMPUS_ID + "= ? ";
         String[] whereArgs = new String[]{campusId};
-        delete(db, CampusDBHelper.TABLE_CAMPUS_INFO, whereClause, whereArgs);
+        mContext.getContentResolver().delete(CampusUriFactory.getCampusInfoUri(), whereClause, whereArgs);
     }
 
     public void updateCampus(CampusInfoItemData itemData) {
         if(itemData == null) {
-            return;
-        }
-        SQLiteDatabase db = getWriteDatabase();
-        if(db == null ) {
             return;
         }
         final ContentValues values = new ContentValues();
@@ -192,16 +100,12 @@ public class CampusDBProcessor {
 
         String whereClause = CampusModel.CampusInfoItemColumn.CAMPUS_ID + " =?";
         String[] whereArgs = new String[]{String.valueOf(itemData.getCampusID())};
-        update(db, CampusDBHelper.TABLE_CAMPUS_INFO, values, whereClause, whereArgs);
+        mContext.getContentResolver().update(CampusUriFactory.getCampusInfoUri(), values, whereClause, whereArgs);
     }
 
     public List<CampusInfoItemData> getCampusInfos(String whereClause, String[] whereArgs, String sortOrder) {
-        SQLiteDatabase db = getWriteDatabase();
-        if(db == null ) {
-            return null;
-        }
         List<CampusInfoItemData> list = null;
-        final Cursor cursor = query(db, CampusDBHelper.TABLE_CAMPUS_INFO, CAMPUS_INFO, whereClause, whereArgs, null, null, sortOrder);
+        final Cursor cursor = mContext.getContentResolver().query(CampusUriFactory.getCampusInfoUri(), CAMPUS_INFO, whereClause, whereArgs, sortOrder);
         if(cursor != null) {
             try {
                 if(cursor.getCount() > 0) {
@@ -242,23 +146,15 @@ public class CampusDBProcessor {
         return list;
     }
 
-    public Cursor query(String whereClause, String[] args, String sortOrder){
-        SQLiteDatabase db = getWriteDatabase();
-        if(db == null ) {
-            return null;
-        }
-        final Cursor cursor = query(db, CampusDBHelper.TABLE_CAMPUS_INFO, CAMPUS_INFO, whereClause, args, null, null, sortOrder);
+    public Cursor query(String whereClause, String[] whereArgs, String sortOrder){
+        final Cursor cursor = mContext.getContentResolver().query(CampusUriFactory.getCampusInfoUri(), CAMPUS_INFO, whereClause, whereArgs, sortOrder);
         return cursor;
     }
     
     public CampusInfoItemData getCampusInfoByCampsuID(String campusID) {
-        SQLiteDatabase db = getWriteDatabase();
-        if(db == null ) {
-            return null;
-        }
         String whereClause = CampusModel.CampusInfoItemColumn.CAMPUS_ID + " =?";
         String[] whereArgs = new String[] {String.valueOf(campusID)};
-        final Cursor cursor = query(db, CampusDBHelper.TABLE_CAMPUS_INFO, CAMPUS_INFO, whereClause, whereArgs, null, null, null);
+        final Cursor cursor =  mContext.getContentResolver().query(CampusUriFactory.getCampusInfoUri(), CAMPUS_INFO, whereClause, whereArgs, null);
         if(cursor != null) {
             try {
                 if(cursor.getCount() > 0) {
