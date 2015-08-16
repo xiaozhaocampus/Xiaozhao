@@ -15,6 +15,7 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.*;
 
 import com.campus.xiaozhao.R;
@@ -33,12 +34,13 @@ import java.io.FileOutputStream;
  */
 public class CampusDetailActivity extends Activity {
     private static final String TAG = "CampusDetailActivity";
-    private TextView mCompanyName, mPublishTime, mInformationCome, mJobTime, mAddress, mProvince, mCompanyIntrodction;
+    private TextView mCompanyName, mPublishTime, mInformationCome, mJobTime, mAddress, mProvince;
     private CampusInfoItemData mItemData;
     private CampusDBProcessor mDBProcessor;
     private String[] mTypes = null; // 提醒类型, 用于用户点击确定后可选的范围
     private String mType;
     private View mContentView;
+    private WebView mCompanyIntrodction;
 
     private ImageView mSave; // actionBar中得收藏按钮
 
@@ -74,11 +76,12 @@ public class CampusDetailActivity extends Activity {
         mAddress = (TextView) findViewById(R.id.campus_detail_school);
         mProvince = (TextView) findViewById(R.id.campus_detail_province);
         mProvince.setText(mItemData.getCity());
-        mCompanyIntrodction = (TextView) findViewById(R.id.company_introduction);
+        mCompanyIntrodction = (WebView) findViewById(R.id.company_introduction);
         mCompanyName.setText(mItemData.getCompany());
         mJobTime.setText(DateUtils.transferTimeToDate(mItemData.getTime()));
         mAddress.setText(mItemData.getAddress());
-        mCompanyIntrodction.setText(Html.fromHtml(mItemData.getContent()));
+        mCompanyIntrodction.getSettings().setDefaultTextEncodingName("UTF-8");
+        mCompanyIntrodction.loadDataWithBaseURL("", mItemData.getContent(), "text/html", "UTF-8", "");
         setButtonState();
     }
 

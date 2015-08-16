@@ -166,12 +166,12 @@
             android:layout_height="wrap_content"
             android:src="@drawable/campus_detail_line"/>
 
-        <TextView
+        <WebView
             android:id="@+id/company_introduction"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="5dp"
             android:textSize="15sp"
             android:text="嘉环公司成立与1998年，"
             android:textColor="#343434"/>
