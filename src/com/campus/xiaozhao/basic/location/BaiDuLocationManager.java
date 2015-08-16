@@ -119,11 +119,10 @@ public class BaiDuLocationManager {
             return;
         }
         String preLocation = CampusSharePreference.getLocation(context);
-        if(!location.getCity().equals(preLocation)) {
-            Message msg = mHandler.obtainMessage(InfoFragment.MSG_SET_LOCATION);
-            msg.obj = location;
-            mHandler.sendMessage(msg);
-            CampusSharePreference.setLocation(context, location.getCity());
-        }
+        Message msg = mHandler.obtainMessage(InfoFragment.MSG_SET_LOCATION);
+        msg.obj = location;
+        msg.arg1 = location.getCity().equals(preLocation) ? 0 : 1;
+        mHandler.sendMessage(msg);
+        CampusSharePreference.setLocation(context, location.getCity());
     }
 }

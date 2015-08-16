@@ -269,4 +269,20 @@ public final class StringUtils {
         }
         return false;
     }
+
+    /**
+     * 去掉定位结果中的省，市后缀，如:湖北省 --> 湖北；武汉市 --> 武汉
+     * @param str
+     * @return
+     */
+    public static String spiltString(String str) {
+        if(TextUtils.isEmpty(str)) {
+            return "";
+        }
+        if(str.contains("省") || str.contains("市")) {
+            str = str.replace("省", "");
+            str = str.replace("市", "");
+        }
+        return str;
+    }
 }

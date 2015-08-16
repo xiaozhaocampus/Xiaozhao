@@ -5,15 +5,16 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.alarm.CampusAlarmManager;
@@ -22,6 +23,10 @@ import com.campus.xiaozhao.basic.db.CampusDBProcessor;
 import com.campus.xiaozhao.basic.utils.DateUtils;
 import com.campus.xiaozhao.basic.utils.RemindType;
 import com.component.logger.Logger;
+
+import java.io.File;
+import java.io.FileOutputStream;
+
 /**
  * Created by frankenliu on 15/5/31.
  */
@@ -32,6 +37,7 @@ public class CampusDetailActivity extends Activity {
     private CampusDBProcessor mDBProcessor;
     private String[] mTypes = null; // 提醒类型, 用于用户点击确定后可选的范围
     private String mType;
+    private View mContentView;
 
     private ImageView mSave; // actionBar中得收藏按钮
 
@@ -51,6 +57,7 @@ public class CampusDetailActivity extends Activity {
         actionBar.setCustomView(R.layout.campus_detail_action_layout);
         initActionBar(actionBar);
 
+        mContentView = findViewById(R.id.campus_detail_view);
         mRemindTime = (RelativeLayout) findViewById(R.id.campus_detail_time);
         mLocation = (RelativeLayout) findViewById(R.id.campus_detail_location);
         mCompanyName = (TextView) findViewById(R.id.company_name);
@@ -100,7 +107,10 @@ public class CampusDetailActivity extends Activity {
                             mSave.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.campus_detail_image_save_on));
                             Toast.makeText(getApplicationContext(), "收藏成功", Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(getApplicationContext(), "已收藏", Toast.LENGTH_LONG).show();
+                            mItemData.setIsSave(false);
+                            mDBProcessor.updateCampus(mItemData);
+                            mSave.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.campus_detail_image_save_off));
+                            Toast.makeText(getApplicationContext(), "取消收藏", Toast.LENGTH_LONG).show();
                         }
                     }
                 }
@@ -109,9 +119,72 @@ public class CampusDetailActivity extends Activity {
         actionBar.getCustomView().findViewById(R.id.campus_detail_action_image_share).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO 点击分享按钮
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Bitmap bitmap = getMagicDrawingCache(mContentView);
+                        String folder = android.os.Environment.getExternalStorageDirectory() + File.separator + ".campus";
+                        String filePath = folder + File.separator + "viewTempFile.png";
+                        try {
+                            File destDir = new File(folder);
+                            if(!destDir.exists()) {
+                                destDir.mkdirs();
+                            }
+                            File file = new File(filePath);
+                            if(file.exists()) {
+                                file.delete();
+                            }
+                            file.createNewFile();
+                            FileOutputStream stream = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 85, stream);
+                            stream.flush();
+                            stream.close();
+
+                            Intent shareIntent = new Intent();
+                            shareIntent.setAction(Intent.ACTION_SEND);
+                            Uri uri = Uri.fromFile(file);
+                            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                            shareIntent.setType("image/png");
+                            startActivity(Intent.createChooser(shareIntent, "share"));
+                        } catch (Exception e) {
+                            Logger.crash(TAG, e);
+                        }
+                    }
+                });
+                thread.start();
             }
         });
+    }
+
+    public static Bitmap getMagicDrawingCache(View view) {
+        int viewWidth = view.getWidth();
+        int viewHeight = view.getHeight();
+        Bitmap bitmap = null;
+        try {
+            bitmap = Bitmap.createBitmap(viewWidth, viewHeight,
+                    Bitmap.Config.ARGB_8888);
+        } catch (Exception e) {
+            Logger.i(TAG, "createBitmap ===bitmap width==>" + viewWidth
+                    + " bitmap height==>" + viewHeight);
+            e.printStackTrace();
+        }
+
+        if (bitmap == null) {
+            return null;
+        }
+
+        Logger.i(
+                TAG,
+                "before ===bitmap bytes==>"
+                        + (bitmap != null ? bitmap.getByteCount() : 0));
+        bitmap.eraseColor(Color.TRANSPARENT);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        Logger.i(
+                TAG,
+                "after ===bitmap bytes==>"
+                        + (bitmap != null ? bitmap.getByteCount() : 0));
+        return bitmap;
     }
 
     /**

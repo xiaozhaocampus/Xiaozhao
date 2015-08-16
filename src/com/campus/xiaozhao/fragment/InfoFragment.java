@@ -24,6 +24,7 @@ import com.campus.xiaozhao.activity.InfoPagerAdapter;
 import com.campus.xiaozhao.activity.MainCategoryActivity;
 import com.campus.xiaozhao.basic.location.BaiDuLocationManager;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
+import com.campus.xiaozhao.basic.utils.StringUtils;
 import com.component.logger.Logger;
 
 /**
@@ -51,7 +52,7 @@ public class InfoFragment extends Fragment implements Handler.Callback{
         if(TextUtils.isEmpty(location)) {
             location = "暂无定位";
         }
-        mLocation.setText(location);
+        mLocation.setText(StringUtils.spiltString(location));
         mLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,9 +147,12 @@ public class InfoFragment extends Fragment implements Handler.Callback{
     public boolean handleMessage(Message msg) {
         switch (msg.what) {
             case MSG_SET_LOCATION:
-                BDLocation location = (BDLocation) msg.obj;
-                mLocation.setText(location.getCity());
-                Logger.d(TAG, "location:" + location.getCity());
+                boolean isNewCity = msg.arg1 > 0;
+                if(isNewCity) {
+                    BDLocation location = (BDLocation) msg.obj;
+                    mLocation.setText(StringUtils.spiltString(location.getCity()));
+                    Logger.d(TAG, "location:" + location.getCity());
+                }
                 BaiDuLocationManager.getInstance().stop();
                 break;
             default:
