@@ -2,16 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/main"
-    android:layout_height="80dp">
-
+    android:layout_height="@dimen/actionbar_height"
+    android:background="@color/main" >
+    
     <ImageView
         android:id="@+id/campus_detail_action_image_back"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="15dp"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/action_back"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:src="@drawable/back_arrow_src"
+        android:background="@drawable/back_arrow_bg"
+        android:clickable="true"
+        android:contentDescription="@null" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,23 +24,27 @@
         android:layout_centerVertical="true"
         android:textColor="@color/white"
         android:textSize="20sp"/>
-
+    
     <ImageView
         android:id="@+id/campus_detail_action_image_share"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:src="@drawable/campus_detail_image_share_off"/>
+        android:scaleType="center"
+        android:src="@drawable/campus_detail_image_share_off"
+        android:background="@drawable/settings_bg_select"
+        android:contentDescription="@null" />
 
     <ImageView
         android:id="@+id/campus_detail_action_image_save"
-        android:layout_toLeftOf="@id/campus_detail_action_image_share"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
-        android:src="@drawable/campus_detail_image_save_off"/>
+        android:layout_toLeftOf="@id/campus_detail_action_image_share"
+        android:scaleType="center"
+        android:src="@drawable/campus_detail_image_save_off"
+        android:background="@drawable/settings_bg_select"
+        android:contentDescription="@null" />
 
 </RelativeLayout>
