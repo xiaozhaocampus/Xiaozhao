@@ -77,22 +77,7 @@ public class MainActivity extends SlidingFragmentActivity {
     	setTheme(R.style.StyledIndicators);
 		setContentView(R.layout.activity_main);
 
-		final ActionBar actionBar = getActionBar();
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-		actionBar.setDisplayShowCustomEnabled(true);
-		actionBar.setCustomView(R.layout.actionbar_main);
-		actionBar.getCustomView().findViewById(R.id.actionbar_location_city).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Logger.d(TAG, "actionbar location city click");
-			}
-		});
-		actionBar.getCustomView().findViewById(R.id.actionbar_settings).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				toggle();
-			}
-		});
+		initActionBar();
 
 		Logger.d(TAG, "setup UI");
 		mSelfFragment = new MeFragment();
@@ -123,6 +108,25 @@ public class MainActivity extends SlidingFragmentActivity {
             }
         });
     }
+    
+    public void initActionBar() {
+    	final ActionBar actionBar = getActionBar();
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+		actionBar.setDisplayShowCustomEnabled(true);
+		actionBar.setCustomView(R.layout.actionbar_main);
+		actionBar.getCustomView().findViewById(R.id.actionbar_location_city).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Logger.d(TAG, "actionbar location city click");
+			}
+		});
+		actionBar.getCustomView().findViewById(R.id.actionbar_settings).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				toggle();
+			}
+		});
+    }
 
 	// TODO:处理各个点击事件
 	public void onClick(View v) {
@@ -142,6 +146,7 @@ public class MainActivity extends SlidingFragmentActivity {
 
             }
             getSupportFragmentManager().beginTransaction().show(mInfoFragment).commit();
+            getActionBar().show();
             break;
         case R.id.fragment_self:
             infoFragmentView.setImageResource(R.drawable.fragment_info_off);
@@ -154,6 +159,7 @@ public class MainActivity extends SlidingFragmentActivity {
             } else {
                 getSupportFragmentManager().beginTransaction().add(R.id.tab_content, mSelfFragment).commit();
             }
+            getActionBar().hide();
             break;
         case R.id.me_header_photo:
         	id = R.id.personal; 

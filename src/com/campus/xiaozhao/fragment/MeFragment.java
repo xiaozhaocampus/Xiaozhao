@@ -80,9 +80,4 @@ public class MeFragment extends Fragment {
 			}
 		}
 	}
-	
-	public void onResume() {
-		super.onResume();
-		getActivity().getActionBar().hide();
-	}
 }
