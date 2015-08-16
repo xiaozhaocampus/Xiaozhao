@@ -173,7 +173,16 @@ public class InfoPagerAdapter extends PagerAdapter {
                             itemData.setPtime(info.getPtime());
 
                             if(isUp) { // 缓存最新的数据
-                                CampusDBProcessor.getInstance(mContext).addCampusInfo(itemData);
+                                CampusInfoItemData localData = CampusDBProcessor.getInstance(mContext).getCampusInfoByCampsuID(itemData.getCampusID());
+                                if(localData != null) {
+                                    itemData.setIsSave(localData.isSave());
+                                    itemData.setIsRemind(localData.isRemind());
+                                    itemData.setRemindType(localData.getRemindType());
+                                    itemData.setRemindTime(localData.getRemindTime());
+                                    CampusDBProcessor.getInstance(mContext).updateCampus(itemData);
+                                } else {
+                                    CampusDBProcessor.getInstance(mContext).addCampusInfo(itemData);
+                                }
                                 // TODO 待删除数据库中旧数据(不算已收藏的)
                             }
                             if (mCampusIDs.contains(itemData.getCampusID())) {
