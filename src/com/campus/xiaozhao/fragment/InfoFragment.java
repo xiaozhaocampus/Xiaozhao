@@ -56,7 +56,7 @@ public class InfoFragment extends Fragment implements Handler.Callback{
         mLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "其他城市正在开发中", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "目前只支持武汉，其他城市正在开发中", Toast.LENGTH_LONG).show();
             }
         });
         initData();

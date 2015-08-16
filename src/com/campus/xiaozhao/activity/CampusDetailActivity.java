@@ -11,6 +11,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,7 +78,7 @@ public class CampusDetailActivity extends Activity {
         mCompanyName.setText(mItemData.getCompany());
         mJobTime.setText(DateUtils.transferTimeToDate(mItemData.getTime()));
         mAddress.setText(mItemData.getAddress());
-        mCompanyIntrodction.setText(mItemData.getContent());
+        mCompanyIntrodction.setText(Html.fromHtml(mItemData.getContent()));
         setButtonState();
     }
 

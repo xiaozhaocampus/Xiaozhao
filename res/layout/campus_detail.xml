@@ -6,7 +6,7 @@
         android:id="@+id/campus_detail_view"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:minHeight="@dimen/campus_detail_min_height"
         android:background="@color/white">
 
@@ -155,7 +155,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:textSize="15.3dp"
+                android:textSize="16sp"
                 android:textColor="#E95644"
                 android:layout_gravity="center_vertical"
                 android:text="招聘详情"/>
@@ -165,22 +165,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/campus_detail_line"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="20dp"
-            android:textSize="@dimen/campus_detail_text_size"
-            android:textColor="#343434"
-            android:text="@string/company_introduction"/>
 
         <TextView
             android:id="@+id/company_introduction"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="40dp"
-            android:textSize="12.7sp"
+            android:textSize="15sp"
             android:text="嘉环公司成立与1998年，"
             android:textColor="#343434"/>
     </LinearLayout>
