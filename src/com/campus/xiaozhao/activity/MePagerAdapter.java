@@ -90,4 +90,9 @@ public class MePagerAdapter extends PagerAdapter implements OnItemClickListener 
         cur.moveToPosition(pos);
         ActivityUtils.showCampusDetailActivity(context, CampusInfoItemData.from(cur));
 	}
+
+	@Override  
+    public int getItemPosition(Object object) {  
+		return POSITION_NONE;  
+    }  
 }

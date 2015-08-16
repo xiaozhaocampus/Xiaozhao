@@ -1,6 +1,11 @@
 package com.campus.xiaozhao.fragment;
 
+import android.content.ContentResolver;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -11,11 +16,11 @@ import android.widget.ImageView;
 
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.activity.MePagerAdapter;
+import com.campus.xiaozhao.basic.db.CampusUriFactory;
 import com.viewpagerindicator.TabPageIndicator;
 
 public class MeFragment extends Fragment {
 	private ViewPager mViewPager = null;
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -45,9 +50,32 @@ public class MeFragment extends Fragment {
             public void onPageScrollStateChanged(int arg0) {  
             }  
         });  
-
-
+        
+        ContentResolver cr = getActivity().getContentResolver();
+        cr.registerContentObserver(CampusUriFactory.getCampusInfoUri(), true, new DBObserver(new Handler(Looper.getMainLooper())));
 		return view;
 	}
 	
+	@Override
+	public void onDestroy() {
+
+		super.onDestroy();
+	}
+	
+	private class DBObserver extends ContentObserver {
+
+		public DBObserver(Handler handler) {
+			super(handler);
+		}
+		
+		@Override
+		public void onChange(boolean selfChange, Uri uri) {
+			super.onChange(selfChange, uri);
+			if(CampusUriFactory.getMatcher().match(uri) == CampusUriFactory.URI_MATCH_CAMPUS_INFO) {
+				if(mViewPager != null) {
+					(mViewPager.getAdapter()).notifyDataSetChanged();
+				}
+			}
+		}
+	}
 }
