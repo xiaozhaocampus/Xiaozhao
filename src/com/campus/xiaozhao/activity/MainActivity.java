@@ -187,7 +187,7 @@ public class MainActivity extends SlidingFragmentActivity {
     	        Toast.makeText(this, "Update clicked", Toast.LENGTH_SHORT).show();
     	        break;
     	    case R.id.about:
-    	        Toast.makeText(this, "About clicked", Toast.LENGTH_SHORT).show();
+    	        showAbout();
     	        break;
 	    }
 	    new Handler().postDelayed(new Runnable() {
@@ -242,4 +242,19 @@ public class MainActivity extends SlidingFragmentActivity {
 	    return interval >= Configuration.SPLASH_START_UP_INTERVAL;
 	}
 	
+	private void showAbout() {
+		AlertDialog dialog = new AlertDialog.Builder(this)
+				.setIcon(R.drawable.ic_launcher)
+				.setTitle(getResources().getString(R.string.app_name))
+				.setMessage("作者：校招达人工作室\n邮箱：xiaozhaocampus@qq.com\n版权：©2015-2016")
+				.setPositiveButton(getResources().getString(R.string.be_sure),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								dialog.dismiss();
+							}
+						}).create();
+		dialog.show();
+	}
 }
