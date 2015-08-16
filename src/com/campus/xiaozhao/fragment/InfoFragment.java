@@ -133,6 +133,7 @@ public class InfoFragment extends Fragment implements Handler.Callback{
             // 刷新数据
             mInfoAdapter.refreshData();
         }
+		getActivity().getActionBar().show();
     }
 
     private void initData() {

@@ -21,6 +21,7 @@ import com.viewpagerindicator.TabPageIndicator;
 
 public class MeFragment extends Fragment {
 	private ViewPager mViewPager = null;
+	private DBObserver mOb = new DBObserver(new Handler(Looper.getMainLooper()));
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -52,13 +53,14 @@ public class MeFragment extends Fragment {
         });  
         
         ContentResolver cr = getActivity().getContentResolver();
-        cr.registerContentObserver(CampusUriFactory.getCampusInfoUri(), true, new DBObserver(new Handler(Looper.getMainLooper())));
+        cr.registerContentObserver(CampusUriFactory.getCampusInfoUri(), true, mOb);
 		return view;
 	}
 	
 	@Override
 	public void onDestroy() {
-
+		ContentResolver cr = getActivity().getContentResolver();
+		cr.unregisterContentObserver(mOb);
 		super.onDestroy();
 	}
 	
@@ -77,5 +79,10 @@ public class MeFragment extends Fragment {
 				}
 			}
 		}
+	}
+	
+	public void onResume() {
+		super.onResume();
+		getActivity().getActionBar().hide();
 	}
 }
