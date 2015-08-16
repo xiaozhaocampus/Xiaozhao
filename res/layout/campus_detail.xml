@@ -7,6 +7,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:minHeight="@dimen/campus_detail_min_height"
         android:background="@color/white">
 
         <RelativeLayout
@@ -177,7 +178,7 @@
         <TextView
             android:id="@+id/company_introduction"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="40dp"
             android:textSize="12.7sp"
             android:text="嘉环公司成立与1998年，"

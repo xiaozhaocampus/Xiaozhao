@@ -38,5 +38,5 @@
     <dimen name="category_item_margin_left">17dp</dimen>
     <dimen name="category_item_margin_right">17dp</dimen>
     <dimen name="category_item_title_size">18sp</dimen>
-
+    <dimen name="campus_detail_min_height">560dp</dimen>
 </resources>
