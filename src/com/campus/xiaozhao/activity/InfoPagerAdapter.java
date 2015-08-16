@@ -185,9 +185,7 @@ public class InfoPagerAdapter extends PagerAdapter {
                                 }
                                 // TODO 待删除数据库中旧数据(不算已收藏的)
                             }
-                            if (mCampusIDs.contains(itemData.getCampusID())) {
-                                continue;
-                            } else {
+                            if (!mCampusIDs.contains(itemData.getCampusID())) {
                                 if(isUp) { // 手指向下拉获取最新数据时，添加到list的最前面
                                     mDatas.add(0, itemData);
                                 } else { // 手指向上拉获取老数据时，添加到list的后面
@@ -196,6 +194,7 @@ public class InfoPagerAdapter extends PagerAdapter {
                                 mCampusIDs.add(itemData.getCampusID());
                             }
                             long version = CampusSharePreference.getServerDataCount(mContext);
+                            Logger.d(TAG, "server version:" + itemData.getVersion() + ", local version:" + version);
                             if(itemData.getVersion() > version)
                                 CampusSharePreference.setServerDataCount(mContext, itemData.getVersion());
                         }
