@@ -45,7 +45,8 @@
                 android:src="@drawable/info_filter"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:contentDescription="@null" />
         </RelativeLayout>
 
     </LinearLayout>

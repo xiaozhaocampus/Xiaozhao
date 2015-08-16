@@ -1,6 +1,5 @@
 package com.campus.xiaozhao.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,7 +20,6 @@ import android.widget.Toast;
 import com.baidu.location.BDLocation;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.activity.InfoPagerAdapter;
-import com.campus.xiaozhao.activity.MainCategoryActivity;
 import com.campus.xiaozhao.basic.location.BaiDuLocationManager;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.campus.xiaozhao.basic.utils.StringUtils;
@@ -40,7 +38,6 @@ public class InfoFragment extends Fragment implements Handler.Callback{
     private TextView mTabAll; // 全部活动的tab
     private RelativeLayout mTabMyFilter; // 我的订阅的tab
     private TextView mTabMyFilterTitle; // 我的订阅tab中的title
-    private ImageView mTabMyFilterImage; // 我的订阅tab中的image
     private int offset = 0; // 动画图片偏移量
     private InfoPagerAdapter mInfoAdapter;
 
@@ -68,15 +65,6 @@ public class InfoFragment extends Fragment implements Handler.Callback{
         mViewPager.setAdapter(mInfoAdapter);
         mViewPager.setCurrentItem(0);
         mTabMyFilterTitle = (TextView) view.findViewById(R.id.tab_my_filter_title);
-        mTabMyFilterImage = (ImageView) view.findViewById(R.id.tab_my_filter_image);
-        mTabMyFilterImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =new Intent();
-                intent.setClass(getActivity().getApplicationContext(), MainCategoryActivity.class);
-                startActivity(intent);
-            }
-        });
         //如果我们要对ViewPager设置监听，用indicator设置就行了
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
