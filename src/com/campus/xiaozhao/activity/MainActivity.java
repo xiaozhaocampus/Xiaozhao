@@ -191,6 +191,7 @@ public class MainActivity extends SlidingFragmentActivity {
     	        break;
     	    case R.id.update:
     	        Toast.makeText(this, "Update clicked", Toast.LENGTH_SHORT).show();
+    	        startActivityById(R.id.update);
     	        break;
     	    case R.id.about:
     	        showAbout();
@@ -213,6 +214,8 @@ public class MainActivity extends SlidingFragmentActivity {
 		case R.id.personal:
 			classes = PersonalActivity.class;
 			break;
+		case R.id.update:
+			classes = UpdateActivity.class;
 		default:
 			break;
 		}
