@@ -184,7 +184,7 @@
         </activity>
 
         <provider
-            android:authorities="com.campus.xiaozhao.providers.campusProvider"
+            android:authorities="com.campus.xiaozhao.providers.CampusProvider"
             android:name="com.campus.xiaozhao.basic.db.CampusProvider" />
     </application>
 

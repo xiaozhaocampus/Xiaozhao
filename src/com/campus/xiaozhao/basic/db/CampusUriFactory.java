@@ -10,7 +10,7 @@ public class CampusUriFactory {
 
     // 若不匹配采用UriMatcher.NO_MATCH(-1)返回
     private static final UriMatcher MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
-    private static final String URI_AUTHORITY = "com.campus.xiaozhao.providers.campusProvider";
+    private static final String URI_AUTHORITY = "com.campus.xiaozhao.providers.CampusProvider";
 
     private static final String ACTION_OPERATE_CAMPUS_INFO = "campus_info";
     // 匹配码
@@ -24,7 +24,7 @@ public class CampusUriFactory {
     }
 
     public static Uri getCampusInfoUri() {
-        return Uri.withAppendedPath(Uri.parse("content://" + URI_AUTHORITY),ACTION_OPERATE_CAMPUS_INFO);
+        return Uri.withAppendedPath(Uri.parse("content://" + URI_AUTHORITY), ACTION_OPERATE_CAMPUS_INFO);
     }
 
     public static String getUriAuthority() {
