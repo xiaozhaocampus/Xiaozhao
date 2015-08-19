@@ -44,10 +44,10 @@ public class MePagerAdapter extends PagerAdapter implements OnItemClickListener 
 	@Override
 	public Object instantiateItem(android.view.ViewGroup container,
 			int position) {
-		LayoutInflater inflater = LayoutInflater.from(container.getContext());
+		Context context = container.getContext();
+		LayoutInflater inflater = LayoutInflater.from(context);
 		View view = null;
 		TextView emptyView = null;
-		Context context = container.getContext();
 		//历史记录
 		if(position == 1) {
 			view = inflater.inflate(R.layout.history_listview, null);

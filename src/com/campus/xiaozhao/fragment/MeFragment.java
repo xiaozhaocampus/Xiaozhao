@@ -13,10 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.activity.MePagerAdapter;
+import com.campus.xiaozhao.basic.data.CampusUser;
 import com.campus.xiaozhao.basic.db.CampusUriFactory;
+import com.campus.xiaozhao.basic.db.CampusUserDBProcessor;
+import com.campus.xiaozhao.basic.utils.BitmapUtils;
 import com.viewpagerindicator.TabPageIndicator;
 
 public class MeFragment extends Fragment {
@@ -55,6 +59,16 @@ public class MeFragment extends Fragment {
         ContentResolver cr = getActivity().getContentResolver();
         cr.registerContentObserver(CampusUriFactory.getCampusInfoUri(), true, mOb);
 		return view;
+	}
+	
+	@Override
+	public void onResume() {
+		CampusUser user = CampusUserDBProcessor.fromDB(getActivity(), false);
+		if(user != null) {
+			((ImageView)getActivity().findViewById(R.id.me_header_photo)).setImageBitmap(BitmapUtils.base64ToBitmap(user.getUserPhoto()));
+			((TextView)getActivity().findViewById(R.id.personal)).setText(user.getUserNickName());
+		}
+		super.onResume();
 	}
 	
 	@Override

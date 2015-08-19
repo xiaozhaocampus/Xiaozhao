@@ -1,5 +1,7 @@
 package com.campus.xiaozhao.activity;
 
+import java.util.List;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -9,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -17,6 +20,9 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.basic.data.CampusUser;
+import com.campus.xiaozhao.basic.db.CampusUserDBProcessor;
+import com.campus.xiaozhao.basic.utils.BitmapUtils;
 import com.campus.xiaozhao.basic.utils.PersonalUtils;
 import com.campus.xiaozhao.basic.utils.PersonalUtils.PersonalEditBaseItem;
 import com.campus.xiaozhao.basic.utils.PersonalUtils.PersonalEditPhotoItem;
@@ -82,6 +88,7 @@ public class PersonalActivity extends Activity {
 		});
 
 		mAdaptor.notifyDataSetInvalidated();
+		refreshProgress();
 	}
 	
 	private void editDialog(int title, int type, final int pos0, final int pos1) {
@@ -112,6 +119,7 @@ public class PersonalActivity extends Activity {
 				PersonalEditBaseItem item = mAdaptor.getItemGroups().valueAt(pos0).get(pos1);
 				((PersonalEditTextItem)item).mContent = editText.getText().toString();
 				mAdaptor.notifyDataSetChanged();
+				refreshProgress();
 			}
 		})
 	 	.setNegativeButton(R.string.cancel, null)
@@ -132,6 +140,7 @@ public class PersonalActivity extends Activity {
 				PersonalEditBaseItem item = mAdaptor.getItemGroups().valueAt(pos0).get(pos1);
 				((PersonalOptionItem)item).mSelectionIndex = which;
 				mAdaptor.notifyDataSetChanged();
+				refreshProgress();
 	 	     }
 	 	  }
 	 	)
@@ -144,13 +153,68 @@ public class PersonalActivity extends Activity {
 		if (resultCode == RESULT_OK) {
 			Uri uri = data.getData();
 			if(uri != null) {
+				int width = getResources().getDimensionPixelSize(R.dimen.campus_edit_photo_size);
 				PersonalEditBaseItem item = mAdaptor.getItemGroups().valueAt(0).get(0);
-				((PersonalEditPhotoItem)item).mPhotoUrl = uri.toString();
+				((PersonalEditPhotoItem)item).mPhotoData = BitmapUtils.getBase64FromUri(this, uri,width,width);
 				mAdaptor.notifyDataSetChanged();
 			} else {
 				Log.e("uri", "URI IS NULL");
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	@Override
+	public void finish() {
+		CampusUser user = mAdaptor.getUserInfo();
+		if(user != null) {
+			CampusUserDBProcessor.saveToServer(this, user, null);
+		}
+		super.finish();
+	}
+	
+	/**
+	 * 刷新完成进度
+	 */
+	private void refreshProgress() {
+		SparseArray<List<PersonalEditBaseItem>> itemGroups = mAdaptor.getItemGroups();
+		int all = 0;
+		int done = 0;
+		int size = itemGroups.size();
+		for(int i = 0; i < size;i++) {
+			List<PersonalEditBaseItem> bases = itemGroups.valueAt(i);
+			if(bases == null) {
+				return;
+			}
+			all += bases.size();
+			for(PersonalEditBaseItem item : bases) {
+				boolean isDone = false;
+				switch (item.mType) {
+				case PersonalUtils.TYPE_PERSONAL_PHOTO:
+					String photoData = ((PersonalEditPhotoItem)item).mPhotoData;
+					isDone = photoData != null && !photoData.isEmpty();
+					break;
+				case PersonalUtils.TYPE_PERSONAL_OPTION:
+					int selIndex = ((PersonalOptionItem)item).mSelectionIndex;
+					isDone = selIndex != -1;
+					break;
+				case PersonalUtils.TYPE_PERSONAL_TEXT:
+				case PersonalUtils.TYPE_PERSONAL_TEXT_MAIL:
+				case PersonalUtils.TYPE_PERSONAL_TEXT_PHONE_NUM:
+					String content = ((PersonalEditTextItem)item).mContent;
+					isDone = content != null && !content.isEmpty();
+					break;
+
+				default:
+					break;
+				}
+				if(isDone) {
+					done++;
+				}
+			}
+		}
+		
+		int progress = (int)(done*100/all*1.0f);
+		((PersonalEditProgressBar)findViewById(R.id.edit_progress)).setProgress(progress);
 	}
 }

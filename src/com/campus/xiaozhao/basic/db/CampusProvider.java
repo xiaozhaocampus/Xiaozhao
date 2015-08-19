@@ -39,13 +39,8 @@ public class CampusProvider extends ContentProvider{
         if(db == null ) {
             return null;
         }
-        switch (CampusUriFactory.getMatcher().match(uri)) {
-            case CampusUriFactory.URI_MATCH_CAMPUS_INFO:
-                Cursor cursor = query(db, CampusDBHelper.TABLE_CAMPUS_INFO, projection, selection, selectionArgs, null, null, sortOrder);
-                return cursor;
-            default:
-                throw new IllegalArgumentException("this is unknow uri:" + uri);
-        }
+        Cursor cursor = query(db, getTable(uri), projection, selection, selectionArgs, null, null, sortOrder);
+        return cursor;
     }
 
     @Override
@@ -59,15 +54,11 @@ public class CampusProvider extends ContentProvider{
         if(db == null ) {
             return null;
         }
-        switch (CampusUriFactory.getMatcher().match(uri)) {
-            case CampusUriFactory.URI_MATCH_CAMPUS_INFO:
-                long id = insert(db, CampusDBHelper.TABLE_CAMPUS_INFO, null, values);
-                Uri insertUri = ContentUris.withAppendedId(uri, id);
-                mContext.getContentResolver().notifyChange(uri, null);
-                return insertUri;
-            default:
-                throw new IllegalArgumentException("this is unknow uri:" + uri);
-        }
+
+        long id = insert(db, getTable(uri), null, values);
+        Uri insertUri = ContentUris.withAppendedId(uri, id);
+        mContext.getContentResolver().notifyChange(uri, null);
+        return insertUri;
     }
 
     @Override
@@ -76,14 +67,10 @@ public class CampusProvider extends ContentProvider{
         if(db == null ) {
             return -1;
         }
-        switch (CampusUriFactory.getMatcher().match(uri)) {
-            case CampusUriFactory.URI_MATCH_CAMPUS_INFO:
-               int id = delete(db, CampusDBHelper.TABLE_CAMPUS_INFO, selection, selectionArgs);
-                mContext.getContentResolver().notifyChange(uri, null);
-                return id;
-            default:
-                throw new IllegalArgumentException("this is unknow uri:" + uri);
-        }
+        
+        int id = delete(db, getTable(uri), selection, selectionArgs);
+        mContext.getContentResolver().notifyChange(uri, null);
+        return id;
     }
 
     @Override
@@ -92,14 +79,11 @@ public class CampusProvider extends ContentProvider{
         if(db == null ) {
             return -1;
         }
-        switch (CampusUriFactory.getMatcher().match(uri)) {
-            case CampusUriFactory.URI_MATCH_CAMPUS_INFO:
-               int id = update(db, CampusDBHelper.TABLE_CAMPUS_INFO, values, selection, selectionArgs);
-                mContext.getContentResolver().notifyChange(uri, null);
-                return id;
-            default:
-                throw new IllegalArgumentException("this is unknow uri:" + uri);
-        }
+
+        int id = -1;
+        id = update(db, getTable(uri), values, selection, selectionArgs);
+        mContext.getContentResolver().notifyChange(uri, null);
+        return id;
     }
 
     @Override
@@ -172,4 +156,20 @@ public class CampusProvider extends ContentProvider{
         }
     }
     /******************************************************************  数据库基本封装结束 *****************************************************************************************/
+    
+    private String getTable(Uri uri) throws IllegalArgumentException {
+        String table = "";
+        switch (CampusUriFactory.getMatcher().match(uri)) {
+            case CampusUriFactory.URI_MATCH_CAMPUS_INFO:
+            	table = CampusDBHelper.TABLE_CAMPUS_INFO;
+            	break;
+            case CampusUriFactory.URI_MATCH_CAMPUS_USER_INFO:
+            	table = CampusDBHelper.TABLE_CAMPUS_USER_INFO;
+            	break;
+            default:
+                throw new IllegalArgumentException("this is unknow uri:" + uri);
+        }
+        return table;
+    }
+    
 }

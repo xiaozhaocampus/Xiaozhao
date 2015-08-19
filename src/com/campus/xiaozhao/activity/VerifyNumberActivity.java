@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.bmob.v3.BmobSMS;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.RequestSMSCodeListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -210,7 +211,7 @@ public class VerifyNumberActivity extends Activity implements OnCountDownListene
 	}
 	
 	private void signUp() {
-		CampusUser user = new CampusUser();
+		BmobUser user = new BmobUser();
 		user.setUsername(mPhoneNumber);
 		user.setPassword(mPassword);
 		user.setMobilePhoneNumber(mPhoneNumber);

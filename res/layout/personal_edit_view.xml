@@ -14,7 +14,8 @@
         android:paddingRight="10dp"
         android:scrollbars="none" />
 
-    <LinearLayout
+    <com.campus.xiaozhao.activity.PersonalEditProgressBar
+		android:id="@+id/edit_progress"
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:layout_gravity="bottom"
@@ -23,12 +24,12 @@
         android:orientation="horizontal" >
 
         <TextView
+            android:id="@+id/how_much_done"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="left|center_vertical"
             android:paddingLeft="10dp"
             android:singleLine="true"
-            android:text="资料完成度20%"
             android:textColor="@color/white"
             android:textSize="15sp" />
 
@@ -46,6 +47,6 @@
             android:progress="20"
             android:layout_gravity="center_vertical"
             />
-    </LinearLayout>
+    </com.campus.xiaozhao.activity.PersonalEditProgressBar>
 
 </RelativeLayout>

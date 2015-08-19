@@ -22,10 +22,10 @@ public class PersonalUtils {
 	}
 	
 	public static class PersonalEditPhotoItem extends PersonalEditBaseItem {
-		public String mPhotoUrl;//可能是本地的也可能是网络的
-		public PersonalEditPhotoItem(int type, int titleResId, String photoUrl){
+		public String mPhotoData;//可能是本地的也可能是网络的
+		public PersonalEditPhotoItem(int type, int titleResId, String photoData){
 			super(type, titleResId);
-			mPhotoUrl = photoUrl;
+			mPhotoData = photoData;
 		}
 	}
 	

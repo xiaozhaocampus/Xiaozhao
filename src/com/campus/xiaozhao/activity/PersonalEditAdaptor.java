@@ -6,7 +6,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +17,9 @@ import android.widget.TextView;
 
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.XZApplication;
+import com.campus.xiaozhao.basic.data.CampusUser;
+import com.campus.xiaozhao.basic.db.CampusUserDBProcessor;
+import com.campus.xiaozhao.basic.utils.BitmapUtils;
 import com.campus.xiaozhao.basic.utils.PersonalUtils;
 import com.campus.xiaozhao.basic.utils.PersonalUtils.PersonalEditBaseItem;
 import com.campus.xiaozhao.basic.utils.PersonalUtils.PersonalEditPhotoItem;
@@ -28,11 +30,51 @@ public class PersonalEditAdaptor extends BaseExpandableListAdapter {
 
 	private Context mContext;
 	private ExpandableListView mExpandableListView;
+	public CampusUser getUserInfo() {
+		CampusUser user = CampusUserDBProcessor.fromDB(mContext, false);
+		if(user == null) {
+			return null;		
+		}
+		int size = mItemGroups.size();
+		for (int i = 0;i < size;i++) {
+			List<PersonalEditBaseItem> items = mItemGroups.valueAt(i);
+			for(PersonalEditBaseItem item:items) {
+				switch (item.mTitleResId) {
+				case R.string.personal_photo:
+					user.setUserPhoto(((PersonalEditPhotoItem)item).mPhotoData);
+					break;
+				case R.string.personal_nickname:
+					user.setUserNickName(((PersonalEditTextItem)item).mContent);
+					break;
+				case R.string.personal_gender:
+					user.setUserGender(((PersonalOptionItem)item).mSelectionIndex);
+					break;
+				case R.string.personal_phone:
+					user.setUserPhoneNum(((PersonalEditTextItem)item).mContent);
+					break;
+				case R.string.personal_mail:
+					user.setUserEmail(((PersonalEditTextItem)item).mContent);
+					break;
+				case R.string.personal_school:
+					user.setUserShcool(((PersonalEditTextItem)item).mContent);
+					break;
+				case R.string.personal_major:
+					user.setUserMajor(((PersonalEditTextItem)item).mContent);
+					break;
+				case R.string.personal_grade:
+					user.setUserClass(((PersonalEditTextItem)item).mContent);
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		return user;
+	}
 	private SparseArray<List<PersonalEditBaseItem>> mItemGroups = new SparseArray<List<PersonalEditBaseItem>>();
 	public SparseArray<List<PersonalEditBaseItem>> getItemGroups() {
 		return mItemGroups;
 	}
-
 
 	public PersonalEditAdaptor(Context context, ExpandableListView listview) {
 		mContext = context;
@@ -66,9 +108,9 @@ public class PersonalEditAdaptor extends BaseExpandableListAdapter {
 		switch (item.mType) {
 		case PersonalUtils.TYPE_PERSONAL_PHOTO:
 			editText.setVisibility(View.GONE);
-			String url = ((PersonalEditPhotoItem)item).mPhotoUrl;
-			if(url != null && !url.isEmpty()) {
-				image.setImageURI(Uri.parse(url));
+			String data = ((PersonalEditPhotoItem)item).mPhotoData;
+			if(data != null && !data.isEmpty()) {
+				image.setImageBitmap(BitmapUtils.base64ToBitmap(data));
 			}
 			image.setVisibility(View.VISIBLE);
 			return view;
@@ -147,17 +189,21 @@ public class PersonalEditAdaptor extends BaseExpandableListAdapter {
 		List<PersonalEditBaseItem> baseItems = new ArrayList<PersonalEditBaseItem>();
 		//由资源文件获取URI
 		Resources r = XZApplication.getInstance().getResources();
-		baseItems.add(new PersonalEditPhotoItem(PersonalUtils.TYPE_PERSONAL_PHOTO, R.string.personal_photo, ""));
-		baseItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT, R.string.personal_nickname, r.getString(R.string.personal_nickname_default)));
+		CampusUser user = CampusUserDBProcessor.fromDB(XZApplication.getInstance(), false);
+		if(user == null) {
+			user = new CampusUser();
+		}
+		baseItems.add(new PersonalEditPhotoItem(PersonalUtils.TYPE_PERSONAL_PHOTO, R.string.personal_photo, user.getUserPhoto()));
+		baseItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT, R.string.personal_nickname, user.getUserNickName()));
 		String[] options = r.getStringArray(R.array.personal_gender_options);
-		baseItems.add(new PersonalOptionItem(PersonalUtils.TYPE_PERSONAL_OPTION, R.string.personal_gender, Arrays.asList(options), 0));
-		baseItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT_PHONE_NUM, R.string.personal_phone, ""));
-		baseItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT_MAIL, R.string.personal_mail, ""));
+		baseItems.add(new PersonalOptionItem(PersonalUtils.TYPE_PERSONAL_OPTION, R.string.personal_gender, Arrays.asList(options), user.getUserGender()));
+		baseItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT_PHONE_NUM, R.string.personal_phone, user.getUserPhoneNum()));
+		baseItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT_MAIL, R.string.personal_mail, user.getUserEmail()));
 		
 		List<PersonalEditBaseItem> moreItems = new ArrayList<PersonalEditBaseItem>();
-		moreItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT, R.string.personal_school, ""));
-		moreItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT, R.string.personal_major, ""));
-		moreItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT, R.string.personal_grade, ""));
+		moreItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT, R.string.personal_school, user.getUserShcool()));
+		moreItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT, R.string.personal_major, user.getUserMajor()));
+		moreItems.add(new PersonalEditTextItem(PersonalUtils.TYPE_PERSONAL_TEXT, R.string.personal_grade, user.getUserClass()));
 		mItemGroups.put(R.string.personal_base_group_title, baseItems);
 		mItemGroups.put(R.string.personal_more_group_title, moreItems);
 	}

@@ -34,8 +34,8 @@
 
     <com.campus.xiaozhao.basic.widget.CircularImage
         android:id="@+id/personal_photo"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/campus_edit_photo_size"
+        android:layout_height="@dimen/campus_edit_photo_size"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:src="@drawable/personal_default_photo"

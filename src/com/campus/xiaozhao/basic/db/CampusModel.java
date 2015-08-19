@@ -53,4 +53,32 @@ public class CampusModel {
         /** 此校招信息的来源 */
         public static final String SOURCE = "source";
     }
+    
+    public static final class CampusUserColumn implements BaseColumns {
+    	/**用户唯一标识*/
+        public static final String USER_ID = "user_id";
+        /**用户名*/
+        public static final String USER_NAME = "user_name";
+        /** 用户头像*/
+        public static final String USER_PHOTO = "user_photo";
+        /** 用户昵称*/
+        public static final String USER_NICKNAME = "user_nickname";
+        /** 用户性别*/
+        public static final String USER_GENDER = "user_gender";
+        /** 用户手机*/
+        public static final String USER_PHONE_NUM = "user_phone_num";
+        /** 用户邮箱*/
+        public static final String USER_EMAIL = "user_email";
+        /** 用户学校*/
+        public static final String USER_SCHOOL = "user_school";
+        /** 用户专业*/
+        public static final String USER_MAJOR = "user_major";
+        /** 用户年级*/
+        public static final String USER_CLASS = "user_class";
+        /** 用户 数据状态*/
+        public static final String USER_LOGIN_TIME = "user_login_time";
+        /** 用户 数据状态*/
+        public static final String USER_DATA_STATUS = "user_data_status";
+    }
+    
 }

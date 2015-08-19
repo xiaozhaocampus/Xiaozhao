@@ -72,6 +72,7 @@ public class UploadManager {
 			Logger.e(TAG, "UPLOAD TYPE ERROR");
 			return false;
 		}
+		//TODO:
 		upload(context, task);
 		return true;
 	}

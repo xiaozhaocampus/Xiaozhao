@@ -19,6 +19,9 @@ public class CampusDBHelper extends SQLiteOpenHelper {
     /** 校招信息表 */
     public static final String TABLE_CAMPUS_INFO = "campus_info";
 
+    /** 用户信息表   */
+    public static final String TABLE_CAMPUS_USER_INFO = "campus_user";
+    
     public static final String CREATE_TABLE_CAMPUS_INFO =
             "CREATE TABLE IF NOT EXISTS " + TABLE_CAMPUS_INFO + " ("
             + CampusModel.CampusInfoItemColumn._ID + " INTEGER PRIMARY KEY,"
@@ -38,8 +41,26 @@ public class CampusDBHelper extends SQLiteOpenHelper {
             + CampusModel.CampusInfoItemColumn.IS_SAVE + " INTEGER NOT NULL DEFAULT 0,"
             + CampusModel.CampusInfoItemColumn.SOURCE + " TEXT);";
 
+    public static final String CREATE_TABLE_CAMPUS_USER_INFO =
+            "CREATE TABLE IF NOT EXISTS " + TABLE_CAMPUS_USER_INFO + " ("
+            + CampusModel.CampusUserColumn._ID + " INTEGER PRIMARY KEY,"
+            + CampusModel.CampusUserColumn.USER_ID + " TEXT,"
+            + CampusModel.CampusUserColumn.USER_NAME + " TEXT,"
+            + CampusModel.CampusUserColumn.USER_PHOTO + " TEXT,"
+            + CampusModel.CampusUserColumn.USER_NICKNAME + " TEXT,"
+            + CampusModel.CampusUserColumn.USER_GENDER + " INTEGER NOT NULL DEFAULT 0,"
+            + CampusModel.CampusUserColumn.USER_PHONE_NUM + " TEXT,"
+            + CampusModel.CampusUserColumn.USER_EMAIL + " TEXT,"
+            + CampusModel.CampusUserColumn.USER_SCHOOL + " TEXT,"
+            + CampusModel.CampusUserColumn.USER_MAJOR + " TEXT,"
+            + CampusModel.CampusUserColumn.USER_CLASS + " TEXT,"
+            + CampusModel.CampusUserColumn.USER_LOGIN_TIME + " LONG DEFAULT -1,"
+            + CampusModel.CampusUserColumn.USER_DATA_STATUS + " INTEGER NOT NULL DEFAULT 0);";
+            
     /** 删除 校招信息数据表 */
     public static final String DROP_TABLE_CAMPUS_INFO = "DROP TABLE IF EXISTS " + TABLE_CAMPUS_INFO;
+    /** 删除 用户信息数据表 */
+    public static final String DROP_TABLE_CAMPUS_USER_INFO = "DROP TABLE IF EXISTS " + TABLE_CAMPUS_USER_INFO;
 
     public CampusDBHelper(Context context) {
         super(context, DB_NAME, null, VER_CURRENT);
@@ -52,6 +73,7 @@ public class CampusDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_CAMPUS_INFO);
+        db.execSQL(CREATE_TABLE_CAMPUS_USER_INFO);
     }
 
     @Override
@@ -60,5 +82,9 @@ public class CampusDBHelper extends SQLiteOpenHelper {
 
         // 重新建表
         db.execSQL(CREATE_TABLE_CAMPUS_INFO);
+        db.execSQL(DROP_TABLE_CAMPUS_USER_INFO);
+
+        // 重新建表
+        db.execSQL(CREATE_TABLE_CAMPUS_USER_INFO);
     }
 }
