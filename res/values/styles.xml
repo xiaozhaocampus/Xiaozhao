@@ -48,10 +48,10 @@
 	</style>
 	
     <!-- 第一步设置主题 -->
-    <style name="StyledIndicators" parent="@android:style/Theme.DeviceDefault.Light.DarkActionBar">
+    <style name="StyledIndicators" parent="@android:style/Theme.Holo.NoActionBar">
         <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
     </style>
-    <style name="StyledIndicatorsNoTitle" parent="@android:style/Theme.DeviceDefault.Light.DarkActionBar">
+    <style name="StyledIndicatorsNoTitle" parent="@android:style/Theme.Holo.NoActionBar">
         <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
         <item name="android:windowNoTitle">true</item>
     </style>

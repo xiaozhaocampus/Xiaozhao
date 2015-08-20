@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.baidu.location.BDLocation;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.activity.InfoPagerAdapter;
+import com.campus.xiaozhao.activity.MainActivity;
 import com.campus.xiaozhao.basic.location.BaiDuLocationManager;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.campus.xiaozhao.basic.utils.StringUtils;
@@ -44,7 +45,7 @@ public class InfoFragment extends Fragment implements Handler.Callback{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_info, container, false);
-        mLocation = (TextView) getActivity().findViewById(R.id.actionbar_location_city);
+        mLocation = (TextView) view.findViewById(R.id.actionbar_location_city);
         String location = CampusSharePreference.getLocation(getActivity());
         if(TextUtils.isEmpty(location)) {
             location = "暂无定位";
@@ -112,9 +113,25 @@ public class InfoFragment extends Fragment implements Handler.Callback{
         ViewGroup.LayoutParams params = mImageCursor.getLayoutParams();
         params.width = screenW / 2;
         mImageCursor.setLayoutParams(params);
+        initActionBar(view);
         return view;
     }
 
+    public void initActionBar(View view) {
+    	view.findViewById(R.id.actionbar_location_city).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Logger.d(TAG, "actionbar location city click");
+			}
+		});
+    	view.findViewById(R.id.actionbar_settings).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				((MainActivity)getActivity()).toggle();
+			}
+		});
+    }
+    
     @Override
     public void onResume() {
         super.onResume();
