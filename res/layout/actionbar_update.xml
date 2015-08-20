@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/actionbar_height"
+    android:background="@color/main">
+
+    <ImageView
+        android:id="@+id/actionbar_back"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:src="@drawable/back_arrow_src"
+        android:background="@drawable/back_arrow_bg"
+        android:clickable="true"
+        android:contentDescription="@null" />
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/actionbar_title_size"
+        android:textColor="#ffffff"
+        android:layout_centerInParent="true"
+        android:text="@string/title_activity_update"/>
+
+</RelativeLayout>

@@ -24,6 +24,7 @@ import com.campus.xiaozhao.Environment;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.utils.ApplicationInfo;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
+import com.campus.xiaozhao.basic.widget.Updater;
 import com.campus.xiaozhao.fragment.InfoFragment;
 import com.campus.xiaozhao.fragment.MeFragment;
 import com.component.logger.Logger;
@@ -36,7 +37,7 @@ public class MainActivity extends SlidingFragmentActivity {
     private ImageView selfFragmentView;
     private Fragment mInfoFragment;
     private Fragment mSelfFragment;
-
+    private Updater mUpdater;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,6 +64,9 @@ public class MainActivity extends SlidingFragmentActivity {
 		
 		CampusSharePreference.setLastStartUpTime(getApplicationContext(), System.currentTimeMillis());
 		setupUI();
+		//更新器
+		mUpdater = new Updater(this);
+		mUpdater.checkUpdate();
 	}
 
 	public static void startFrom(Context context) {
@@ -191,7 +195,8 @@ public class MainActivity extends SlidingFragmentActivity {
     	        break;
     	    case R.id.update:
     	        Toast.makeText(this, "Update clicked", Toast.LENGTH_SHORT).show();
-    	        startActivityById(R.id.update);
+//    	        startActivityById(R.id.update);
+    	        mUpdater.checkUpdate();
     	        break;
     	    case R.id.about:
     	        showAbout();
@@ -214,8 +219,6 @@ public class MainActivity extends SlidingFragmentActivity {
 		case R.id.personal:
 			classes = PersonalActivity.class;
 			break;
-		case R.id.update:
-			classes = UpdateActivity.class;
 		default:
 			break;
 		}
