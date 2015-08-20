@@ -166,11 +166,11 @@ public class MainActivity extends SlidingFragmentActivity {
     	    	MainCategoryActivity.startFrom(this);
     	        break;
     	    case R.id.feedback:
-    	        Toast.makeText(this, "Feedback clicked", Toast.LENGTH_SHORT).show();
+//    	        Toast.makeText(this, "Feedback clicked", Toast.LENGTH_SHORT).show();
     	        startActivityById(R.id.feedback);
     	        break;
     	    case R.id.update:
-    	        Toast.makeText(this, "Update clicked", Toast.LENGTH_SHORT).show();
+//    	        Toast.makeText(this, "Update clicked", Toast.LENGTH_SHORT).show();
 //    	        startActivityById(R.id.update);
     	        mUpdater.checkUpdate();
     	        break;
