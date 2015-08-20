@@ -19,9 +19,9 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:paddingTop="20dp"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true" >
+            android:layout_alignParentTop="true"
+            android:paddingTop="20dp" >
 
             <TextView
                 android:id="@+id/tips"
@@ -40,7 +40,7 @@
             android:layout_height="30dp"
             android:layout_alignParentBottom="true"
             android:layout_margin="10dp"
-            android:background="@drawable/login_btn_bg"
+            android:background="@drawable/dialog_btn_selector"
             android:gravity="center"
             android:text="@string/ok"
             android:textColor="@color/indicator_text" />
@@ -52,7 +52,7 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="10dp"
             android:layout_toRightOf="@id/ok"
-            android:background="@drawable/login_btn_bg"
+            android:background="@drawable/dialog_btn_selector"
             android:gravity="center"
             android:text="@string/cancel"
             android:textColor="@color/indicator_text" />
