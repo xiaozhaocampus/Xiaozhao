@@ -36,7 +36,8 @@ public class CampusDBProcessor {
             CampusModel.CampusInfoItemColumn.REMIND_TYPE,
             CampusModel.CampusInfoItemColumn.REMIND_TIME,
             CampusModel.CampusInfoItemColumn.IS_SAVE,
-            CampusModel.CampusInfoItemColumn.SOURCE
+            CampusModel.CampusInfoItemColumn.SOURCE,
+            CampusModel.CampusInfoItemColumn.IS_DELETE
     };
 
     private static volatile CampusDBProcessor mInstance;
@@ -128,6 +129,7 @@ public class CampusDBProcessor {
                         itemData.setRemindTime(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.REMIND_TIME)));
                         itemData.setIsSave(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.IS_SAVE)) > 0 ? true : false);
                         itemData.setSource(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.SOURCE)));
+                        itemData.setIsDelete(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.IS_DELETE)) > 0 ? true : false);
                         list.add(itemData);
                     }
                 }
@@ -176,6 +178,7 @@ public class CampusDBProcessor {
                         itemData.setRemindTime(cursor.getLong(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.REMIND_TIME)));
                         itemData.setIsSave(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.IS_SAVE)) > 0 ? true : false);
                         itemData.setSource(cursor.getString(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.SOURCE)));
+                        itemData.setIsDelete(cursor.getInt(cursor.getColumnIndex(CampusModel.CampusInfoItemColumn.IS_DELETE)) > 0 ? true : false);
                         return itemData;
                     }
                 }

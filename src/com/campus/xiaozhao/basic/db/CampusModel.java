@@ -52,6 +52,9 @@ public class CampusModel {
 
         /** 此校招信息的来源 */
         public static final String SOURCE = "source";
+
+        /** 此校招信息是否被后台标记为删除 */
+        public static final String IS_DELETE = "is_delete";
     }
     
     public static final class CampusUserColumn implements BaseColumns {
