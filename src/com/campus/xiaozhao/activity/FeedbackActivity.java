@@ -59,7 +59,7 @@ public class FeedbackActivity extends Activity implements OnItemClickListener,
 
 	// 提交反馈
 	public void submit(View view) {
-		final String suggestion = ((TextView)findViewById(R.id.feedback_qq)).getText().toString();
+		final String suggestion = ((TextView)findViewById(R.id.feedback_suggestion)).getText().toString();
 		if(suggestion == null || suggestion.trim().isEmpty()) {
 			Toast.makeText(this, R.string.toast_no_feedback_content, Toast.LENGTH_SHORT).show();
 			return;
