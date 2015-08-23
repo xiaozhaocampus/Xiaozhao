@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="build_common" basedir=".">
+    <tstamp>
+        <format property="output.file.build.date" pattern="yyMMdd"/>
+    </tstamp>
+    <target name="pre-build-all">
+	</target>
+    <target name="post-build-debug">
+	</target>    
+    <target name="post-build-all">
+		<copy file="${out.absolute.dir}/${ant.project.name}-debug.apk" tofile="${web.dir}/${ant.project.name}_${output.file.build.date}_debug.apk" overwrite="true"/>
+        <copy file="${out.absolute.dir}/${ant.project.name}-release.apk" tofile="${web.dir}/${ant.project.name}_${output.file.build.date}_release.apk" overwrite="true"/>
+	</target>
+</project>	
