@@ -13,7 +13,6 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobInstallation;
@@ -65,7 +64,7 @@ public class MainActivity extends SlidingFragmentActivity {
 		setupUI();
 		//更新器
 		mUpdater = new Updater(this);
-		mUpdater.checkUpdate();
+		mUpdater.checkUpdate(true);
 	}
 
 	public static void startFrom(Context context) {
@@ -172,7 +171,7 @@ public class MainActivity extends SlidingFragmentActivity {
     	    case R.id.update:
 //    	        Toast.makeText(this, "Update clicked", Toast.LENGTH_SHORT).show();
 //    	        startActivityById(R.id.update);
-    	        mUpdater.checkUpdate();
+    	        mUpdater.checkUpdate(false);
     	        break;
     	    case R.id.about:
     	        showAbout();

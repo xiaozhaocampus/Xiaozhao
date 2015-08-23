@@ -23,6 +23,10 @@ public class CampusSharePreference {
     /** 缓存用户设置的过滤条件 */
     private static final String KEY_CACHE_CATEGORY_FILTER = "key_cache_category_filter";
 
+    /**最近一次自动检测更新的时间     */
+    private static final String KEY_LAST_AUTO_CHECK_UPDATE_TIME = "last_auto_check_update_time";
+
+    
     /**
      * 获取终端最大版本号
      * @param context
@@ -94,6 +98,14 @@ public class CampusSharePreference {
         return getPreference(context).getLong(KEY_LAST_START_UP_TIME, 0);
     }
 
+    /** 最近一次自动检测更新的时间*/
+    public static long getLastAutoCheckUpdateTime(Context context) {
+    	return getPreference(context).getLong(KEY_LAST_AUTO_CHECK_UPDATE_TIME, 0);
+    }
+    
+    public static void setLastAutoCheckUpdateTime(Context context, long time) {
+    	getPreference(context).edit().putLong(KEY_LAST_AUTO_CHECK_UPDATE_TIME, time).commit();
+    }
     /**
      * 缓存用户设置的过滤条件
      * @param context

@@ -24,7 +24,9 @@ import com.campus.xiaozhao.XZApplication;
 import com.campus.xiaozhao.activity.UpdateDialog;
 import com.campus.xiaozhao.basic.utils.ApplicationInfo;
 import com.campus.xiaozhao.basic.utils.AutoInstall;
+import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.campus.xiaozhao.basic.utils.FileUtils;
+import com.campus.xiaozhao.eventbus.EventBus;
 import com.campus.xiaozhao.model.UpdateInfo;
 import com.component.logger.Logger;
 import com.loopj.android.http.BinaryHttpResponseHandler;
@@ -36,6 +38,7 @@ import com.loopj.android.http.BinaryHttpResponseHandler;
  */
 public class Updater {
 	private static final String TAG = "Updater";
+	private static final long ONE_DAY_MILLIS = 24*60*60*1000;
 	public WeakReference<Activity> mContext;
 	public String mDownloadUrl = "";
 	private UpdateDialog mUpdateDialog;
@@ -45,13 +48,24 @@ public class Updater {
 		mContext = new WeakReference<Activity>(context);
 	}
 	
-	public void checkUpdate() {
+	public void checkUpdate(boolean auto) {
+		
 		mIsChecking = true;
 		final Activity ac = mContext.get();
 		if(ac == null) {
 			Logger.e(TAG, "Context is null");
 			return;
 		}
+		
+		if(auto) {
+			long interval = System.currentTimeMillis() - CampusSharePreference.getLastAutoCheckUpdateTime(ac);
+			if(interval < ONE_DAY_MILLIS) {
+				Logger.i(TAG, "AUTO CHECK TIME IS TOO SHORT");
+				return;
+			}
+			CampusSharePreference.setLastAutoCheckUpdateTime(ac, System.currentTimeMillis());
+		}
+		
 		
 		if(mUpdateDialog == null || !mUpdateDialog.isShowing()) {
 			mUpdateDialog = new UpdateDialog(ac);
@@ -76,14 +90,13 @@ public class Updater {
 			
 			@Override
 			public void run() {
-				if(mIsChecking) {
-					mIsChecking = false;
-					Toast.makeText(ac, R.string.check_update_failed, Toast.LENGTH_SHORT).show();
-					if(mUpdateDialog != null && mUpdateDialog.isShowing()) {
-						mUpdateDialog.dismiss();
-						mUpdateDialog = null;
+				EventBus.runOnUIThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						timeIsUp();
 					}
-				}
+				});
 			}
 		}, 10000);
 		
@@ -214,6 +227,23 @@ public class Updater {
 		mTimer = null;
 		if(close && mUpdateDialog != null && mUpdateDialog.isShowing()) {
 			mUpdateDialog.dismiss();
+		}
+	}
+	
+	private void timeIsUp() {
+		final Activity ac = mContext.get();
+		if(ac == null) {
+			Logger.e(TAG, "Context is null");
+			return;
+		}
+		
+		if(mIsChecking) {
+			mIsChecking = false;
+			Toast.makeText(ac, R.string.check_update_failed, Toast.LENGTH_SHORT).show();
+			if(mUpdateDialog != null && mUpdateDialog.isShowing()) {
+				mUpdateDialog.dismiss();
+				mUpdateDialog = null;
+			}
 		}
 	}
 }
