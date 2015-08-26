@@ -6,6 +6,7 @@ import android.os.Handler;
 import com.campus.xiaozhao.basic.alarm.CampusAlarmManager;
 import com.campus.xiaozhao.http.HttpEngine;
 import com.component.logger.Logger;
+import com.tencent.bugly.crashreport.CrashReport;
 
 public class XZApplication extends Application {
 	private static final String TAG = "XZApplication";
@@ -24,7 +25,10 @@ public class XZApplication extends Application {
 		mApp = this;
 
 		Logger.d(TAG, "application onCreate");
-        new Handler().postDelayed(new Runnable() {
+
+		// 初始化腾讯Bugly监控应用程序的crash
+		CrashReport.initCrashReport(getApplicationContext(), "900007583", false);
+		new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 //APP启动时主动重置Alarm计时
