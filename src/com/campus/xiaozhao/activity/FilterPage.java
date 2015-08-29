@@ -153,7 +153,7 @@ public class FilterPage {
                             itemData.setType(info.getType());
                             itemData.setSource(info.getSource());
                             itemData.setPtime(info.getPtime());
-                            itemData.setIsDelete(info.isDelete());
+                            itemData.setIsDelete(info.getStatus() > 0 ? true : false);
 
                             if (mCampusIDs.contains(itemData.getCampusID())) {
 

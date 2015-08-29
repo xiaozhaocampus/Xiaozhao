@@ -28,7 +28,7 @@ public class CampusInfo extends BmobObject {
 
     private String source;
 
-    private boolean isDelete;
+    private int status;
 
     public String getCity() {
         return city;
@@ -110,11 +110,11 @@ public class CampusInfo extends BmobObject {
         this.source = source;
     }
 
-    public boolean isDelete() {
-        return isDelete;
+    public int getStatus() {
+        return status;
     }
 
-    public void setIsDelete(boolean isDelete) {
-        this.isDelete = isDelete;
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
