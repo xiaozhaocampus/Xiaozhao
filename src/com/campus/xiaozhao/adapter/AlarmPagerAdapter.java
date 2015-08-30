@@ -1,4 +1,4 @@
-package com.campus.xiaozhao.activity;
+package com.campus.xiaozhao.adapter;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.activity.AlarmActivity;
 import com.campus.xiaozhao.activity.AlarmActivity.PageViewInfo;
 
 public class AlarmPagerAdapter extends PagerAdapter {

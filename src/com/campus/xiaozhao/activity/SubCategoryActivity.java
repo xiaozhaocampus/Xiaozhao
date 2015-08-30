@@ -17,6 +17,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.adapter.SubCategoryAdapter;
 import com.campus.xiaozhao.basic.data.MainCategory;
 import com.campus.xiaozhao.basic.data.SubCategory;
 import com.campus.xiaozhao.basic.data.job_type;

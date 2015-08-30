@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.campus.xiaozhao.R;
-import com.campus.xiaozhao.activity.MePagerAdapter;
+import com.campus.xiaozhao.adapter.MePagerAdapter;
 import com.campus.xiaozhao.basic.data.CampusUser;
 import com.campus.xiaozhao.basic.db.CampusUriFactory;
 import com.campus.xiaozhao.basic.db.CampusUserDBProcessor;

@@ -1,5 +1,8 @@
 package com.campus.xiaozhao.activity;
 
+import java.io.File;
+import java.io.FileOutputStream;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,12 +14,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.*;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.alarm.CampusAlarmManager;
@@ -25,9 +30,6 @@ import com.campus.xiaozhao.basic.db.CampusDBProcessor;
 import com.campus.xiaozhao.basic.utils.DateUtils;
 import com.campus.xiaozhao.basic.utils.RemindType;
 import com.component.logger.Logger;
-
-import java.io.File;
-import java.io.FileOutputStream;
 
 /**
  * Created by frankenliu on 15/5/31.

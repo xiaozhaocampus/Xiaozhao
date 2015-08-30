@@ -1,4 +1,4 @@
-package com.campus.xiaozhao.activity;
+package com.campus.xiaozhao.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -12,8 +12,8 @@ import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.db.CampusModel;
 import com.campus.xiaozhao.basic.utils.DateUtils;
 
-public class HistoryListAdaptor extends CursorAdapter {
-	public HistoryListAdaptor(Context context, Cursor c, boolean autoRequery) {
+public class HistoryListAdapter extends CursorAdapter {
+	public HistoryListAdapter(Context context, Cursor c, boolean autoRequery) {
 		super(context, c, autoRequery);
 	}
 

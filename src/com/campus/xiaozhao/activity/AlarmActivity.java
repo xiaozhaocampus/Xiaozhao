@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.adapter.AlarmPagerAdapter;
 import com.component.logger.Logger;
 import com.viewpagerindicator.TabPageIndicator;
 

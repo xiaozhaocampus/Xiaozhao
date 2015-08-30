@@ -25,7 +25,8 @@ import cn.bmob.v3.listener.SaveListener;
 import com.bmob.BmobProFile;
 import com.bmob.btp.callback.UploadListener;
 import com.campus.xiaozhao.R;
-import com.campus.xiaozhao.activity.FeedbackGridAdaptor.Selection;
+import com.campus.xiaozhao.adapter.FeedbackGridAdapter;
+import com.campus.xiaozhao.adapter.FeedbackGridAdapter.Selection;
 import com.campus.xiaozhao.basic.data.FeedbackData;
 import com.campus.xiaozhao.basic.utils.PicChooseUtils;
 import com.component.logger.Logger;
@@ -53,7 +54,7 @@ public class FeedbackActivity extends Activity implements OnItemClickListener,
 		
 		// 选项
 		GridView items = ((GridView) findViewById(R.id.feedback_items));
-		items.setAdapter(new FeedbackGridAdaptor(this));
+		items.setAdapter(new FeedbackGridAdapter(this));
 		items.setOnItemClickListener(this);
 	}
 
@@ -93,7 +94,7 @@ public class FeedbackActivity extends Activity implements OnItemClickListener,
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		ToggleButton button = (ToggleButton) arg1.findViewById(R.id.button);
 		button.setChecked(!button.isChecked());
-		((FeedbackGridAdaptor) ((GridView) findViewById(R.id.feedback_items))
+		((FeedbackGridAdapter) ((GridView) findViewById(R.id.feedback_items))
 				.getAdapter()).notifyDataSetChanged();
 	}
 
@@ -148,7 +149,7 @@ public class FeedbackActivity extends Activity implements OnItemClickListener,
 		data.setQQCode(((TextView)findViewById(R.id.feedback_qq)).getText().toString());
 		data.setSuggestion(suggestion);
 		String selection = "";
-		List<Selection> selections = ((FeedbackGridAdaptor)((GridView)findViewById(R.id.feedback_items)).getAdapter()).getSelections();
+		List<Selection> selections = ((FeedbackGridAdapter)((GridView)findViewById(R.id.feedback_items)).getAdapter()).getSelections();
 		int size = selections.size();
 		for (int i = 0; i < size; i++) {
 			if(i != 0 && selections.get(i).mIsSelected) {

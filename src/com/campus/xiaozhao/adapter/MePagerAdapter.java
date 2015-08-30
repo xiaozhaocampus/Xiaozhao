@@ -1,4 +1,4 @@
-package com.campus.xiaozhao.activity;
+package com.campus.xiaozhao.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.XZApplication;
+import com.campus.xiaozhao.activity.HistoryListView;
+import com.campus.xiaozhao.activity.MyActiviesListView;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
 import com.campus.xiaozhao.basic.db.CampusDBProcessor;
 import com.campus.xiaozhao.basic.db.CampusModel;
@@ -57,7 +59,7 @@ public class MePagerAdapter extends PagerAdapter implements OnItemClickListener 
 			list.setEmptyView(emptyView);
 			list.setOnItemClickListener(this);
 			Cursor cur = CampusDBProcessor.getInstance(context).query("("+ CampusModel.CampusInfoItemColumn.IS_SAVE + " =? OR " + CampusModel.CampusInfoItemColumn.IS_REMIND + " =?) AND " + CampusModel.CampusInfoItemColumn.TIME + " <? ", new String[]{String.valueOf(1),String.valueOf(1),String.valueOf(System.currentTimeMillis()) }, CampusModel.CampusInfoItemColumn.TIME);
-			HistoryListAdaptor adaptor = new HistoryListAdaptor(context, cur, true);
+			HistoryListAdapter adaptor = new HistoryListAdapter(context, cur, true);
 			list.setAdapter(adaptor);
 		} else if(position == 0) {
 			//我的活动
