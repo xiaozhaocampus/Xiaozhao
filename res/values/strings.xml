@@ -14,7 +14,7 @@
     <string name="title_activity_main_category">MainCategoryActivity</string>
     <string name="title_activity_sub_category">SubCategoryActivity</string>
 	<string name="title_activity_update">版本升级</string>
-    <string name="login">登陆</string>
+    <string name="login">登录</string>
     <string name="register">注册</string>
     <string name="quick_register">快速注册</string>
     <string name="edit_hint_phone_number">请输入手机号码</string>
