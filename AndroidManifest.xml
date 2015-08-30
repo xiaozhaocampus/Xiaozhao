@@ -1,187 +1,128 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.campus.xiaozhao"
-    android:versionCode="1"
-    android:versionName="1.0" >
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="150830" android:versionName="150830.01" package="com.campus.xiaozhao">
 
-    <uses-sdk
-        android:minSdkVersion="18"
-        android:targetSdkVersion="18" />
+    <uses-sdk android:minSdkVersion="18" android:targetSdkVersion="18"/>
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
 
     <!-- 这个权限用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION">
     </uses-permission>
     <!-- 这个权限用于访问GPS定位 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION">
     </uses-permission>
     <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" >
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE">
     </uses-permission>
     <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE">
     </uses-permission>
     <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" >
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE">
     </uses-permission>
     <!-- 用于读取手机当前的状态 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" >
+    <uses-permission android:name="android.permission.READ_PHONE_STATE">
     </uses-permission>
     <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE">
     </uses-permission>
     <!-- 访问网络，网络定位需要上网 -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <!-- SD卡读取权限，用户写入离线定位数据 -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" >
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS">
     </uses-permission>
     <!-- 允许应用读取低级别的系统日志文件 -->
-    <uses-permission android:name="android.permission.READ_LOGS" >
+    <uses-permission android:name="android.permission.READ_LOGS">
     </uses-permission>
 
     <!-- BmobPush SDK权限 -->
-    <permission
-        android:name="cn.bmob.permission.push"
-        android:protectionLevel="normal" >
+    <permission android:name="cn.bmob.permission.push" android:protectionLevel="normal">
     </permission>
 
-    <uses-permission android:name="cn.bmob.permission.push" />
+    <uses-permission android:name="cn.bmob.permission.push"/>
     <!-- 添加自定义的权限 -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
 
-    <application
-        android:name="com.campus.xiaozhao.XZApplication"
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+    <application android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:name="com.campus.xiaozhao.XZApplication" android:theme="@style/AppTheme">
 
         <!-- 以下是百度地图定位需要的配置 -->
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="73HoeMOMZroObeGc5ZBWranv" />
+        <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="73HoeMOMZroObeGc5ZBWranv"/>
 
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote" >
+        <service android:enabled="true" android:name="com.baidu.location.f" android:process=":remote">
         </service>
 
-        <activity
-            android:name="com.campus.xiaozhao.activity.MainActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/StyledIndicatorsNoTitle" >
+        <activity android:label="@string/app_name" android:name="com.campus.xiaozhao.activity.MainActivity" android:screenOrientation="portrait" android:theme="@style/StyledIndicatorsNoTitle">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.campus.xiaozhao.activity.SplashActivity"
-            android:label="@string/title_activity_splash" >
+        <activity android:label="@string/title_activity_splash" android:name="com.campus.xiaozhao.activity.SplashActivity">
         </activity>
-        <activity
-            android:name="com.campus.xiaozhao.activity.LoginActivity"
-            android:label="@string/title_activity_login"
-            android:screenOrientation="portrait" >
+        <activity android:label="@string/title_activity_login" android:name="com.campus.xiaozhao.activity.LoginActivity" android:screenOrientation="portrait">
         </activity>
-        <activity
-            android:name="com.campus.xiaozhao.activity.RegisterActivity"
-            android:label="@string/title_activity_register"
-            android:screenOrientation="portrait" >
+        <activity android:label="@string/title_activity_register" android:name="com.campus.xiaozhao.activity.RegisterActivity" android:screenOrientation="portrait">
         </activity>
-        <activity
-            android:name="com.campus.xiaozhao.activity.FeedbackActivity"
-            android:label="@string/title_activity_feedback"
-            android:screenOrientation="portrait" >
+        <activity android:label="@string/title_activity_feedback" android:name="com.campus.xiaozhao.activity.FeedbackActivity" android:screenOrientation="portrait">
         </activity>
-		<activity
-            android:name="com.campus.xiaozhao.activity.PersonalActivity"
-            android:label="@string/title_activity_personal"
-            android:screenOrientation="portrait" >
+		<activity android:label="@string/title_activity_personal" android:name="com.campus.xiaozhao.activity.PersonalActivity" android:screenOrientation="portrait">
         </activity>
-        <activity
-            android:name="com.campus.xiaozhao.activity.AlarmActivity"
-            android:label="@string/title_activity_feedback"
-            android:screenOrientation="portrait" >
+        <activity android:label="@string/title_activity_feedback" android:name="com.campus.xiaozhao.activity.AlarmActivity" android:screenOrientation="portrait">
         </activity>
-        <activity
-            android:name="com.campus.xiaozhao.activity.CampusDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.campus.xiaozhao.activity.VerifyNumberActivity"
-            android:label="@string/title_activity_verify_number" >
+        <activity android:name="com.campus.xiaozhao.activity.CampusDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:label="@string/title_activity_verify_number" android:name="com.campus.xiaozhao.activity.VerifyNumberActivity">
         </activity>
-        <activity
-            android:name="com.campus.xiaozhao.activity.ResetPasswordActivity"
-            android:label="@string/title_activity_reset_password" >
+        <activity android:label="@string/title_activity_reset_password" android:name="com.campus.xiaozhao.activity.ResetPasswordActivity">
         </activity>
 
-        <receiver android:name="com.campus.xiaozhao.basic.alarm.CampusAlarmReceiver" >
+        <receiver android:name="com.campus.xiaozhao.basic.alarm.CampusAlarmReceiver">
         </receiver>
-        <receiver
-            android:name="com.campus.xiaozhao.basic.alarm.CampusBootReceiver"
-            android:enabled="false" >
+        <receiver android:enabled="false" android:name="com.campus.xiaozhao.basic.alarm.CampusBootReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" >
+                <action android:name="android.intent.action.BOOT_COMPLETED">
                 </action>
             </intent-filter>
         </receiver>
 
-        <service
-            android:name="cn.bmob.push.lib.service.PushService"
-            android:exported="true"
-            android:label="PushService"
-            android:permission="cn.bmob.permission.push"
-            android:process="cn.bmob.push" >
+        <service android:exported="true" android:label="PushService" android:name="cn.bmob.push.lib.service.PushService" android:permission="cn.bmob.permission.push" android:process="cn.bmob.push">
             <intent-filter>
-                <action android:name="cn.bmob.push.lib.service.PushService" />
+                <action android:name="cn.bmob.push.lib.service.PushService"/>
             </intent-filter>
         </service>
 
-        <receiver android:name="cn.bmob.push.PushReceiver" >
-            <intent-filter android:priority="2147483647" >
+        <receiver android:name="cn.bmob.push.PushReceiver">
+            <intent-filter android:priority="2147483647">
 
                 <!-- 优先级加最高 -->
                 <!-- 系统启动完成后会调用 -->
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <!-- 解锁完成后会调用 -->
-                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.USER_PRESENT"/>
                 <!-- 监听网络连通性 -->
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
 
         <!-- 第四部中创建的消息接收器，在这里进行注册 -->
-        <receiver
-            android:name="com.campus.xiaozhao.push.PushMsgReceiver"
-            android:exported="false" >
+        <receiver android:exported="false" android:name="com.campus.xiaozhao.push.PushMsgReceiver">
             <intent-filter>
-                <action android:name="cn.bmob.push.action.MESSAGE" />
+                <action android:name="cn.bmob.push.action.MESSAGE"/>
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name="com.campus.xiaozhao.activity.MainCategoryActivity"
-            android:label="@string/title_activity_main_category" >
+        <activity android:label="@string/title_activity_main_category" android:name="com.campus.xiaozhao.activity.MainCategoryActivity">
         </activity>
-        <activity
-            android:name="com.campus.xiaozhao.activity.SubCategoryActivity"
-            android:label="@string/title_activity_sub_category" >
+        <activity android:label="@string/title_activity_sub_category" android:name="com.campus.xiaozhao.activity.SubCategoryActivity">
         </activity>
 
-        <provider
-            android:authorities="com.campus.xiaozhao.providers.CampusProvider"
-            android:name="com.campus.xiaozhao.basic.db.CampusProvider" />
+        <provider android:authorities="com.campus.xiaozhao.providers.CampusProvider" android:name="com.campus.xiaozhao.basic.db.CampusProvider"/>
     </application>
 
 </manifest>

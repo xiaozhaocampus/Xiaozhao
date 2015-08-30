@@ -1,15 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="build_common" basedir=".">
+    <!-- 引入XML助手 -->
+    <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
+    <!-- 时间 -->
     <tstamp>
         <format property="output.file.build.date" pattern="yyMMdd"/>
     </tstamp>
+    <condition property="build_no" value="01" else="${env.xiaozhao_build_no}">
+   	    <os family="windows" />
+    </condition>
+    <!-- 构建前准备-->        
     <target name="pre-build-all">
+        <!-- XML替换方法-->
+        <xmltask source="./AndroidManifest.xml" dest="./AndroidManifest.xml" encoding="utf-8" >  
+	        <attr path="//manifest" attr="android:versionName" value="${output.file.build.date}.${build_no}" />  
+			<attr path="//manifest" attr="android:versionCode" value="${output.file.build.date}" />
+		</xmltask>
 	</target>
+	<!-- 构建DEBUG后处理-->
     <target name="post-build-debug">
-	</target>    
+	</target>
+	<!-- 构建后处理-->    
     <target name="post-build-all">
-		<copy file="${out.absolute.dir}/${ant.project.name}-debug.apk" tofile="${web.dir}/${ant.project.name}_${output.file.build.date}_debug.apk" overwrite="true"/>
-        <copy file="${out.absolute.dir}/${ant.project.name}-release.apk" tofile="${web.dir}/${ant.project.name}_${output.file.build.date}_release.apk" overwrite="true"/>
+		<!-- sdk dir properties -->
+    	<condition property="out_dir" value="out" else="${env.out_dir}">
+    	    <os family="windows" />
+	    </condition>
+		<copy file="${out.absolute.dir}/${ant.project.name}-debug.apk" tofile="${out_dir}/${ant.project.name}_${output.file.build.date}_build.no${build_no}_debug.apk" overwrite="true"/>
+        <copy file="${out.absolute.dir}/${ant.project.name}-release.apk" tofile="${out_dir}/${ant.project.name}_${output.file.build.date}_build.no${build_no}_release.apk" overwrite="true"/>
 	</target>
 </project>	
