@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 
+import com.campus.xiaozhao.Configuration;
 import com.campus.xiaozhao.R;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 
@@ -24,7 +25,7 @@ public class SplashActivity extends Activity {
                 MainActivity.startFrom(SplashActivity.this.getApplicationContext());
                 finish();
             }
-        }, 1500);
+        }, Configuration.SPLASH_DURATION);
         CampusSharePreference.setLastStartUpTime(getApplicationContext(), System.currentTimeMillis());
     }
     
