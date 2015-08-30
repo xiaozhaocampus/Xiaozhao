@@ -28,6 +28,8 @@ public class CampusInfo extends BmobObject {
 
     private String source;
 
+    private int status;
+
     public String getCity() {
         return city;
     }
@@ -84,11 +86,11 @@ public class CampusInfo extends BmobObject {
         this.company = company;
     }
 
-    public long getDate() {
+    public long getTime() {
         return time;
     }
 
-    public void setDate(long time) {
+    public void setTime(long time) {
         this.time = time;
     }
 
@@ -106,5 +108,13 @@ public class CampusInfo extends BmobObject {
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

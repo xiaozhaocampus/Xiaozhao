@@ -39,7 +39,8 @@ public class CampusDBHelper extends SQLiteOpenHelper {
             + CampusModel.CampusInfoItemColumn.REMIND_TYPE + " INTEGER NOT NULL DEFAULT 0,"
             + CampusModel.CampusInfoItemColumn.REMIND_TIME + " LONG DEFAULT -1,"
             + CampusModel.CampusInfoItemColumn.IS_SAVE + " INTEGER NOT NULL DEFAULT 0,"
-            + CampusModel.CampusInfoItemColumn.SOURCE + " TEXT);";
+            + CampusModel.CampusInfoItemColumn.SOURCE + " TEXT,"
+            + CampusModel.CampusInfoItemColumn.IS_DELETE + " INTEGER NOT NULL DEFAULT 0);";
 
     public static final String CREATE_TABLE_CAMPUS_USER_INFO =
             "CREATE TABLE IF NOT EXISTS " + TABLE_CAMPUS_USER_INFO + " ("

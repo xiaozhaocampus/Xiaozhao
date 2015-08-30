@@ -166,11 +166,12 @@ public class InfoPagerAdapter extends PagerAdapter {
                             itemData.setAddress(info.getAddress());
                             itemData.setTitle(info.getTitle());
                             itemData.setContent(info.getContent());
-                            itemData.setTime(info.getDate());
+                            itemData.setTime(info.getTime());
                             itemData.setVersion(info.getVersion());
                             itemData.setType(info.getType());
                             itemData.setSource(info.getSource());
                             itemData.setPtime(info.getPtime());
+                            itemData.setIsDelete(info.getStatus() > 0 ? true : false);
 
                             if(isUp) { // 缓存最新的数据
                                 CampusInfoItemData localData = CampusDBProcessor.getInstance(mContext).getCampusInfoByCampsuID(itemData.getCampusID());

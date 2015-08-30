@@ -45,6 +45,8 @@ public class CampusInfoItemData implements Serializable{
     private boolean isSave;
     /** 15 校招信息的来源 */
     private String source;
+    /** 15 校招信息是否被后台标记为删除 */
+    private boolean isDelete;
 
     public long getTime() {
         return time;
@@ -174,6 +176,14 @@ public class CampusInfoItemData implements Serializable{
         this.source = source;
     }
 
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(boolean isDelete) {
+        this.isDelete = isDelete;
+    }
+
     public void onAddToDatabase(ContentValues values) {
         values.put(CampusModel.CampusInfoItemColumn.CAMPUS_ID, campusID);
         values.put(CampusModel.CampusInfoItemColumn.COMPANY_NAME, company);
@@ -190,6 +200,7 @@ public class CampusInfoItemData implements Serializable{
         values.put(CampusModel.CampusInfoItemColumn.REMIND_TIME, remindTime);
         values.put(CampusModel.CampusInfoItemColumn.IS_SAVE, isSave);
         values.put(CampusModel.CampusInfoItemColumn.SOURCE, source);
+        values.put(CampusModel.CampusInfoItemColumn.IS_DELETE, isDelete);
     }
     
     public static final CampusInfoItemData from(Cursor cur) {
@@ -209,6 +220,7 @@ public class CampusInfoItemData implements Serializable{
     	campusInfoItemData.setTitle(cur.getString(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.TITLE)));
     	campusInfoItemData.setType(cur.getString(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.TYPE)));
     	campusInfoItemData.setVersion(cur.getInt(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.VERSION)));
+        campusInfoItemData.setIsDelete(cur.getInt(cur.getColumnIndex(CampusModel.CampusInfoItemColumn.IS_DELETE)) == 1);
     	return campusInfoItemData;
     }
 }
