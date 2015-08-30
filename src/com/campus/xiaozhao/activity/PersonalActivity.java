@@ -20,6 +20,7 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.adapter.PersonalEditAdapter;
 import com.campus.xiaozhao.basic.data.CampusUser;
 import com.campus.xiaozhao.basic.db.CampusUserDBProcessor;
 import com.campus.xiaozhao.basic.utils.BitmapUtils;
@@ -31,7 +32,7 @@ import com.campus.xiaozhao.basic.utils.PersonalUtils.PersonalOptionItem;
 import com.campus.xiaozhao.basic.utils.PicChooseUtils;
 
 public class PersonalActivity extends Activity {
-	private PersonalEditAdaptor mAdaptor = null;
+	private PersonalEditAdapter mAdaptor = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,7 +51,7 @@ public class PersonalActivity extends Activity {
 		PersonalEditListView listView = (PersonalEditListView)findViewById(R.id.personal_info);
 		listView.setGroupIndicator(null);
 		listView.setClickable(true);
-		mAdaptor = new PersonalEditAdaptor(this, listView);
+		mAdaptor = new PersonalEditAdapter(this, listView);
 		listView.setAdapter(mAdaptor);
 		listView.setOnGroupClickListener(new OnGroupClickListener() {
 			

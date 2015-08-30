@@ -1,4 +1,4 @@
-package com.campus.xiaozhao.activity;
+package com.campus.xiaozhao.adapter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,6 +21,8 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.activity.CampusDetailActivity;
+import com.campus.xiaozhao.activity.FilterPage;
 import com.campus.xiaozhao.basic.data.CampusInfo;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
 import com.campus.xiaozhao.basic.data.CampusType;

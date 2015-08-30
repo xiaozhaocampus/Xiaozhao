@@ -19,6 +19,7 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
 import com.campus.xiaozhao.R;
+import com.campus.xiaozhao.adapter.CampusInfoAdapter;
 import com.campus.xiaozhao.basic.data.CampusInfo;
 import com.campus.xiaozhao.basic.data.CampusInfoItemData;
 import com.campus.xiaozhao.basic.data.CampusType;

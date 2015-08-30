@@ -1,4 +1,4 @@
-package com.campus.xiaozhao.activity;
+package com.campus.xiaozhao.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import android.widget.ToggleButton;
 
 import com.campus.xiaozhao.R;
 
-public class FeedbackGridAdaptor extends BaseAdapter {
+public class FeedbackGridAdapter extends BaseAdapter {
 	public static class Selection {
 		public String mSelTitle = null;
 		public boolean mIsSelected = false;
@@ -23,7 +23,7 @@ public class FeedbackGridAdaptor extends BaseAdapter {
 		return mSelections;
 	}
 	private Context mContext;
-	public FeedbackGridAdaptor(Context context) {
+	public FeedbackGridAdapter(Context context) {
 		mContext = context;
 		init();
 	}

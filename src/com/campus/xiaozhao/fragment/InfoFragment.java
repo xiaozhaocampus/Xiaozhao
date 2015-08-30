@@ -19,8 +19,8 @@ import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.campus.xiaozhao.R;
-import com.campus.xiaozhao.activity.InfoPagerAdapter;
 import com.campus.xiaozhao.activity.MainActivity;
+import com.campus.xiaozhao.adapter.InfoPagerAdapter;
 import com.campus.xiaozhao.basic.location.BaiDuLocationManager;
 import com.campus.xiaozhao.basic.utils.CampusSharePreference;
 import com.campus.xiaozhao.basic.utils.StringUtils;

@@ -22,7 +22,7 @@
                 android:layout_marginBottom="13.3dp"
                 android:layout_marginTop="13.3dp"
                 android:text="南京嘉环科技有限公司"
-                android:textSize="15.3sp"
+                android:textSize="17sp"
                 android:textColor="#343434"/>
             <TextView
                 android:id="@+id/publish_time"
@@ -32,7 +32,7 @@
                 android:layout_marginBottom="15.3dp"
                 android:text="@string/publish_time"
                 android:textSize="12sp"
-                android:textColor="#c9c9c9"/>
+                android:textColor="#a9a9a9"/>
             <TextView
                 android:id="@+id/information_come"
                 android:layout_below="@id/publish_time"
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/campus_source"
                 android:textSize="12sp"
-                android:textColor="#c9c9c9"/>
+                android:textColor="#a9a9a9"/>
             <ImageView
                 android:id="@+id/company_logo"
                 android:layout_width="100dp"
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="2015-08-02"
-                android:textColor="#868686"
+                android:textColor="#666666"
                 android:textSize="12sp"/>
             <ImageView
                 android:layout_width="wrap_content"
@@ -114,7 +114,7 @@
                 android:layout_marginTop="13.3dp"
                 android:text="武汉理工大学"
                 android:textSize="12sp"
-                android:textColor="#868686"/>
+                android:textColor="#666666"/>
             <TextView
                 android:id="@+id/campus_detail_province"
                 android:layout_below="@id/campus_detail_school"
@@ -124,13 +124,14 @@
                 android:layout_marginTop="6.7dp"
                 android:text="湖北"
                 android:textSize="12sp"
-                android:textColor="#868686"/>
+                android:textColor="#666666"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/campus_detail_next"/>
+                android:src="@drawable/campus_detail_next"
+                android:visibility="invisible" />
         </RelativeLayout>
 
         <LinearLayout

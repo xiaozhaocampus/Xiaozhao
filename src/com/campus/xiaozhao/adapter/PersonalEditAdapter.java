@@ -1,4 +1,4 @@
-package com.campus.xiaozhao.activity;
+package com.campus.xiaozhao.adapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +26,7 @@ import com.campus.xiaozhao.basic.utils.PersonalUtils.PersonalEditPhotoItem;
 import com.campus.xiaozhao.basic.utils.PersonalUtils.PersonalEditTextItem;
 import com.campus.xiaozhao.basic.utils.PersonalUtils.PersonalOptionItem;
 
-public class PersonalEditAdaptor extends BaseExpandableListAdapter {
+public class PersonalEditAdapter extends BaseExpandableListAdapter {
 
 	private Context mContext;
 	private ExpandableListView mExpandableListView;
@@ -76,7 +76,7 @@ public class PersonalEditAdaptor extends BaseExpandableListAdapter {
 		return mItemGroups;
 	}
 
-	public PersonalEditAdaptor(Context context, ExpandableListView listview) {
+	public PersonalEditAdapter(Context context, ExpandableListView listview) {
 		mContext = context;
 		mExpandableListView = listview;
 		initPersonalData();
