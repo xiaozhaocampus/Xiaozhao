@@ -29,7 +29,7 @@
     <property file="ant.properties" />
 
     <!-- sdk dir properties -->
-    <condition property="sdk.dir" value="/var/opt/DB_SYSTEM/adt-bundle-linux-x86_64-20130522/sdk" else="${env.ANDROID_SDK_18_2204_16}">
+    <condition property="sdk.dir" value="E:\\tools\\adt-bundle-windows-x86-20130219\\sdk" else="${env.ANDROID_SDK_18_2204_16}">
 		<os family="windows" />
     </condition>
 
